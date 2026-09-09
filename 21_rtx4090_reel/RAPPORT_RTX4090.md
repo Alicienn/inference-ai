@@ -197,7 +197,57 @@ démontrer proprement le correctif. Code : `16_gpu/probe_d_incremental.py`.
 
 ---
 
-## 7. Ce que ça change / ne change pas
+## 7. Le correctif implémenté proprement : ça marche
+
+Suite au Test D (raté à cause de `torch.cat`), implémentation propre d'ASP v2
+(`16_gpu/e2e_qwen_v2.py`) avec les deux corrections validées cette session :
+- **Tampons à croissance amortie** (doublement de capacité, jamais de recopie à chaque
+  pas) au lieu de reconstruire tout à chaque appel.
+- **Score par MAX aux deux étages** (index PCA causal d′=8, base figée sur 256 tokens,
+  pour le filtrage grossier ; max sur clés brutes pour les survivants) au lieu de la
+  moyenne, confirmée catastrophique (§ vérification `test_e_mean_vs_max_premier_etage.py`).
+
+**[FAIT]** Instantané à N fixe (même méthodologie que `e2e_qwen.py`, donc les deux variantes
+bénéficient également de la mise en cache après amorçage — ne teste que l'effet de
+l'algorithme de score, pas encore le gain incrémental) :
+
+| N | dense | ASP actuel (bug) | ASP corrigé | gain ASP actuel | gain ASP corrigé |
+|---:|---:|---:|---:|---:|---:|
+| 16 384 | 40,74 ms | 67,94 ms | 60,93 ms | 0,60× | 0,67× |
+| 32 768 | 39,55 ms | 65,65 ms | 60,78 ms | 0,60× | 0,65× |
+| 65 536 | 54,54 ms | 65,52 ms | 60,67 ms | 0,83× | 0,90× |
+
+Le correctif est systématiquement 5 à 12 % plus rapide que le bug d'origine, mais reste
+plus lent que dense dans ce protocole à instantané unique. Résultats :
+`16_gpu/resultats/e2e_qwen_v2.json`.
+
+**[FAIT] Sur une vraie boucle de décodage (Test F, 128 pas consécutifs, cache qui grandit
+de 1 token/pas)** — reprise du Test D avec les tampons corrects, isolant l'effet de
+l'incrémentalité seule :
+
+| N0 | ASP actuel (bug, O(N)/pas) | ASP corrigé (O(1) amorti/pas) | gain |
+|---:|---:|---:|---:|
+| 16 384 | 0,0136 s | 0,0321 s | 0,42× (pire) |
+| 65 536 | 0,0811 s | 0,0661 s | **1,23×** |
+| 131 072 | 0,1614 s | 0,1080 s | **1,49×** |
+| 262 144 | 0,3210 s | 0,1912 s | **1,68×** |
+
+**Le gain croît avec le contexte, exactement comme prédit par le diagnostic du Test B**
+(coût O(N)/pas vs O(1) amorti/pas — l'écart absolu s'agrandit avec N). En dessous de
+~65k tokens, le coût fixe de la base PCA domine et le correctif perd ; au-dessus, il
+gagne de plus en plus. **C'est la première mesure de vitesse propre et cohérente de ce
+fil de correctifs** — contrairement au Test D, le signal est net et dans le sens attendu.
+Code : `16_gpu/e2e_qwen_v2.py`, `16_gpu/probe_f_multistep_v2.py`. Résultats :
+`16_gpu/resultats/probe_f_multistep_v2.json`.
+
+**[LIMITE]** Ce test isole la construction des résumés seule (comme le Test B/D), pas le
+pipeline complet (tri + gather + attention finale) ni un vrai passage de modèle bout en
+bout sur une séquence multi-pas — ce dernier reste à faire pour confirmer que le gain
+survit une fois intégré dans un vrai passage `forward()` répété.
+
+---
+
+## 8. Ce que ça change / ne change pas
 
 - **Ne change pas** : la conclusion centrale du papier (ASP économise des octets mais ne
   devient pas plus rapide sans fusion de noyau) — **renforcée**, reproduite sur un 2ᵉ GPU.
@@ -211,16 +261,35 @@ démontrer proprement le correctif. Code : `16_gpu/probe_d_incremental.py`.
 - **Piste ouverte** : l'intérêt réel d'économiser des octets n'est probablement pas la
   latence par requête (négative ici) mais le débit multi-utilisateurs (plus de séquences
   servies en parallèle à mémoire GPU égale) — non mesuré dans cette session.
-- **Nouveau, le plus actionnable** : le vrai levier pour améliorer la latence n'est pas la
-  fusion de noyau (ciblait le mauvais composant) mais la **mise à jour incrémentale des
-  résumés de blocs**, actuellement reconstruits en entier à chaque token généré (§6,
-  Test B). Prochaine étape naturelle si quelqu'un poursuit ce travail.
+- **Confirmé et mesuré (§7)** : le correctif (tampons incrémentaux + score max) accélère
+  réellement la construction des résumés — jusqu'à **1,68× à 262k tokens**, un gain qui
+  croît avec le contexte comme prédit. Reste à intégrer dans le pipeline complet et
+  mesurer l'effet bout en bout sur un vrai passage de modèle multi-pas — pas encore fait,
+  mais la brique qui manquait est maintenant validée isolément.
+
+## État final — où en est ASP après cette session
+
+1. **Le résultat négatif du papier tient** : ASP tel que publié/implémenté est plus lent
+   que dense, confirmé sur 2 GPU indépendants (H200, RTX 4090).
+2. **Deux causes identifiées et corrigées isolément** : reconstruction complète des
+   résumés à chaque pas (corrigé, §7, jusqu'à 1,68× de gain sur cette brique) et score par
+   moyenne au lieu de max (corrigé, qualité déjà validée, effet vitesse mesuré §7 en bonus
+   ~5-12 %).
+3. **Ce qui manque encore pour conclure** : intégrer les deux correctifs dans le pipeline
+   complet (tri + gather + attention finale, pas juste la construction des résumés) et
+   mesurer un vrai décodage multi-pas de bout en bout, pas seulement une brique isolée.
+   C'est l'étape suivante si ce travail continue.
 
 ## Reproductibilité
 
-- `16_gpu/bench_gather.py` / `colab_driver.py` (gather), `e2e_qwen.py` (bout en bout),
-  `vent.py` (ventilation, patché pour bande passante configurable via `ASP_BW`).
+- `16_gpu/bench_gather.py` / `colab_driver.py` (gather), `e2e_qwen.py` (bout en bout,
+  version originale/buguée), `e2e_qwen_v2.py` (version corrigée, tampons incrémentaux +
+  score max), `vent.py` (ventilation, bande passante configurable via `ASP_BW`),
+  `probe_b_decomposition.py` / `probe_c_batch.py` / `probe_d_incremental.py` (raté) /
+  `probe_f_multistep_v2.py` (refait proprement).
 - `12_poc/code/capture_qk.py` (patché GPU bf16 + fallback dataset `Salesforce/wikitext`),
   `eval_selection.py --tag qwen8b_gpu`.
 - `19_loi_octets/code/frontiere2.py --tags qwen8b_gpu` (patché chemins portables).
+- `21_rtx4090_reel/test_a_stabilite_selection.py`,
+  `21_rtx4090_reel/test_e_mean_vs_max_premier_etage.py` (gratuits, locaux, sans GPU).
 - Dépôt complet (code, sans les gros binaires) : github.com/Alicienn/inference-ai.
