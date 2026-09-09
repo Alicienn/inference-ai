@@ -116,7 +116,64 @@ de généraliser. Résultats : `19_loi_octets/resultats/frontiere_qwen8b_gpu.jso
 
 ---
 
-## 6. Ce que ça change / ne change pas
+## 6. Pourquoi le sélecteur est-il lent ? Trois pistes testées, un vrai coupable trouvé
+
+Un agent de recherche externe a proposé plusieurs leviers pour abaisser le seuil de
+croisement (le contexte à partir duquel ASP devient plus rapide que dense, estimé à
+N*≈146k sur RTX4090 à partir d'un modèle linéaire sur les données de la section 3). On a
+testé les trois idées les moins coûteuses.
+
+### Test A — réutiliser la sélection sur plusieurs pas de décodage : réfutée
+
+**[FAIT]** Sur la capture réelle Qwen3-8B (gratuit, sans GPU), chevauchement (indice de
+Jaccard) du top-k de blocs sélectionnés entre le pas p et le pas p+écart :
+
+| écart (pas) | 1 | 2 | 4 | 8 | 16 | 32 |
+|---|---:|---:|---:|---:|---:|---:|
+| chevauchement | 0,509 | 0,434 | 0,389 | 0,371 | 0,360 | 0,337 |
+
+**[FAIT]** Même d'un pas au suivant, à peine la moitié des blocs sélectionnés sont
+identiques. Réutiliser la sélection sur plusieurs pas perdrait trop de masse d'attention :
+idée écartée. Code : `21_rtx4090_reel/test_a_stabilite_selection.py`.
+
+### Test B — décomposition du "plateau" : ce n'est pas un coût fixe, c'est un bug d'archi
+
+**[FAIT]** Décomposition du coût du sélecteur par couche en 6 étapes (RTX4090) :
+
+| N | construction résumés | tri+gather+attention (reste) |
+|---:|---:|---:|
+| 16 384 | 0,054 ms | 0,541 ms |
+| 65 536 | 0,339 ms | 0,536 ms |
+| 131 072 | 0,641 ms | 0,521 ms |
+| 262 144 | **1,251 ms** | 0,541 ms |
+
+**[FAIT]** Seule la construction des résumés de blocs croît avec le contexte (×23 entre
+16k et 262k) ; le reste est plat. **[INFÉRENCE]** Le modèle "plateau fixe ~24ms" de la
+section 3 sous-estime donc le coût réel : ce plateau ne provenait à l'origine que d'un
+artefact de mesure (`vent.py` réutilisait les résumés déjà construits d'un appel à
+l'autre, ce qu'un vrai décodage ne fait jamais — le contexte change de token à chaque
+pas). En production, l'implémentation actuelle **reconstruit tous les résumés de blocs à
+partir de zéro à chaque mot généré**, alors qu'une mise à jour incrémentale du seul
+dernier bloc modifié suffirait. C'est un défaut d'implémentation plus simple à corriger
+qu'une fusion complète de noyau (qui reste utile mais cible le mauvais composant en
+premier). Code : `16_gpu/probe_b_decomposition.py`.
+
+### Test C — partage du coût entre requêtes d'un batch : non concluant
+
+**[FAIT]** À N=65 536 fixe (VRAM limitée à B=2 sur 48 Go à ce contexte) :
+
+| batch | dense / séquence | ASP / séquence | ratio |
+|---:|---:|---:|---:|
+| 1 | 55,29 ms | 64,72 ms | 0,854× |
+| 2 | 44,31 ms | 47,95 ms | 0,924× |
+
+**[LIMITE]** Seulement 2 points (VRAM insuffisante au-delà). Le gain existe mais profite
+presque autant au dense qu'à ASP — pas l'effet "quasi gratuit" espéré, mais l'échantillon
+est trop petit pour trancher. Code : `16_gpu/probe_c_batch.py`.
+
+---
+
+## 7. Ce que ça change / ne change pas
 
 - **Ne change pas** : la conclusion centrale du papier (ASP économise des octets mais ne
   devient pas plus rapide sans fusion de noyau) — **renforcée**, reproduite sur un 2ᵉ GPU.
@@ -130,6 +187,10 @@ de généraliser. Résultats : `19_loi_octets/resultats/frontiere_qwen8b_gpu.jso
 - **Piste ouverte** : l'intérêt réel d'économiser des octets n'est probablement pas la
   latence par requête (négative ici) mais le débit multi-utilisateurs (plus de séquences
   servies en parallèle à mémoire GPU égale) — non mesuré dans cette session.
+- **Nouveau, le plus actionnable** : le vrai levier pour améliorer la latence n'est pas la
+  fusion de noyau (ciblait le mauvais composant) mais la **mise à jour incrémentale des
+  résumés de blocs**, actuellement reconstruits en entier à chaque token généré (§6,
+  Test B). Prochaine étape naturelle si quelqu'un poursuit ce travail.
 
 ## Reproductibilité
 
