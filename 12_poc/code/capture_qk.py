@@ -36,7 +36,10 @@ def main(mid, seq, ndoc, tag):
         hooks.append(layer.self_attn.k_proj.register_forward_hook(mk(f"k{li}")))
 
     from datasets import load_dataset
-    ds = load_dataset("wikitext", "wikitext-103-raw-v1", split="test")
+    try:
+        ds = load_dataset("wikitext", "wikitext-103-raw-v1", split="test")
+    except Exception:
+        ds = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1", split="test")
     buf, texts = "", ""
     allt = []
     for r in ds:
