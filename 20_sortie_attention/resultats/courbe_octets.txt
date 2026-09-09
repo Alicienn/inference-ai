@@ -1,0 +1,39 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | tranches offsets [0, 200000, 400000]
+
+offset 0 (auto-test causal 2.9e-05)
+  dense      2.9144
+  maxip      2.9613
+  pca_d32    2.9711
+  pca_d16    2.9749
+  pca_d8     3.0123
+  pca_d4     3.0445
+  aleatoire  3.1309
+
+offset 200000 (auto-test causal 8.3e-05)
+  dense      1.9244
+  pca_d16    1.9433
+  maxip      1.9477
+  pca_d32    1.9526
+  pca_d8     1.9843
+  pca_d4     2.0232
+  aleatoire  2.1116
+
+offset 400000 (auto-test causal 3.5e-05)
+  dense      2.9936
+  pca_d32    3.0248
+  maxip      3.0269
+  pca_d8     3.0396
+  pca_d4     3.0475
+  pca_d16    3.0533
+  aleatoire  3.2208
+
+=== moyennes sur 3 tranches (min-max) ===
+dense      moy=2.6108 min=1.9244 max=2.9936 etendue=1.0692
+maxip      moy=2.6453 min=1.9477 max=3.0269 etendue=1.0792
+aleatoire  moy=2.8211 min=2.1116 max=3.2208 etendue=1.1092
+pca_d4     moy=2.7050 min=2.0232 max=3.0475 etendue=1.0243
+pca_d8     moy=2.6787 min=1.9843 max=3.0396 etendue=1.0553
+pca_d16    moy=2.6572 min=1.9433 max=3.0533 etendue=1.1100
+pca_d32    moy=2.6495 min=1.9526 max=3.0248 etendue=1.0722
+
+ecart a maxip (moyennes) : d'=4 +0.0597 | d'=8 +0.0334 | d'=16 +0.0118 | d'=32 +0.0042 | 

@@ -1,0 +1,81 @@
+========================================================================================================
+BLOCS PAR CONTENU vs PAR POSITION   (qwen8k avec RoPE, L=64, top-8)
+========================================================================================================
+  r  partition  rho moyen  sigma_disc  rappel rel.   masse ABSOLUE captée
+--------------------------------------------------------------------------------------------------------
+  1   position     14.199       0.877       83.88%                 44.55%
+  1    contenu     13.329       0.887       89.55%                 54.78%
+  1 contenu-preRoPE     14.841       0.966       84.46%                 48.79%
+    -> rho x0.94   sigma x1.01   masse absolue x1.23
+  2   position     13.243       0.792       86.22%                 45.81%
+  2    contenu     12.693       0.844       90.20%                 55.18%
+  2 contenu-preRoPE     14.137       0.917       85.10%                 49.27%
+    -> rho x0.96   sigma x1.07   masse absolue x1.20
+  4   position     12.510       0.721       87.40%                 46.24%
+  4    contenu     12.171       0.782       91.43%                 56.00%
+  4 contenu-preRoPE     13.580       0.830       86.57%                 50.15%
+    -> rho x0.97   sigma x1.08   masse absolue x1.21
+  8   position     11.332       0.648       89.51%                 47.43%
+  8    contenu     11.183       0.690       93.45%                 57.35%
+  8 contenu-preRoPE     12.602       0.743       88.36%                 51.27%
+    -> rho x0.99   sigma x1.07   masse absolue x1.21
+
+========================================================================================================
+BLOCS PAR CONTENU vs PAR POSITION   (qwen8k sans RoPE, L=64, top-8)
+========================================================================================================
+  r  partition  rho moyen  sigma_disc  rappel rel.   masse ABSOLUE captée
+--------------------------------------------------------------------------------------------------------
+  1   position     12.724       0.488       87.23%                 21.61%
+  1    contenu      8.416       0.444       96.81%                 43.14%
+    -> rho x0.66   sigma x0.91   masse absolue x2.00
+  2   position     11.604       0.415       88.61%                 22.06%
+  2    contenu      7.868       0.392       97.25%                 43.36%
+    -> rho x0.68   sigma x0.94   masse absolue x1.97
+  4   position     10.723       0.363       90.55%                 22.65%
+  4    contenu      7.394       0.331       97.92%                 43.77%
+    -> rho x0.69   sigma x0.91   masse absolue x1.93
+  8   position      9.483       0.308       92.70%                 23.40%
+  8    contenu      6.663       0.269       98.45%                 44.04%
+    -> rho x0.70   sigma x0.87   masse absolue x1.88
+
+========================================================================================================
+BLOCS PAR CONTENU vs PAR POSITION   (smol8k avec RoPE, L=64, top-8)
+========================================================================================================
+  r  partition  rho moyen  sigma_disc  rappel rel.   masse ABSOLUE captée
+--------------------------------------------------------------------------------------------------------
+  1   position     13.273       1.097       79.12%                 51.78%
+  1    contenu     12.185       0.817       93.19%                 71.04%
+  1 contenu-preRoPE     14.378       1.009       85.05%                 56.29%
+    -> rho x0.92   sigma x0.75   masse absolue x1.37
+  2   position     12.258       0.971       82.64%                 54.20%
+  2    contenu     11.649       0.757       94.36%                 71.99%
+  2 contenu-preRoPE     13.396       0.887       87.75%                 58.18%
+    -> rho x0.95   sigma x0.78   masse absolue x1.33
+  4   position     11.534       0.827       87.74%                 57.81%
+  4    contenu     11.208       0.672       95.57%                 72.96%
+  4 contenu-preRoPE     12.678       0.785       90.42%                 60.05%
+    -> rho x0.97   sigma x0.81   masse absolue x1.26
+  8   position     10.477       0.676       90.71%                 59.71%
+  8    contenu     10.348       0.566       96.64%                 73.71%
+  8 contenu-preRoPE     11.607       0.669       92.14%                 61.12%
+    -> rho x0.99   sigma x0.84   masse absolue x1.23
+
+========================================================================================================
+BLOCS PAR CONTENU vs PAR POSITION   (smol8k sans RoPE, L=64, top-8)
+========================================================================================================
+  r  partition  rho moyen  sigma_disc  rappel rel.   masse ABSOLUE captée
+--------------------------------------------------------------------------------------------------------
+  1   position     11.863       0.577       81.71%                 19.14%
+  1    contenu      7.897       0.459       95.36%                 45.20%
+    -> rho x0.67   sigma x0.80   masse absolue x2.36
+  2   position     10.586       0.476       86.10%                 21.09%
+  2    contenu      7.288       0.374       97.43%                 46.77%
+    -> rho x0.69   sigma x0.79   masse absolue x2.22
+  4   position      9.784       0.399       89.72%                 22.65%
+  4    contenu      6.778       0.309       98.21%                 47.18%
+    -> rho x0.69   sigma x0.77   masse absolue x2.08
+  8   position      8.684       0.337       92.56%                 23.82%
+  8    contenu      5.966       0.239       98.87%                 47.58%
+    -> rho x0.69   sigma x0.71   masse absolue x2.00
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\content_blocks.json

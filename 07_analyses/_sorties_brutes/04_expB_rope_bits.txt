@@ -1,0 +1,50 @@
+
+================================================================================================
+EXPERIENCE B : profil d'energie par bloc RoPE et allocation de bits
+================================================================================================
+
+  SmolLM2-135M : 30 couches, 9 tetes Q, 3 tetes KV, head_dim 64, rope_base 10000.0
+  -> 32 blocs de frequence 2D par tete
+
+================================================================================================
+(1) LE PROFIL D'ENERGIE PAR BLOC RoPE EST-IL 'FORTEMENT INEGAL' ?
+================================================================================================
+  90 profils (couche x tete KV)
+  etendue max/mediane : mediane    793.1x   p90   2688.1x   max   4873.4x
+  -> soit 2.9 ordre(s) de grandeur en mediane.
+
+  Profil moyen normalise, par indice de frequence (0 = rotation rapide):
+    blocs  0- 3 :    4.44    1.60    1.51    1.86
+    blocs  4- 7 :    1.28    1.99    2.03    2.09
+    blocs  8-11 :    2.76    3.30    2.83    3.21
+    blocs 12-15 :    3.07    2.62    2.83    2.38
+    blocs 16-19 :    2.22   13.74    2.51    9.27
+    blocs 20-23 :    1.94    4.30   56.88  528.60
+    blocs 24-27 :  464.24   97.26   35.26    9.51
+    blocs 28-31 :   13.64   32.07   49.51   68.05
+
+  energie moyenne  hautes frequences (i<16) :   2.49
+  energie moyenne  basses frequences (i>=16):  86.81   -> ratio 34.91x
+
+================================================================================================
+(2) L'ALLOCATION GUIDEE PAR L'ENERGIE BAT-ELLE L'UNIFORME (budget moyen egal) ?
+================================================================================================
+ bits moy |  err. uniforme  err. allouee      gain |   KL unif  KL alloc
+------------------------------------------------------------------------------------------------
+        2 |        0.23970       0.04244     82.3% |   0.83748   0.02250
+        3 |        0.07976       0.02117     73.5% |   0.14401   0.00541
+        4 |        0.03412       0.00879     74.2% |   0.03145   0.00095
+        6 |        0.00771       0.00183     76.3% |   0.00181   0.00004
+        8 |        0.00188       0.00044     76.5% |   0.00011   0.00000
+
+================================================================================================
+(3) L'ALLOCATION BINAIRE DE DeepSeek-V4 (RoPE=BF16, reste=FP8)
+================================================================================================
+  V4 n'alloue que DEUX niveaux : 64 dims RoPE en BF16, le reste en FP8.
+  C'est un cas particulier tres grossier de l'allocation par bloc. Nos mesures
+  ci-dessus indiquent que l'ecart d'energie se joue ENTRE blocs de frequence a
+  l'interieur meme de la partie RoPE ; une allocation binaire ne peut donc pas
+  capturer ce gradient. Voir l'analyse detaillee dans 07_analyses/.
+
+  -> C:\Users\alici\Downloads\inference_opti\07_analyses\expB_rope_bits.json
+

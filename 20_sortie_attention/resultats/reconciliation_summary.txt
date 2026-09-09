@@ -1,0 +1,13 @@
+smol8k : 90 tetes | masse du bloc du sink = 0.2928
+   mean_r1         err med=0.4441 p90=2.0785 max=3.3730 | catastrophes= 46.7 % | masse med=0.561
+   mean_r1_sink    err med=0.1251 p90=0.3296 max=0.8286 | catastrophes=  2.2 % | masse med=0.870
+   s1_off0         err med=0.1723 p90=0.4569 max=0.8632 | catastrophes=  6.7 % | masse med=0.839
+   s1_off16_sink   err med=0.1615 p90=0.4414 max=0.9057 | catastrophes=  7.8 % | masse med=0.836
+   oracle          err med=0.0787 p90=0.1844 max=0.2507 | catastrophes=  0.0 % | masse med=0.897
+
+qwen8k : 112 tetes | masse du bloc du sink = 0.2638
+   mean_r1         err med=0.3460 p90=2.4069 max=9.1713 | catastrophes= 42.9 % | masse med=0.618
+   mean_r1_sink    err med=0.0894 p90=0.2166 max=0.4973 | catastrophes=  0.0 % | masse med=0.883
+   s1_off0         err med=0.1075 p90=0.2763 max=0.6882 | catastrophes=  1.8 % | masse med=0.853
+   s1_off16_sink   err med=0.1034 p90=0.2509 max=0.5096 | catastrophes=  0.9 % | masse med=0.859
+   oracle          err med=0.0732 p90=0.1858 max=0.3793 | catastrophes=  0.0 % | masse med=0.904

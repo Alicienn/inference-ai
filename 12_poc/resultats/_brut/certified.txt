@@ -1,0 +1,41 @@
+========================================================================================================
+SELECTION CERTIFIEE (top-8 garanti)  --  avec RoPE  --  Qwen2.5-0.5B, L=64
+========================================================================================================
+  r   certificat  candidats   ambigus  reduction  validite  top-8 couvert    exact
+--------------------------------------------------------------------------------------------------------
+  2    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  2    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  4    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  4    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  8    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  8    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+ 16    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+ 16    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+
+  'ambigus'      = blocs qu'on ne peut PAS eliminer par preuve -> a lire
+  'reduction'    = candidats / ambigus : facteur d'economie garanti
+  'top-8 couvert'= le vrai top-8 est-il inclus ? le theoreme impose 100%
+  'exact'        = fraction des requetes ou |A| = 8, soit top-8 PROUVE sans
+                   lire aucune cle
+
+========================================================================================================
+SELECTION CERTIFIEE (top-8 garanti)  --  sans RoPE  --  Qwen2.5-0.5B, L=64
+========================================================================================================
+  r   certificat  candidats   ambigus  reduction  validite  top-8 couvert    exact
+--------------------------------------------------------------------------------------------------------
+  2    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  2    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  4    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  4    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  8    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+  8    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+ 16    hoeffding       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+ 16    bernstein       87.2      87.2      1.00x    100.0%        100.00%     0.0%
+
+  'ambigus'      = blocs qu'on ne peut PAS eliminer par preuve -> a lire
+  'reduction'    = candidats / ambigus : facteur d'economie garanti
+  'top-8 couvert'= le vrai top-8 est-il inclus ? le theoreme impose 100%
+  'exact'        = fraction des requetes ou |A| = 8, soit top-8 PROUVE sans
+                   lire aucune cle
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\certified.json

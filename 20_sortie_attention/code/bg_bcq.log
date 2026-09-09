@@ -1,0 +1,11 @@
+off=0 Lb=64 m=1 vs_dense=+0.7920 index=-0.0034
+off=0 Lb=32 m=2 vs_dense=+0.3078 index=+0.0222
+off=0 Lb=16 m=4 vs_dense=+0.0880 index=-0.0093
+off=0 Lb=8 m=8 vs_dense=+0.0114 index=-0.0057
+off=0 Lb=4 m=16 vs_dense=-0.0059 index=+0.0019
+off=200000 Lb=64 m=1 vs_dense=+0.8111 index=-0.0321
+off=200000 Lb=32 m=2 vs_dense=+0.3848 index=-0.0189
+off=200000 Lb=16 m=4 vs_dense=+0.1755 index=-0.0128
+off=200000 Lb=8 m=8 vs_dense=+0.0585 index=-0.0081
+off=200000 Lb=4 m=16 vs_dense=-0.0007 index=-0.0113
+FIN

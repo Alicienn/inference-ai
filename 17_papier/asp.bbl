@@ -1,0 +1,479 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{35}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter does
+%%% not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+\makeatletter
+\@ifundefined{NAT@parse@date}{}{\let\NAT@parse@date@orig\NAT@parse@date}
+\@ifundefined{NAT@parse@date}{}{\def\NAT@parse@date#1#2#3#4#5#6@@{\NAT@parse@date@orig#1#2#3#4#5#6@@\def\NAT@tempyear{0000}\def\NAT@tempexlab{{?}}\ifx\NAT@year\NAT@tempyear\ifx\NAT@exlab\NAT@tempexlab\def\NAT@date{[n.\,d.]}\else\edef\NAT@date{[n.\,d.]\NAT@exlab}\fi\fi}}
+\makeatother
+
+\bibitem[Agrawal et~al\mbox{.}(2024)]%
+        {agrawal2024sarathi}
+\bibfield{author}{\bibinfo{person}{Amey Agrawal}, \bibinfo{person}{Nitin
+  Kedia}, \bibinfo{person}{Ashish Panwar}, \bibinfo{person}{Jayashree Mohan},
+  \bibinfo{person}{Nipun Kwatra}, \bibinfo{person}{Bhargav~S. Gulavani},
+  \bibinfo{person}{Alexey Tumanov}, {and} \bibinfo{person}{Ramachandran
+  Ramjee}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Taming Throughput-Latency Tradeoff in {LLM}
+  Inference with {Sarathi-Serve}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2403.02310}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Ainslie et~al\mbox{.}(2023)]%
+        {ainslie2023gqa}
+\bibfield{author}{\bibinfo{person}{Joshua Ainslie}, \bibinfo{person}{James
+  Lee-Thorp}, \bibinfo{person}{Michiel de Jong}, \bibinfo{person}{Yury
+  Zemlyanskiy}, \bibinfo{person}{Federico Lebr{\'o}n}, {and}
+  \bibinfo{person}{Sumit Sanghai}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{GQA}: Training Generalized Multi-Query Transformer
+  Models from Multi-Head Checkpoints}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2305.13245}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Beltagy et~al\mbox{.}(2020)]%
+        {beltagy2020longformer}
+\bibfield{author}{\bibinfo{person}{Iz Beltagy}, \bibinfo{person}{Matthew~E.
+  Peters}, {and} \bibinfo{person}{Arman Cohan}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Longformer: The Long-Document Transformer}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2004.05150}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[{Block-GTQ Authors}(2026)]%
+        {blockgtq2026}
+\bibfield{author}{\bibinfo{person}{{Block-GTQ Authors}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{RoPE}-Aware Bit Allocation for {KV}-Cache
+  Quantization}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2606.24033}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[Bubeck et~al\mbox{.}(2009)]%
+        {bubeck2009pure}
+\bibfield{author}{\bibinfo{person}{S{\'e}bastien Bubeck},
+  \bibinfo{person}{R{\'e}mi Munos}, {and} \bibinfo{person}{Gilles Stoltz}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Pure Exploration in Multi-armed Bandits Problems}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:0802.2655}}
+  (\bibinfo{year}{2009}).
+\newblock
+
+
+\bibitem[Carpentier and Locatelli(2016)]%
+        {carpentier2016tight}
+\bibfield{author}{\bibinfo{person}{Alexandra Carpentier} {and}
+  \bibinfo{person}{Andrea Locatelli}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Tight (Lower) Bounds for the Fixed Budget Best Arm
+  Identification Bandit Problem}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1605.09004}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[{DeepSeek-AI}(2024a)]%
+        {deepseek2024v2}
+\bibfield{author}{\bibinfo{person}{{DeepSeek-AI}}.}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{DeepSeek-V2: A Strong, Economical, and Efficient
+  Mixture-of-Experts Language Model}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2405.04434}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[{DeepSeek-AI}(2024b)]%
+        {deepseek2024v3}
+\bibfield{author}{\bibinfo{person}{{DeepSeek-AI}}.}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{DeepSeek-V3 Technical Report}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2412.19437}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[{DeepSeek-AI}(2025)]%
+        {deepseek2025v32}
+\bibfield{author}{\bibinfo{person}{{DeepSeek-AI}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{DeepSeek-V3.2: Pushing the Frontier of Open Large
+  Language Models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2512.02556}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[{DeepSeek-AI}(2026)]%
+        {deepseek2026v4}
+\bibfield{author}{\bibinfo{person}{{DeepSeek-AI}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{DeepSeek-V4: Towards Highly Efficient Million-Token
+  Context Intelligence}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2606.19348}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[{FlashMemory Authors}(2026)]%
+        {lsa2026}
+\bibfield{author}{\bibinfo{person}{{FlashMemory Authors}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{FlashMemory-DeepSeek-V4}: Lightning Index
+  Ultra-Long Context via Lookahead Sparse Attention}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2606.09079}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[Gonzalez(1985)]%
+        {gonzalez1985clustering}
+\bibfield{author}{\bibinfo{person}{Teofilo~F. Gonzalez}.}
+  \bibinfo{year}{1985}\natexlab{}.
+\newblock \showarticletitle{Clustering to Minimize the Maximum Intercluster
+  Distance}.
+\newblock \bibinfo{journal}{\emph{Theoretical Computer Science}}
+  \bibinfo{volume}{38} (\bibinfo{year}{1985}), \bibinfo{pages}{293--306}.
+\newblock
+
+
+\bibitem[{HiSparse Authors}(2026)]%
+        {hisparse2026}
+\bibfield{author}{\bibinfo{person}{{HiSparse Authors}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{HiSparse}: Scaling Sparse-Attention Decoding with
+  Hierarchical {KV} Cache Management}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2608.07009}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[Hsieh et~al\mbox{.}(2024)]%
+        {hsieh2024ruler}
+\bibfield{author}{\bibinfo{person}{Cheng-Ping Hsieh}, \bibinfo{person}{Simeng
+  Sun}, \bibinfo{person}{Samuel Kriman}, \bibinfo{person}{Shantanu Acharya},
+  \bibinfo{person}{Dima Rekesh}, \bibinfo{person}{Fei Jia},
+  \bibinfo{person}{Yang Zhang}, {and} \bibinfo{person}{Boris Ginsburg}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{RULER}: What's the Real Context Size of Your
+  Long-Context Language Models?}
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2404.06654}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Hu et~al\mbox{.}(2026)]%
+        {hu2026asynctls}
+\bibfield{author}{\bibinfo{person}{Yuxuan Hu}, \bibinfo{person}{Jianchao Tan},
+  \bibinfo{person}{Jiaqi Zhang}, \bibinfo{person}{Wen Zan},
+  \bibinfo{person}{Pingwei Sun}, \bibinfo{person}{Yifan Lu},
+  \bibinfo{person}{Yerui Sun}, \bibinfo{person}{Yuchen Xie},
+  \bibinfo{person}{Xunliang Cai}, {and} \bibinfo{person}{Jing Zhang}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{AsyncTLS}: Efficient Generative {LLM} Inference
+  with Asynchronous Two-level Sparse Attention}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2604.07815}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[Karnin et~al\mbox{.}(2013)]%
+        {karnin2013almost}
+\bibfield{author}{\bibinfo{person}{Zohar Karnin}, \bibinfo{person}{Tomer
+  Koren}, {and} \bibinfo{person}{Oren Somekh}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Almost Optimal Exploration in Multi-Armed Bandits}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 30th International Conference
+  on Machine Learning (ICML)}}. \bibinfo{pages}{1238--1246}.
+\newblock
+
+
+\bibitem[Kwon et~al\mbox{.}(2023)]%
+        {kwon2023vllm}
+\bibfield{author}{\bibinfo{person}{Woosuk Kwon}, \bibinfo{person}{Zhuohan Li},
+  \bibinfo{person}{Siyuan Zhuang}, \bibinfo{person}{Ying Sheng},
+  \bibinfo{person}{Lianmin Zheng}, \bibinfo{person}{Cody~Hao Yu},
+  \bibinfo{person}{Joseph~E. Gonzalez}, \bibinfo{person}{Hao Zhang}, {and}
+  \bibinfo{person}{Ion Stoica}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Efficient Memory Management for Large Language
+  Model Serving with {PagedAttention}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 29th Symposium on Operating
+  Systems Principles (SOSP)}}.
+\newblock
+
+
+\bibitem[Leviathan et~al\mbox{.}(2023)]%
+        {leviathan2023speculative}
+\bibfield{author}{\bibinfo{person}{Yaniv Leviathan}, \bibinfo{person}{Matan
+  Kalman}, {and} \bibinfo{person}{Yossi Matias}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Fast Inference from Transformers via Speculative
+  Decoding}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2211.17192}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Li et~al\mbox{.}(2024)]%
+        {li2024snapkv}
+\bibfield{author}{\bibinfo{person}{Yuhong Li}, \bibinfo{person}{Yingbing
+  Huang}, \bibinfo{person}{Bowen Yang}, \bibinfo{person}{Bharat Venkitesh},
+  \bibinfo{person}{Acyr Locatelli}, \bibinfo{person}{Hanchen Ye},
+  \bibinfo{person}{Tianle Cai}, \bibinfo{person}{Patrick Lewis}, {and}
+  \bibinfo{person}{Deming Chen}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{SnapKV}: {LLM} Knows What You are Looking for
+  Before Generation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2404.14469}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Li et~al\mbox{.}(2025)]%
+        {li2025eagle3}
+\bibfield{author}{\bibinfo{person}{Yuhui Li}, \bibinfo{person}{Fangyun Wei},
+  \bibinfo{person}{Chao Zhang}, {and} \bibinfo{person}{Hongyang Zhang}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{EAGLE-3}: Scaling up Inference Acceleration of
+  Large Language Models via Training-Time Test}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2503.01840}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Little and Graves(2008)]%
+        {little2008queueing}
+\bibfield{author}{\bibinfo{person}{John D.~C. Little} {and}
+  \bibinfo{person}{Stephen~C. Graves}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Little's Law}}.
+\newblock \bibinfo{publisher}{Springer}. 81--100 pages.
+\newblock
+
+
+\bibitem[Qin et~al\mbox{.}(2024)]%
+        {qin2024mooncake}
+\bibfield{author}{\bibinfo{person}{Ruoyu Qin}, \bibinfo{person}{Zheming Li},
+  \bibinfo{person}{Weiran He}, \bibinfo{person}{Mingxing Zhang},
+  \bibinfo{person}{Yongwei Wu}, \bibinfo{person}{Weimin Zheng}, {and}
+  \bibinfo{person}{Xinran Xu}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Mooncake: A {KVCache}-centric Disaggregated
+  Architecture for {LLM} Serving}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2407.00079}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[{Qwen Team}(2025)]%
+        {qwen3}
+\bibfield{author}{\bibinfo{person}{{Qwen Team}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{Qwen3 Technical Report}.
+\newblock
+\newblock
+\shownote{Model weights: \url{https://huggingface.co/Qwen/Qwen3-8B}}.
+
+
+\bibitem[Shah et~al\mbox{.}(2024)]%
+        {shah2024flashattention3}
+\bibfield{author}{\bibinfo{person}{Jay Shah}, \bibinfo{person}{Ganesh
+  Bikshandi}, \bibinfo{person}{Ying Zhang}, \bibinfo{person}{Vijay Thakkar},
+  \bibinfo{person}{Pradeep Ramani}, {and} \bibinfo{person}{Tri Dao}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{FlashAttention-3}: Fast and Accurate Attention
+  with Asynchrony and Low-precision}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2407.08608}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Singhania et~al\mbox{.}(2024)]%
+        {singhania2024loki}
+\bibfield{author}{\bibinfo{person}{Prajwal Singhania},
+  \bibinfo{person}{Siddharth Singh}, \bibinfo{person}{Shwai He},
+  \bibinfo{person}{Soheil Feizi}, {and} \bibinfo{person}{Abhinav Bhatele}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Loki: Low-rank Keys for Efficient Sparse
+  Attention}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2406.02542}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Tang et~al\mbox{.}(2024)]%
+        {tang2024quest}
+\bibfield{author}{\bibinfo{person}{Jiaming Tang}, \bibinfo{person}{Yilong
+  Zhao}, \bibinfo{person}{Kan Zhu}, \bibinfo{person}{Guangxuan Xiao},
+  \bibinfo{person}{Baris Kasikci}, {and} \bibinfo{person}{Song Han}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Quest: Query-Aware Sparsity for Efficient
+  Long-Context {LLM} Inference}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2406.10774}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Tian et~al\mbox{.}(2026)]%
+        {tian2026cobs}
+\bibfield{author}{\bibinfo{person}{Alexander Tian}, \bibinfo{person}{Aditya
+  Ghai}, \bibinfo{person}{Sanjit Neelam}, \bibinfo{person}{Zaal Vasania}, {and}
+  \bibinfo{person}{Akshay Mishra}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{{COBS}: Cumulant Order Block Sparse Attention}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2607.09052}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\bibitem[{TurboQuant Authors}(2025)]%
+        {turboquant2025}
+\bibfield{author}{\bibinfo{person}{{TurboQuant Authors}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{TurboQuant}: Online Vector Quantization with
+  Near-optimal Distortion Rate}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2504.19874}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Xiao et~al\mbox{.}(2024)]%
+        {xiao2024streamingllm}
+\bibfield{author}{\bibinfo{person}{Guangxuan Xiao}, \bibinfo{person}{Yuandong
+  Tian}, \bibinfo{person}{Beidi Chen}, \bibinfo{person}{Song Han}, {and}
+  \bibinfo{person}{Mike Lewis}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Efficient Streaming Language Models with Attention
+  Sinks}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2309.17453}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Ye et~al\mbox{.}(2025)]%
+        {ye2025flashinfer}
+\bibfield{author}{\bibinfo{person}{Zihao Ye}, \bibinfo{person}{Lequn Chen},
+  \bibinfo{person}{Ruihang Lai}, \bibinfo{person}{Wuwei Lin},
+  \bibinfo{person}{Yineng Zhang}, \bibinfo{person}{Stephanie Wang},
+  \bibinfo{person}{Tianqi Chen}, \bibinfo{person}{Baris Kasikci},
+  \bibinfo{person}{Vinod Grover}, \bibinfo{person}{Arvind Krishnamurthy}, {and}
+  \bibinfo{person}{Luis Ceze}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{FlashInfer}: Efficient and Customizable Attention
+  Engine for {LLM} Inference Serving}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2501.01005}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Yuan et~al\mbox{.}(2025)]%
+        {yuan2025nsa}
+\bibfield{author}{\bibinfo{person}{Jingyang Yuan}, \bibinfo{person}{Huazuo
+  Gao}, \bibinfo{person}{Damai Dai}, \bibinfo{person}{Junyu Luo},
+  \bibinfo{person}{Liang Zhao}, \bibinfo{person}{Zhengyan Zhang},
+  \bibinfo{person}{Zhenda Xie}, \bibinfo{person}{Y.~X. Wei},
+  \bibinfo{person}{Lean Wang}, \bibinfo{person}{Zhiping Xiao},
+  \bibinfo{person}{Yuqing Wang}, \bibinfo{person}{Chong Ruan},
+  \bibinfo{person}{Ming Zhang}, \bibinfo{person}{Wenfeng Liang}, {and}
+  \bibinfo{person}{Wangding Zeng}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Native Sparse Attention: Hardware-Aligned and
+  Natively Trainable Sparse Attention}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2502.11089}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Zaheer et~al\mbox{.}(2020)]%
+        {zaheer2020bigbird}
+\bibfield{author}{\bibinfo{person}{Manzil Zaheer}, \bibinfo{person}{Guru
+  Guruganesh}, \bibinfo{person}{Avinava Dubey}, \bibinfo{person}{Joshua
+  Ainslie}, \bibinfo{person}{Chris Alberti}, \bibinfo{person}{Santiago
+  Onta{\~n}{\'o}n}, \bibinfo{person}{Philip Pham}, \bibinfo{person}{Anirudh
+  Ravula}, \bibinfo{person}{Qifan Wang}, \bibinfo{person}{Li Yang}, {and}
+  \bibinfo{person}{Amr Ahmed}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Big Bird: Transformers for Longer Sequences}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2007.14062}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2023)]%
+        {zhang2023h2o}
+\bibfield{author}{\bibinfo{person}{Zhenyu Zhang}, \bibinfo{person}{Ying Sheng},
+  \bibinfo{person}{Tianyi Zhou}, \bibinfo{person}{Tianlong Chen},
+  \bibinfo{person}{Lianmin Zheng}, \bibinfo{person}{Ruisi Cai},
+  \bibinfo{person}{Zhao Song}, \bibinfo{person}{Yuandong Tian},
+  \bibinfo{person}{Christopher R{\'e}}, \bibinfo{person}{Clark Barrett},
+  \bibinfo{person}{Zhangyang Wang}, {and} \bibinfo{person}{Beidi Chen}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{H2O}: Heavy-Hitter Oracle for Efficient Generative
+  Inference of Large Language Models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2306.14048}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Zheng et~al\mbox{.}(2024)]%
+        {zheng2024sglang}
+\bibfield{author}{\bibinfo{person}{Lianmin Zheng}, \bibinfo{person}{Liangsheng
+  Yin}, \bibinfo{person}{Zhiqiang Xie}, \bibinfo{person}{Chuyue Sun},
+  \bibinfo{person}{Jeff Huang}, \bibinfo{person}{Cody~Hao Yu},
+  \bibinfo{person}{Shiyi Cao}, \bibinfo{person}{Christos Kozyrakis},
+  \bibinfo{person}{Ion Stoica}, \bibinfo{person}{Joseph~E. Gonzalez},
+  \bibinfo{person}{Clark Barrett}, {and} \bibinfo{person}{Ying Sheng}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{SGLang}: Efficient Execution of Structured
+  Language Model Programs}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2312.07104}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Zhong et~al\mbox{.}(2024)]%
+        {zhong2024distserve}
+\bibfield{author}{\bibinfo{person}{Yinmin Zhong}, \bibinfo{person}{Shengyu
+  Liu}, \bibinfo{person}{Junda Chen}, \bibinfo{person}{Jianbo Hu},
+  \bibinfo{person}{Yibo Zhu}, \bibinfo{person}{Xuanzhe Liu},
+  \bibinfo{person}{Xin Jin}, {and} \bibinfo{person}{Hao Zhang}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{DistServe}: Disaggregating Prefill and Decoding
+  for Goodput-optimized Large Language Model Serving}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2401.09670}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\end{thebibliography}

@@ -1,0 +1,55 @@
+============================================================================================
+SPECTRE DE LA COVARIANCE INTRA-BLOC  --  avec RoPE  (L=64, D=64)
+============================================================================================
+  variance cumulee captee par les r premieres directions propres :
+    rang  1 :  20.1%
+    rang  2 :  33.0%
+    rang  4 :  50.3%
+    rang  8 :  70.6%
+    rang 16 :  88.8%
+    rang 32 :  98.3%
+
+  rang effectif (entropie de participation) : 17.8 / 64   (median 17.6)
+
+  fraction du terme q^T Sigma q reellement captee au rang r :
+    rang  1 :  21.4%
+    rang  2 :  34.9%
+    rang  4 :  53.5%
+    rang  8 :  74.4%
+    rang 16 :  90.3%
+    rang 32 :  98.2%
+
+  LECTURE. Le spectre est PLAT : il faut ~17 directions pour
+  capter 90% de la variance, sur un rang maximal de 32. La covariance
+  intra-bloc n'est donc PAS de rang faible. Un resume de rang r n'en capte
+  qu'une fraction, et cette fraction varie d'un bloc a l'autre : c'est cette
+  variabilite, et non l'ordre du developpement, qui degrade le classement.
+
+============================================================================================
+SPECTRE DE LA COVARIANCE INTRA-BLOC  --  sans RoPE  (L=64, D=64)
+============================================================================================
+  variance cumulee captee par les r premieres directions propres :
+    rang  1 :  24.0%
+    rang  2 :  38.6%
+    rang  4 :  57.1%
+    rang  8 :  76.3%
+    rang 16 :  91.5%
+    rang 32 :  98.9%
+
+  rang effectif (entropie de participation) : 14.8 / 64   (median 14.1)
+
+  fraction du terme q^T Sigma q reellement captee au rang r :
+    rang  1 :  28.9%
+    rang  2 :  42.7%
+    rang  4 :  60.2%
+    rang  8 :  77.8%
+    rang 16 :  90.8%
+    rang 32 :  98.1%
+
+  LECTURE. Le spectre est PLAT : il faut ~15 directions pour
+  capter 90% de la variance, sur un rang maximal de 32. La covariance
+  intra-bloc n'est donc PAS de rang faible. Un resume de rang r n'en capte
+  qu'une fraction, et cette fraction varie d'un bloc a l'autre : c'est cette
+  variabilite, et non l'ordre du developpement, qui degrade le classement.
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\diagnostics_rang.json

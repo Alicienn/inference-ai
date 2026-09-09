@@ -1,0 +1,84 @@
+L0 p=100 h= 0 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.98e-06
+L0 p=100 h= 1 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=5.64e-08
+L0 p=100 h= 2 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=6.52e-06
+L0 p=100 h= 3 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=5.70e-06
+L0 p=100 h= 4 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=7.35e-06
+L0 p=100 h= 5 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=9.55e-08
+L0 p=100 h= 6 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.09e-05
+L0 p=100 h= 7 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.74e-06
+L0 p=100 h= 8 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=4.41e-06
+L0 p=100 h= 9 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.87e-06
+L0 p=100 h=10 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=7.88e-06
+L0 p=100 h=11 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=4.94e-06
+L0 p=100 h=12 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=5.09e-06
+L0 p=100 h=13 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=6.11e-06
+L0 p=300 h= 0 | sel_ref=[2, 4] sel_harnais=[2, 4] | masque 192/192 identique=True | sortie rel=9.91e-06
+L0 p=300 h= 1 | sel_ref=[2, 3] sel_harnais=[2, 3] | masque 192/192 identique=True | sortie rel=4.30e-08
+L0 p=300 h= 2 | sel_ref=[3, 4] sel_harnais=[3, 4] | masque 192/192 identique=True | sortie rel=5.41e-06
+L0 p=300 h= 3 | sel_ref=[2, 4] sel_harnais=[2, 4] | masque 192/192 identique=True | sortie rel=3.42e-06
+L0 p=300 h= 4 | sel_ref=[0, 4] sel_harnais=[0, 4] | masque 192/192 identique=True | sortie rel=3.03e-06
+L0 p=300 h= 5 | sel_ref=[0, 2] sel_harnais=[0, 2] | masque 192/192 identique=True | sortie rel=2.21e-06
+L0 p=300 h= 6 | sel_ref=[2, 4] sel_harnais=[2, 4] | masque 192/192 identique=True | sortie rel=1.37e-05
+L0 p=300 h= 7 | sel_ref=[0, 2] sel_harnais=[0, 2] | masque 192/192 identique=True | sortie rel=1.82e-07
+L0 p=300 h= 8 | sel_ref=[3, 4] sel_harnais=[3, 4] | masque 192/192 identique=True | sortie rel=5.27e-06
+L0 p=300 h= 9 | sel_ref=[3, 4] sel_harnais=[3, 4] | masque 192/192 identique=True | sortie rel=1.55e-06
+L0 p=300 h=10 | sel_ref=[3, 4] sel_harnais=[3, 4] | masque 192/192 identique=True | sortie rel=3.93e-06
+L0 p=300 h=11 | sel_ref=[2, 4] sel_harnais=[2, 4] | masque 192/192 identique=True | sortie rel=7.75e-06
+L0 p=300 h=12 | sel_ref=[3, 4] sel_harnais=[3, 4] | masque 192/192 identique=True | sortie rel=5.21e-06
+L0 p=300 h=13 | sel_ref=[2, 4] sel_harnais=[2, 4] | masque 192/192 identique=True | sortie rel=1.22e-05
+L0 p=500 h= 0 | sel_ref=[7, 10] sel_harnais=[7, 10] | masque 192/192 identique=True | sortie rel=1.27e-05
+L0 p=500 h= 1 | sel_ref=[7, 10] sel_harnais=[7, 10] | masque 192/192 identique=True | sortie rel=2.28e-07
+L0 p=500 h= 2 | sel_ref=[6, 7] sel_harnais=[6, 7] | masque 192/192 identique=True | sortie rel=3.89e-06
+L0 p=500 h= 3 | sel_ref=[5, 7] sel_harnais=[5, 7] | masque 192/192 identique=True | sortie rel=3.39e-06
+L0 p=500 h= 4 | sel_ref=[6, 10] sel_harnais=[6, 10] | masque 192/192 identique=True | sortie rel=4.89e-06
+L0 p=500 h= 5 | sel_ref=[6, 10] sel_harnais=[6, 10] | masque 192/192 identique=True | sortie rel=4.48e-06
+L0 p=500 h= 6 | sel_ref=[5, 7] sel_harnais=[5, 7] | masque 192/192 identique=True | sortie rel=6.09e-06
+L0 p=500 h= 7 | sel_ref=[1, 3] sel_harnais=[1, 3] | masque 192/192 identique=True | sortie rel=3.97e-06
+L0 p=500 h= 8 | sel_ref=[0, 1] sel_harnais=[0, 1] | masque 192/192 identique=True | sortie rel=2.43e-06
+L0 p=500 h= 9 | sel_ref=[7, 8] sel_harnais=[7, 8] | masque 192/192 identique=True | sortie rel=9.88e-07
+L0 p=500 h=10 | sel_ref=[0, 7] sel_harnais=[0, 7] | masque 192/192 identique=True | sortie rel=3.23e-06
+L0 p=500 h=11 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=2.94e-07
+L0 p=500 h=12 | sel_ref=[3, 5] sel_harnais=[3, 5] | masque 192/192 identique=True | sortie rel=5.44e-06
+L0 p=500 h=13 | sel_ref=[0, 2] sel_harnais=[0, 2] | masque 192/192 identique=True | sortie rel=5.62e-06
+L14 p=100 h= 0 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=3.13e-07
+L14 p=100 h= 1 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.93e-07
+L14 p=100 h= 2 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=4.36e-07
+L14 p=100 h= 3 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.95e-07
+L14 p=100 h= 4 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.20e-07
+L14 p=100 h= 5 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.91e-07
+L14 p=100 h= 6 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.57e-07
+L14 p=100 h= 7 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.60e-07
+L14 p=100 h= 8 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.88e-07
+L14 p=100 h= 9 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.84e-07
+L14 p=100 h=10 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=9.61e-08
+L14 p=100 h=11 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=2.16e-07
+L14 p=100 h=12 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.91e-07
+L14 p=100 h=13 | sel_ref=[] sel_harnais=[] | masque 101/101 identique=True | sortie rel=1.82e-07
+L14 p=300 h= 0 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=4.00e-07
+L14 p=300 h= 1 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=1.32e-07
+L14 p=300 h= 2 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=5.85e-07
+L14 p=300 h= 3 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=4.90e-07
+L14 p=300 h= 4 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=2.96e-07
+L14 p=300 h= 5 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=1.67e-07
+L14 p=300 h= 6 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=3.81e-07
+L14 p=300 h= 7 | sel_ref=[0, 2] sel_harnais=[0, 2] | masque 192/192 identique=True | sortie rel=5.95e-07
+L14 p=300 h= 8 | sel_ref=[2, 3] sel_harnais=[2, 3] | masque 192/192 identique=True | sortie rel=1.71e-07
+L14 p=300 h= 9 | sel_ref=[2, 3] sel_harnais=[2, 3] | masque 192/192 identique=True | sortie rel=2.12e-07
+L14 p=300 h=10 | sel_ref=[0, 1] sel_harnais=[0, 1] | masque 192/192 identique=True | sortie rel=3.26e-07
+L14 p=300 h=11 | sel_ref=[2, 3] sel_harnais=[2, 3] | masque 192/192 identique=True | sortie rel=2.44e-07
+L14 p=300 h=12 | sel_ref=[0, 2] sel_harnais=[0, 2] | masque 192/192 identique=True | sortie rel=2.46e-07
+L14 p=300 h=13 | sel_ref=[0, 3] sel_harnais=[0, 3] | masque 192/192 identique=True | sortie rel=3.89e-07
+L14 p=500 h= 0 | sel_ref=[0, 8] sel_harnais=[0, 8] | masque 192/192 identique=True | sortie rel=2.64e-07
+L14 p=500 h= 1 | sel_ref=[0, 10] sel_harnais=[0, 10] | masque 192/192 identique=True | sortie rel=6.95e-08
+L14 p=500 h= 2 | sel_ref=[0, 1] sel_harnais=[0, 1] | masque 192/192 identique=True | sortie rel=3.53e-07
+L14 p=500 h= 3 | sel_ref=[0, 8] sel_harnais=[0, 8] | masque 192/192 identique=True | sortie rel=2.17e-07
+L14 p=500 h= 4 | sel_ref=[0, 10] sel_harnais=[0, 10] | masque 192/192 identique=True | sortie rel=1.73e-07
+L14 p=500 h= 5 | sel_ref=[0, 8] sel_harnais=[0, 8] | masque 192/192 identique=True | sortie rel=2.27e-07
+L14 p=500 h= 6 | sel_ref=[0, 10] sel_harnais=[0, 10] | masque 192/192 identique=True | sortie rel=2.19e-07
+L14 p=500 h= 7 | sel_ref=[0, 10] sel_harnais=[0, 10] | masque 192/192 identique=True | sortie rel=3.43e-07
+L14 p=500 h= 8 | sel_ref=[0, 7] sel_harnais=[0, 7] | masque 192/192 identique=True | sortie rel=2.44e-07
+L14 p=500 h= 9 | sel_ref=[7, 10] sel_harnais=[7, 10] | masque 192/192 identique=True | sortie rel=2.52e-07
+L14 p=500 h=10 | sel_ref=[0, 10] sel_harnais=[0, 10] | masque 192/192 identique=True | sortie rel=3.44e-07
+L14 p=500 h=11 | sel_ref=[7, 10] sel_harnais=[7, 10] | masque 192/192 identique=True | sortie rel=1.68e-07
+L14 p=500 h=12 | sel_ref=[7, 8] sel_harnais=[7, 8] | masque 192/192 identique=True | sortie rel=2.10e-07
+L14 p=500 h=13 | sel_ref=[7, 10] sel_harnais=[7, 10] | masque 192/192 identique=True | sortie rel=1.89e-07

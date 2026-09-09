@@ -1,0 +1,19 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | PCA par tete (donnees)
+AUTO-TEST CAUSAL 2.861e-05 -> OK
+dense            perte=2.9144 (p=  18.437)
+maxip_D64        perte=2.9613 (p=  19.323)
+oracle_LSE       perte=2.9690 (p=  19.472)
+PCA_d32          perte=2.9711 (p=  19.513)
+PCA_d16          perte=2.9749 (p=  19.587)
+PCA_d8           perte=3.0123 (p=  20.334)
+randproj_d32     perte=3.1138 (p=  22.506)
+rand_moy         perte=3.1163 (p=  22.563)
+randproj_d16     perte=3.2269 (p=  25.201)
+randproj_d8      perte=3.5216 (p=  33.840)
+m0_fenetre       perte=4.7402 (p= 114.461)
+
+PCA vs projection aleatoire (meme budget) :
+  d'= 8 (12% octets) : PCA 3.0123 vs alea 3.5216 -> ecart -0.5093
+  d'=16 (25% octets) : PCA 2.9749 vs alea 3.2269 -> ecart -0.2520
+  d'=32 (50% octets) : PCA 2.9711 vs alea 3.1138 -> ecart -0.1427
+PCA bat le hasard ? d8=True d16=True d32=True

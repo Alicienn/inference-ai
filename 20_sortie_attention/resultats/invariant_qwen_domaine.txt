@@ -1,0 +1,6 @@
+Qwen/Qwen2.5-0.5B | wikitext | T=1024 | W=256 | Lb=64 | m=2 | candidats=16
+dense              perte=2.1610 (p=8.680)
+m0_fenetre         perte=0.4450 (p=1.561)
+mean_cle_moyenne   perte=0.5013 (p=1.651)
+rand_seed1234      perte=0.5127 (p=1.670)
+oracle_LSE         perte=0.5179 (p=1.679)

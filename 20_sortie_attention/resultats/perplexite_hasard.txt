@@ -1,0 +1,21 @@
+SmolLM2-135M | T=512 | W=128 | Lb=64 | m=2 | candidats=6
+dense            perte=2.9144 (p= 18.44)
+m0_fenetre       perte=2.4987 (p= 12.17)
+mean_cle_moyenne perte=2.8595 (p= 17.45)
+oracle_LSE       perte=2.8926 (p= 18.04)
+rand_seed0       perte=2.5943 (p= 13.39)
+rand_seed1       perte=2.7334 (p= 15.38)
+rand_seed2       perte=2.7157 (p= 15.12)
+rand_seed3       perte=2.5818 (p= 13.22)
+rand_seed4       perte=2.7595 (p= 15.79)
+rand_seed5       perte=2.6043 (p= 13.52)
+rand_seed6       perte=2.8294 (p= 16.93)
+rand_seed7       perte=2.7210 (p= 15.20)
+rand_seed8       perte=2.6570 (p= 14.25)
+rand_seed9       perte=2.6825 (p= 14.62)
+rand_seed10      perte=2.6308 (p= 13.89)
+rand_seed11      perte=2.6557 (p= 14.24)
+
+ALEATOIRE (12 tirages) : moyenne=2.6804 ecart-type=0.0711 min=2.5818 max=2.8294
+SELECTEUR cle moyenne = 2.8595 | position dans la distribution : EN DEHORS (12/12 tirages meilleurs)
+ORACLE LSE = 2.8926 | dense = 2.9144

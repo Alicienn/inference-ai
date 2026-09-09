@@ -1,0 +1,17 @@
+Qwen/Qwen2.5-0.5B | T=512 W=128 Lb=32 m=2 NFIT=256
+AUDIT : base PCA sur tout le segment (transductif) vs base causale
+CONTROLE : p=100 -> 101 ; p=300 -> 192
+
+offset 0
+  maxip                2.9845  (ecart +0.0000)
+  pca_d8_transductif   3.0292  (ecart +0.0447)
+  pca_d8_causal        3.0067  (ecart +0.0222)
+  pca_d16_causal       2.9843  (ecart -0.0002)
+
+=== moyennes sur 3 tranches ===
+maxip                moy=2.9845  ecart=+0.0000
+pca_d8_transductif   moy=3.0292  ecart=+0.0447
+pca_d8_causal        moy=3.0067  ecart=+0.0222
+pca_d16_causal       moy=2.9843  ecart=-0.0002
+
+EFFET DE LA FUITE FUTURE (transductif - causal) : +0.0225 nat

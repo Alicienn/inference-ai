@@ -1,0 +1,62 @@
+
+================================================================================================
+EXPERIENCE A3 : trou de Jensen dans la selection par cle compressee (attention reelle)
+================================================================================================
+
+
+Masse d'attention reellement recuperee selon la maniere dont le bloc est score.
+beta = 0 : cle compressee = moyenne uniforme (compresseur non entraine)
+beta = inf : cle compressee = max (compresseur ideal, aiguille preservee)
+
+================================================================================================
+  m = 4
+================================================================================================
+ budget | top-k token oracle somme |    b=0.0   b=0.25    b=0.5    b=1.0    b=2.0    b=4.0    b=inf
+------------------------------------------------------------------------------------------------
+     64 |      0.8664       0.8259 |   0.6223   0.8246   0.8255   0.8234   0.8225   0.8227   0.8232
+    128 |      0.9179       0.8870 |   0.7123   0.8859   0.8868   0.8850   0.8839   0.8841   0.8847
+    256 |      0.9607       0.9410 |   0.8127   0.9403   0.9409   0.9397   0.9387   0.9388   0.9391
+
+  trou de Jensen a budget 256 : moyenne uniforme 0.8127 -> max 0.9391   (ecart +15.6%)
+  perte de la mise en commun uniforme vs oracle somme : -13.6%
+
+================================================================================================
+  m = 8
+================================================================================================
+ budget | top-k token oracle somme |    b=0.0   b=0.25    b=0.5    b=1.0    b=2.0    b=4.0    b=inf
+------------------------------------------------------------------------------------------------
+     64 |      0.8664       0.8044 |   0.5776   0.8011   0.8039   0.8007   0.7992   0.7997   0.8005
+    128 |      0.9179       0.8702 |   0.6636   0.8682   0.8699   0.8672   0.8653   0.8657   0.8665
+    256 |      0.9607       0.9295 |   0.7599   0.9282   0.9294   0.9275   0.9259   0.9259   0.9265
+
+  trou de Jensen a budget 256 : moyenne uniforme 0.7599 -> max 0.9265   (ecart +21.9%)
+  perte de la mise en commun uniforme vs oracle somme : -18.2%
+
+================================================================================================
+  m = 16
+================================================================================================
+ budget | top-k token oracle somme |    b=0.0   b=0.25    b=0.5    b=1.0    b=2.0    b=4.0    b=inf
+------------------------------------------------------------------------------------------------
+     64 |      0.8664       0.7811 |   0.5391   0.7667   0.7802   0.7756   0.7736   0.7739   0.7753
+    128 |      0.9179       0.8521 |   0.6247   0.8463   0.8516   0.8480   0.8457   0.8464   0.8473
+    256 |      0.9607       0.9166 |   0.7170   0.9137   0.9164   0.9139   0.9116   0.9118   0.9127
+
+  trou de Jensen a budget 256 : moyenne uniforme 0.7170 -> max 0.9127   (ecart +27.3%)
+  perte de la mise en commun uniforme vs oracle somme : -21.8%
+
+================================================================================================
+LECTURE
+================================================================================================
+  Un compresseur qui fait une moyenne uniforme (beta=0) perd nettement la masse
+  portee par les aiguilles : c'est le trou de Jensen. Il se referme des que la
+  ponderation devient piquee (beta >= 1-2), c'est-a-dire des que le compresseur
+  apprend a se comporter comme un max.
+
+  Consequence de conception, non explicitee dans le papier V4 : la qualite de CSA
+  ne depend pas seulement du taux de compression m, mais de l'ENTROPIE de la
+  ponderation de compression. Un compresseur a softmax plat annule une partie du
+  benefice. Cela rend la temperature/entropie de Softmax_row (eq. 11) un
+  hyperparametre critique -- et une metrique a surveiller en entrainement.
+
+  -> C:\Users\alici\Downloads\inference_opti\07_analyses\expA3_jensen.json
+

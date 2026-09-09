@@ -1,0 +1,26 @@
+Qwen/Qwen2.5-0.5B | T=512 W=128 Lb=32 m=2 | HARNAIS CORRIGE (sentinelle -1)
+CONTROLE STRUCTUREL : p=100 -> 101 (attendu 101, fenetre seule) ; p=300 -> 192 (attendu 192)
+
+offset 0 (auto-test causal 4.1e-05)
+  dense      2.6767
+  oracle     2.9822
+  maxip      2.9845
+  pca_d16    2.9896
+  pca_d8     3.0292
+  aleatoire  4.4352
+
+offset 200000 (auto-test causal 2.4e-05)
+  dense      3.6287
+  pca_d16    4.0009
+  pca_d8     4.0038
+  maxip      4.0134
+  oracle     4.0137
+  aleatoire  6.2754
+
+=== moyennes sur 3 tranches (harnais corrige) ===
+dense      moy=3.1527  ecart_maxip=-0.3463
+pca_d16    moy=3.4953  ecart_maxip=-0.0037
+oracle     moy=3.4980  ecart_maxip=-0.0010
+maxip      moy=3.4990  ecart_maxip=+0.0000
+pca_d8     moy=3.5165  ecart_maxip=+0.0175
+aleatoire  moy=5.3553  ecart_maxip=+1.8564

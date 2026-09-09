@@ -1,0 +1,49 @@
+============================================================================================
+CONCEPT 4 -- budget adaptatif vs top-k fixe  --  avec RoPE  (coreset r=4, L=64)
+============================================================================================
+  blocs necessaires pour 90% de la masse (oracle) : 35.7 en moyenne
+
+   cible tau   k moyen   masse captee   |    k fixe   masse captee
+--------------------------------------------------------------------------------------------
+        0.50      8.72         43.45%   |         8         46.33%   
+        0.70     16.56         61.24%   |        16         63.22%   
+        0.80     23.06         71.42%   |        24         73.92%   
+        0.90     33.88         83.12%   |        32         81.50%   <-- adaptatif gagne
+        0.95     43.71         89.94%   |        32         81.50%   <-- adaptatif gagne
+        0.98     54.76         94.89%   |        32         81.50%   <-- adaptatif gagne
+
+  reference, k fixe :
+    k=  2 ->  21.03% de la masse
+    k=  4 ->  32.14% de la masse
+    k=  6 ->  40.07% de la masse
+    k=  8 ->  46.33% de la masse
+    k= 12 ->  55.96% de la masse
+    k= 16 ->  63.22% de la masse
+    k= 24 ->  73.92% de la masse
+    k= 32 ->  81.50% de la masse
+
+============================================================================================
+CONCEPT 4 -- budget adaptatif vs top-k fixe  --  sans RoPE  (coreset r=4, L=64)
+============================================================================================
+  blocs necessaires pour 90% de la masse (oracle) : 61.1 en moyenne
+
+   cible tau   k moyen   masse captee   |    k fixe   masse captee
+--------------------------------------------------------------------------------------------
+        0.50     23.56         46.64%   |        24         49.40%   
+        0.70     38.55         65.99%   |        32         59.50%   <-- adaptatif gagne
+        0.80     48.30         76.11%   |        32         59.50%   <-- adaptatif gagne
+        0.90     60.87         86.70%   |        32         59.50%   <-- adaptatif gagne
+        0.95     69.49         92.48%   |        32         59.50%   <-- adaptatif gagne
+        0.98     76.73         96.44%   |        32         59.50%   <-- adaptatif gagne
+
+  reference, k fixe :
+    k=  2 ->   7.19% de la masse
+    k=  4 ->  12.96% de la masse
+    k=  6 ->  17.93% de la masse
+    k=  8 ->  22.49% de la masse
+    k= 12 ->  30.52% de la masse
+    k= 16 ->  37.43% de la masse
+    k= 24 ->  49.40% de la masse
+    k= 32 ->  59.50% de la masse
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\adaptive_k.json

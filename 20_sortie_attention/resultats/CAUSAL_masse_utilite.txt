@@ -1,0 +1,23 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 | masque causal corrige
+AUTO-TEST CAUSAL (m0, prefixe 256) : ecart max par position = 2.861e-05 -> OK
+m0_fenetre perte=4.7402
+bloc | masse_norm | gain_de_perte (neg=utile)
+   0 |    0.18692 | -1.68460
+   1 |    0.16716 | +0.29677
+   2 |    0.15337 | +0.21866
+   3 |    0.11651 | +0.09096
+   4 |    0.09291 | -0.09251
+   5 |    0.07702 | -0.05736
+   6 |    0.06668 | -0.08901
+   7 |    0.04986 | -0.05079
+   8 |    0.04122 | -0.07274
+   9 |    0.02699 | -0.00652
+  10 |    0.01598 | +0.00413
+  11 |    0.00538 | +0.01223
+  12 |    0.00000 | +0.00000
+  13 |    0.00000 | +0.00000
+  14 |    0.00000 | +0.00000
+  15 |    0.00000 | +0.00000
+
+CORRELATION masse<->gain = -0.3706 (n=16)
+blocs utiles (gain<0) : 7/16 | gain median=+0.00000 | meilleur=-1.68460 (bloc 0) | bloc de masse max = bloc 0 (gain -1.68460)

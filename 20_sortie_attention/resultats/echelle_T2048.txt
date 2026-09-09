@@ -1,0 +1,8 @@
+HuggingFaceTB/SmolLM2-135M | T=2048 W=128 Lb=32 m=2 | blocs candidats ~60
+CONTROLE STRUCTUREL (p=1000, maxip) : positions autorisees = 192, attendu 192 -> OK
+maxip      perte=2.7194 (p=  15.171)
+pca_d8     perte=2.8509 (p=  17.304)
+aleatoire  perte=4.4750 (p=  87.799)
+
+ecarts a maxip : pca_d8 +0.1315 ; aleatoire +1.7557
+RAPPORT pca/aleatoire = 0.075 (T=512 : 0,190 ; T=1024 : 0,188)

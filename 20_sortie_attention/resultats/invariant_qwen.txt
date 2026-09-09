@@ -1,0 +1,12 @@
+Qwen/Qwen2.5-0.5B | T=512 | W=128 | Lb=32 | m=2 | candidats=14
+dense              perte=2.6767 (p=14.537)
+m0_fenetre         perte=0.3298 (p=1.391)
+mean_cle_moyenne   perte=0.3098 (p=1.363)
+oracle_LSE         perte=0.2886 (p=1.335)
+rand_seed1000      perte=0.3023 (p=1.353)
+rand_seed2000      perte=0.3014 (p=1.352)
+rand_seed3000      perte=0.3000 (p=1.350)
+
+ALEATOIRE 3 tirages : moy=0.3012 min=0.3000 max=0.3023
+ORDRE : dense=0.0000 ; cle moyenne=0.3098 ; oracle=0.2886
+cle moyenne bat le hasard ? False | oracle bat le hasard ? True

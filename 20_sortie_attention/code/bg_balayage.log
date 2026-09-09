@@ -1,0 +1,10 @@
+Lb=16 m=1 maxip=3.1056 pca=3.1594 ecart=+0.0537 frac=0.281
+Lb=16 m=2 maxip=3.0798 pca=3.0885 ecart=+0.0087 frac=0.312
+Lb=16 m=4 maxip=3.0728 pca=3.0527 ecart=-0.0200 frac=0.375
+Lb=32 m=1 maxip=3.2192 pca=3.2647 ecart=+0.0456 frac=0.312
+Lb=32 m=2 maxip=3.1855 pca=3.1888 ecart=+0.0032 frac=0.375
+Lb=32 m=4 maxip=3.1896 pca=3.1887 ecart=-0.0009 frac=0.500
+Lb=64 m=1 maxip=3.4667 pca=3.4810 ecart=+0.0143 frac=0.375
+Lb=64 m=2 maxip=3.4454 pca=3.4473 ecart=+0.0019 frac=0.500
+Lb=64 m=4 maxip=3.4445 pca=3.4465 ecart=+0.0020 frac=0.750
+FIN

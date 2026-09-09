@@ -1,0 +1,7 @@
+SmolLM2-135M | T=1024 | Lb=64 | corpus local | tokens=1024
+dense                  perte=2.7564 (p= 15.74) | hors fenetre=nan (p=   nan)
+W256_m0                perte=3.7909 (p= 44.30) | hors fenetre=2.8779 (p= 17.78)
+W256_m4                perte=3.9240 (p= 50.60) | hors fenetre=3.0760 (p= 21.67)
+W256_m8                perte=4.0116 (p= 55.24) | hors fenetre=3.2032 (p= 24.61)
+W256_m4_RANDOM         perte=3.8634 (p= 47.63) | hors fenetre=2.9786 (p= 19.66)
+W512_m4                perte=4.0235 (p= 55.89) | hors fenetre=2.2623 (p=  9.61)

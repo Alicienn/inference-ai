@@ -1,0 +1,39 @@
+# Session-tool internal state, not part of the project
+.beale/
+
+# Large regenerable capture files (re-run capture_qk.py to recreate)
+*.npz
+
+# Corpus PDFs — kept locally, not redistributed (arXiv sources, re-fetchable via 06_ressources_en_ligne.md)
+01_deepseek/
+02_surveys/
+03_attention_kv_cache/
+04_speculative_decoding/
+05_serving_systems/
+08_quantization_poids/
+09_moe_inference/
+10_benchmarks_eval/
+11_materiel/
+13_selection_blocs/
+14_hierarchique/
+15_theorie_selection/
+18_refs_papier/
+*.pdf
+
+# Extracted corpus text (regenerable from PDFs)
+_txt/
+_extracted/
+
+# Superseded v1 notes
+_archive_v1/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

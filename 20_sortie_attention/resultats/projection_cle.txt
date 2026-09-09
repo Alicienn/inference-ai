@@ -1,0 +1,14 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | projection aleatoire d' dims
+AUTO-TEST CAUSAL 2.861e-05 -> OK
+dense            perte=2.9144 (p=  18.437)
+maxip_D64        perte=2.9613 (p=  19.323)
+oracle_LSE       perte=2.9690 (p=  19.472)
+proj_d32         perte=3.0787 (p=  21.730)
+rand_moy         perte=3.1163 (p=  22.563)
+proj_d16         perte=3.3028 (p=  27.189)
+proj_d8          perte=3.3704 (p=  29.091)
+proj_d4          perte=3.9110 (p=  49.948)
+m0_fenetre       perte=4.7402 (p= 114.461)
+
+proj_d16 vs maxip : +0.3415 nat (25 % des octets de cles)
+proj bat le hasard ? d4=False d8=False d16=False d32=True

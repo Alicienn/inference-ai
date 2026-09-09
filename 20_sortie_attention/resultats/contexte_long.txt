@@ -1,0 +1,20 @@
+HuggingFaceTB/SmolLM2-135M | T=1024 W=128 Lb=32 m=2 | blocs candidats ~28
+
+offset 0 (auto-test causal 2.9e-05)
+  dense      2.7564
+  maxip      2.8121
+  pca_d8     2.8902
+  aleatoire  3.2547
+
+offset 200000 (auto-test causal 8.3e-05)
+  dense      1.6324
+  maxip      1.6804
+  pca_d8     1.7592
+  aleatoire  2.0722
+
+=== moyennes sur 2 tranches (T=1024) ===
+dense      moy=2.1944
+maxip      moy=2.2463
+pca_d8     moy=2.3247
+aleatoire  moy=2.6635
+ecart a maxip : pca_d8 +0.0784 ; aleatoire +0.4172

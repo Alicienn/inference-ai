@@ -1,0 +1,65 @@
+
+==============================================================================================
+
+EXPERIENCE A2 : mecanisme et limites de la selection par blocs (attention reelle GPT-2)
+==============================================================================================
+  3 documents x 12 couches x 12 tetes x 1024 positions
+
+==============================================================================================
+(1) MECANISME : autocorrelation spatiale de la masse d'attention
+==============================================================================================
+   lag :       1      2      4      8     16     32     64
+   rho :   0.207  0.155  0.130  0.093  0.061  0.036  0.015
+
+   longueur de correlation (rho < 0.5) ~ 1 tokens
+   -> la masse d'attention est REGROUPEE sur ~1 tokens contigus.
+      Un bloc de m=4 reste bien en-deca : il agrege des tokens deja correles,
+      donc il detruit peu d'information. C'est la justification de m=4.
+      Un bloc m'=128 depasse largement cette longueur : HCA melange des
+      contenus non correles -> il ne peut servir que de resume grossier.
+
+==============================================================================================
+(2) MODE D'ECHEC : aiguilles isolees
+==============================================================================================
+   30.4% des tokens du top-16 n'ont aucun autre
+   token du top-16 a moins de 4 positions : ce sont des 'aiguilles' que la
+   compression dilue (facteur jusqu'a m). C'est le risque residuel de CSA,
+   et precisement ce que la branche sliding-window + l'attention sink compensent.
+   Masse moyenne concentree dans le top-1% des positions : 0.655
+
+==============================================================================================
+(3) MASSE RECUPEREE, budget en tokens lus strictement respecte
+==============================================================================================
+  budget |      m=1      m=2      m=4      m=8     m=16     m=32     m=64    m=128
+----------------------------------------------------------------------------------------------
+      32 |   0.8080   0.7831   0.7571   0.7286   0.6913   0.5741      ---       --- 
+      64 |   0.8664   0.8468   0.8259   0.8044   0.7811   0.7495   0.6209      --- 
+     128 |   0.9179   0.9032   0.8870   0.8702   0.8521   0.8324   0.8024   0.6676
+     256 |   0.9607   0.9516   0.9410   0.9295   0.9166   0.9038   0.8875   0.8650
+     512 |   0.9909   0.9880   0.9844   0.9802   0.9750   0.9695   0.9628   0.9559
+
+  budget |      m=1      m=2      m=4      m=8     m=16     m=32     m=64    m=128    (% de la selection par token)
+----------------------------------------------------------------------------------------------
+      32 |   100.0%    96.9%    93.7%    90.2%    85.6%    71.1%      ---       --- 
+      64 |   100.0%    97.7%    95.3%    92.8%    90.1%    86.5%    71.7%      --- 
+     128 |   100.0%    98.4%    96.6%    94.8%    92.8%    90.7%    87.4%    72.7%
+     256 |   100.0%    99.1%    97.9%    96.8%    95.4%    94.1%    92.4%    90.0%
+     512 |   100.0%    99.7%    99.3%    98.9%    98.4%    97.8%    97.2%    96.5%
+
+==============================================================================================
+(4) A BANDE PASSANTE D'INDEXEUR EGALE  --  l'arbitrage reel de DeepSeek-V4
+==============================================================================================
+   Cout indexeur par token de contexte :
+     DSA (V3.2) : 1 cle de dim 128 en FP8       = 128 octets/token
+     CSA (V4)   : 1 cle de dim 128 en FP4 /m    =  64/m octets/token
+   => a m=4, CSA consomme 8x moins de bande passante d'indexeur que DSA.
+   On compare donc DSA(budget b) a CSA(budget b x m), tous deux bornes par le contexte.
+
+ budget DSA |   DSA m=1 |    CSA m=2    CSA m=4    CSA m=8   CSA m=16
+----------------------------------------------------------------------------------------------
+         32 |    0.8080 |     0.8468     0.8870     0.9295     0.9750   (+4.8%) (+9.8%) (+15.0%) (+20.7%)
+         64 |    0.8664 |     0.9032     0.9410     0.9802       ---    (+4.2%) (+8.6%) (+13.1%) 
+        128 |    0.9179 |     0.9516     0.9844       ---        ---    (+3.7%) (+7.2%)  
+
+  -> C:\Users\alici\Downloads\inference_opti\07_analyses\expA2_mechanism.json
+

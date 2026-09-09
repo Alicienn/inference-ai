@@ -1,0 +1,14 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | harnais causal corrige
+AUTO-TEST CAUSAL : 2.861e-05 -> OK
+dense          perte=2.9144 (p=  18.437)
+maxip          perte=2.9613 (p=  19.323)
+oracle         perte=2.9690 (p=  19.472)
+rand_moy       perte=3.1240 (p=  22.737)
+wcentroid      perte=3.4726 (p=  32.221)
+meankey        perte=4.3862 (p=  80.333)
+maxnorm        perte=4.5053 (p=  90.496)
+m0_fenetre     perte=4.7402 (p= 114.461)
+
+aleatoire : ['3.1309', '3.1017', '3.1394']
+meilleur estimateur non-oracle : 2.9613
+bat-il le hasard ? maxip=True wcentroid=False maxnorm=False meankey=False

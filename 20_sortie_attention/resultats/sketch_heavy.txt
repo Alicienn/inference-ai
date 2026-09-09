@@ -1,0 +1,13 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | sketch = top-r cles par norme
+AUTO-TEST CAUSAL 2.861e-05 -> OK
+dense                perte=2.9144 (p=  18.437)
+maxip_toutes_cles    perte=2.9613 (p=  19.323)
+oracle_LSE           perte=2.9690 (p=  19.472)
+rand_moy             perte=3.1163 (p=  22.563)
+sketch_r1            perte=3.5310 (p=  34.159)
+sketch_r4            perte=3.5535 (p=  34.937)
+sketch_r8            perte=3.6017 (p=  36.659)
+sketch_r2            perte=3.6964 (p=  40.301)
+m0_fenetre           perte=4.7402 (p= 114.461)
+
+sketch r=2 vs maxip : +0.7351 nat (octets de cles : 2/32 = 6,25 %)

@@ -1,0 +1,14 @@
+HuggingFaceTB/SmolLM2-135M | W=128 Lb=32 m=2 | HARNAIS CORRIGE
+
+T=512 (blocs candidats 16)
+  dense 2.9144 | maxip 3.1855 | pca_d8 3.2407 | aleatoire 5.0570
+  ecart pca +0.0551 | ecart aleatoire +1.8715 | rapport pca/aleatoire 0.0295
+CONTROLE STRUCTUREL (T=1024, p=1000) : 192 positions (attendu 192)
+
+T=1024 (blocs candidats 32)
+  dense 2.7564 | maxip 2.9179 | pca_d8 2.9962 | aleatoire 4.7825
+  ecart pca +0.0783 | ecart aleatoire +1.8646 | rapport pca/aleatoire 0.0420
+
+T=2048 (blocs candidats 64)
+  dense 2.5597 | maxip 2.7194 | pca_d8 2.8509 | aleatoire 4.4750
+  ecart pca +0.1315 | ecart aleatoire +1.7557 | rapport pca/aleatoire 0.0749

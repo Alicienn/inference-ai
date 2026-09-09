@@ -1,0 +1,16 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | base orthonormee, 128 req/tete, 4 textes d'entrainement
+CE entrainement (d'=4, base orthonormee) : 4.5064 -> 0.7239 sur 5 points
+
+=== texte A (tenu a l'ecart) ===
+dense        perte=2.9144  ecart_maxip=-0.2712
+maxip        perte=3.1855  ecart_maxip=+0.0000
+pca_d8       perte=3.2364  ecart_maxip=+0.0508
+pca_d4       perte=3.2625  ecart_maxip=+0.0770
+appris_d4    perte=3.2819  ecart_maxip=+0.0964
+aleatoire    perte=5.0570  ecart_maxip=+1.8715
+appris_d4 vs pca_d4 : +0.0194
+appris_d4 vs pca_d8 : +0.0455
+
+=== texte d'entrainement (in-sample) ===
+[B] pca_d4       perte=2.2248
+[B] appris_d4    perte=2.1897

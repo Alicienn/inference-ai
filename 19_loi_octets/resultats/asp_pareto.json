@@ -1,0 +1,911 @@
+{
+  "qwen8k|RoPE": {
+    "asp": {
+      "coreset r=1 -> coreset r=4 m1=2m": {
+        "octets": 19869.6875,
+        "rappel": 0.87676654316784
+      },
+      "coreset r=1 -> coreset r=8 m1=2m": {
+        "octets": 28189.6875,
+        "rappel": 0.8918284424480576
+      },
+      "coreset r=1 -> coreset r=16 m1=2m": {
+        "octets": 44829.6875,
+        "rappel": 0.9061049394284169
+      },
+      "coreset r=1 -> quant 2b m1=2m": {
+        "octets": 32029.6875,
+        "rappel": 0.9046958422009912
+      },
+      "coreset r=1 -> quant 4b m1=2m": {
+        "octets": 48413.6875,
+        "rappel": 0.9318606326037411
+      },
+      "coreset r=1 -> quant 6b m1=2m": {
+        "octets": 64797.6875,
+        "rappel": 0.9329883151798826
+      },
+      "coreset r=1 -> exact m1=2m": {
+        "octets": 142621.6875,
+        "rappel": 0.9330469497627845
+      },
+      "coreset r=1 -> coreset r=4 m1=4m": {
+        "octets": 28189.6875,
+        "rappel": 0.8838172623947398
+      },
+      "coreset r=1 -> coreset r=8 m1=4m": {
+        "octets": 44829.6875,
+        "rappel": 0.905985770701085
+      },
+      "coreset r=1 -> coreset r=16 m1=4m": {
+        "octets": 78109.6875,
+        "rappel": 0.9276789113898738
+      },
+      "coreset r=1 -> quant 2b m1=4m": {
+        "octets": 52509.6875,
+        "rappel": 0.9243612469160155
+      },
+      "coreset r=1 -> quant 4b m1=4m": {
+        "octets": 85277.6875,
+        "rappel": 0.973474474005722
+      },
+      "coreset r=1 -> quant 6b m1=4m": {
+        "octets": 118045.6875,
+        "rappel": 0.9757797131783718
+      },
+      "coreset r=1 -> exact m1=4m": {
+        "octets": 273693.6875,
+        "rappel": 0.9759001220147
+      },
+      "coreset r=1 -> coreset r=4 m1=8m": {
+        "octets": 44829.6875,
+        "rappel": 0.8866800865062726
+      },
+      "coreset r=1 -> coreset r=8 m1=8m": {
+        "octets": 78109.6875,
+        "rappel": 0.9079328418952357
+      },
+      "coreset r=1 -> coreset r=16 m1=8m": {
+        "octets": 144669.6875,
+        "rappel": 0.9329078335681538
+      },
+      "coreset r=1 -> quant 2b m1=8m": {
+        "octets": 93469.6875,
+        "rappel": 0.9272648854146811
+      },
+      "coreset r=1 -> quant 4b m1=8m": {
+        "octets": 159005.6875,
+        "rappel": 0.9929203095160214
+      },
+      "coreset r=1 -> quant 6b m1=8m": {
+        "octets": 224541.6875,
+        "rappel": 0.996299628361318
+      },
+      "coreset r=1 -> exact m1=8m": {
+        "octets": 535837.6875,
+        "rappel": 0.9964809433126305
+      },
+      "coreset r=2 -> coreset r=4 m1=2m": {
+        "octets": 31419.375,
+        "rappel": 0.8846284969671736
+      },
+      "coreset r=2 -> coreset r=8 m1=2m": {
+        "octets": 39739.375,
+        "rappel": 0.9015356261581411
+      },
+      "coreset r=2 -> coreset r=16 m1=2m": {
+        "octets": 56379.375,
+        "rappel": 0.9164070202894927
+      },
+      "coreset r=2 -> quant 2b m1=2m": {
+        "octets": 43579.375,
+        "rappel": 0.9153469262008855
+      },
+      "coreset r=2 -> quant 4b m1=2m": {
+        "octets": 59963.375,
+        "rappel": 0.94344627143009
+      },
+      "coreset r=2 -> quant 6b m1=2m": {
+        "octets": 76347.375,
+        "rappel": 0.9447142510792543
+      },
+      "coreset r=2 -> exact m1=2m": {
+        "octets": 154171.375,
+        "rappel": 0.9447706859269329
+      },
+      "coreset r=2 -> coreset r=4 m1=4m": {
+        "octets": 39739.375,
+        "rappel": 0.8859174973893548
+      },
+      "coreset r=2 -> coreset r=8 m1=4m": {
+        "octets": 56379.375,
+        "rappel": 0.907480665785352
+      },
+      "coreset r=2 -> coreset r=16 m1=4m": {
+        "octets": 89659.375,
+        "rappel": 0.9284633561812796
+      },
+      "coreset r=2 -> quant 2b m1=4m": {
+        "octets": 64059.375,
+        "rappel": 0.9251287037931727
+      },
+      "coreset r=2 -> quant 4b m1=4m": {
+        "octets": 96827.375,
+        "rappel": 0.9765523729280512
+      },
+      "coreset r=2 -> quant 6b m1=4m": {
+        "octets": 129595.375,
+        "rappel": 0.9789606918213152
+      },
+      "coreset r=2 -> exact m1=4m": {
+        "octets": 285243.375,
+        "rappel": 0.9790878848592109
+      },
+      "coreset r=2 -> coreset r=4 m1=8m": {
+        "octets": 56379.375,
+        "rappel": 0.8870203360301789
+      },
+      "coreset r=2 -> coreset r=8 m1=8m": {
+        "octets": 89659.375,
+        "rappel": 0.9083559188151723
+      },
+      "coreset r=2 -> coreset r=16 m1=8m": {
+        "octets": 156219.375,
+        "rappel": 0.9336088972896501
+      },
+      "coreset r=2 -> quant 2b m1=8m": {
+        "octets": 105019.375,
+        "rappel": 0.9268145049917842
+      },
+      "coreset r=2 -> quant 4b m1=8m": {
+        "octets": 170555.375,
+        "rappel": 0.9937441510200575
+      },
+      "coreset r=2 -> quant 6b m1=8m": {
+        "octets": 236091.375,
+        "rappel": 0.9971465984234553
+      },
+      "coreset r=2 -> exact m1=8m": {
+        "octets": 547387.375,
+        "rappel": 0.9973220396533818
+      },
+      "quantG 2b -> coreset r=4 m1=2m": {
+        "octets": 99552.0,
+        "rappel": 0.8937810677297406
+      },
+      "quantG 2b -> coreset r=8 m1=2m": {
+        "octets": 107872.0,
+        "rappel": 0.9073256049590542
+      },
+      "quantG 2b -> coreset r=16 m1=2m": {
+        "octets": 124512.0,
+        "rappel": 0.9212265685666048
+      },
+      "quantG 2b -> quant 2b m1=2m": {
+        "octets": 111712.0,
+        "rappel": 0.9233799107338139
+      },
+      "quantG 2b -> quant 4b m1=2m": {
+        "octets": 128096.0,
+        "rappel": 0.9509763626880603
+      },
+      "quantG 2b -> quant 6b m1=2m": {
+        "octets": 144480.0,
+        "rappel": 0.9522182065943653
+      },
+      "quantG 2b -> exact m1=2m": {
+        "octets": 222304.0,
+        "rappel": 0.9522906331748971
+      },
+      "quantG 2b -> coreset r=4 m1=4m": {
+        "octets": 107872.0,
+        "rappel": 0.8931975039393082
+      },
+      "quantG 2b -> coreset r=8 m1=4m": {
+        "octets": 124512.0,
+        "rappel": 0.9135506165403137
+      },
+      "quantG 2b -> coreset r=16 m1=4m": {
+        "octets": 157792.0,
+        "rappel": 0.9347675181980426
+      },
+      "quantG 2b -> quant 2b m1=4m": {
+        "octets": 132192.0,
+        "rappel": 0.933953484342021
+      },
+      "quantG 2b -> quant 4b m1=4m": {
+        "octets": 164960.0,
+        "rappel": 0.9866674741833363
+      },
+      "quantG 2b -> quant 6b m1=4m": {
+        "octets": 197728.0,
+        "rappel": 0.9894297389182318
+      },
+      "quantG 2b -> exact m1=4m": {
+        "octets": 353376.0,
+        "rappel": 0.9895480071216536
+      },
+      "quantG 2b -> coreset r=4 m1=8m": {
+        "octets": 124512.0,
+        "rappel": 0.887500798760108
+      },
+      "quantG 2b -> coreset r=8 m1=8m": {
+        "octets": 157792.0,
+        "rappel": 0.90890419813667
+      },
+      "quantG 2b -> coreset r=16 m1=8m": {
+        "octets": 224352.0,
+        "rappel": 0.9344762787932188
+      },
+      "quantG 2b -> quant 2b m1=8m": {
+        "octets": 173152.0,
+        "rappel": 0.926594199845672
+      },
+      "quantG 2b -> quant 4b m1=8m": {
+        "octets": 238688.0,
+        "rappel": 0.9951993003361973
+      },
+      "quantG 2b -> quant 6b m1=8m": {
+        "octets": 304224.0,
+        "rappel": 0.9986518953622976
+      },
+      "quantG 2b -> exact m1=8m": {
+        "octets": 615520.0,
+        "rappel": 0.9988561398698153
+      }
+    },
+    "flat": {
+      "coreset r=1": {
+        "octets": 11549.6875,
+        "rappel": 0.852606888827947
+      },
+      "coreset r=2": {
+        "octets": 23099.375,
+        "rappel": 0.870622649707234
+      },
+      "coreset r=4": {
+        "octets": 46198.75,
+        "rappel": 0.8870005906375307
+      },
+      "coreset r=8": {
+        "octets": 92397.5,
+        "rappel": 0.908314017065442
+      },
+      "coreset r=16": {
+        "octets": 184795.0,
+        "rappel": 0.9335712920776587
+      },
+      "coreset r=32": {
+        "octets": 369590.0,
+        "rappel": 0.9700109941968652
+      },
+      "quant 1b": {
+        "octets": 68232.0,
+        "rappel": 0.636298169231549
+      },
+      "quant 2b": {
+        "octets": 113720.0,
+        "rappel": 0.9246493900814444
+      },
+      "quant 3b": {
+        "octets": 159208.0,
+        "rappel": 0.9829204814120512
+      },
+      "quant 4b": {
+        "octets": 204696.0,
+        "rappel": 0.9959737692240904
+      },
+      "quant 6b": {
+        "octets": 295672.0,
+        "rappel": 0.9998035388126244
+      }
+    },
+    "n_blocs_moyen": 88.84375
+  },
+  "qwen8k|NoPE": {
+    "asp": {
+      "coreset r=1 -> coreset r=4 m1=2m": {
+        "octets": 19869.6875,
+        "rappel": 0.8937527282934743
+      },
+      "coreset r=1 -> coreset r=8 m1=2m": {
+        "octets": 28189.6875,
+        "rappel": 0.9102550330058399
+      },
+      "coreset r=1 -> coreset r=16 m1=2m": {
+        "octets": 44829.6875,
+        "rappel": 0.9234842964260845
+      },
+      "coreset r=1 -> quant 2b m1=2m": {
+        "octets": 32029.6875,
+        "rappel": 0.9058213402618986
+      },
+      "coreset r=1 -> quant 4b m1=2m": {
+        "octets": 48413.6875,
+        "rappel": 0.939035031376479
+      },
+      "coreset r=1 -> quant 6b m1=2m": {
+        "octets": 64797.6875,
+        "rappel": 0.9406808849089946
+      },
+      "coreset r=1 -> exact m1=2m": {
+        "octets": 142621.6875,
+        "rappel": 0.9407800241763851
+      },
+      "coreset r=1 -> coreset r=4 m1=4m": {
+        "octets": 28189.6875,
+        "rappel": 0.9005646048665561
+      },
+      "coreset r=1 -> coreset r=8 m1=4m": {
+        "octets": 44829.6875,
+        "rappel": 0.9228033966255047
+      },
+      "coreset r=1 -> coreset r=16 m1=4m": {
+        "octets": 78109.6875,
+        "rappel": 0.9422691916815441
+      },
+      "coreset r=1 -> quant 2b m1=4m": {
+        "octets": 52509.6875,
+        "rappel": 0.908029045028393
+      },
+      "coreset r=1 -> quant 4b m1=4m": {
+        "octets": 85277.6875,
+        "rappel": 0.9716443120494997
+      },
+      "coreset r=1 -> quant 6b m1=4m": {
+        "octets": 118045.6875,
+        "rappel": 0.974693923985336
+      },
+      "coreset r=1 -> exact m1=4m": {
+        "octets": 273693.6875,
+        "rappel": 0.9748758842601608
+      },
+      "coreset r=1 -> coreset r=4 m1=8m": {
+        "octets": 44829.6875,
+        "rappel": 0.9023434318085
+      },
+      "coreset r=1 -> coreset r=8 m1=8m": {
+        "octets": 78109.6875,
+        "rappel": 0.9252652772713841
+      },
+      "coreset r=1 -> coreset r=16 m1=8m": {
+        "octets": 144669.6875,
+        "rappel": 0.9499470210501564
+      },
+      "coreset r=1 -> quant 2b m1=8m": {
+        "octets": 93469.6875,
+        "rappel": 0.9043184631122279
+      },
+      "coreset r=1 -> quant 4b m1=8m": {
+        "octets": 159005.6875,
+        "rappel": 0.9923715063259961
+      },
+      "coreset r=1 -> quant 6b m1=8m": {
+        "octets": 224541.6875,
+        "rappel": 0.9963491288356546
+      },
+      "coreset r=1 -> exact m1=8m": {
+        "octets": 535837.6875,
+        "rappel": 0.9965796513189158
+      },
+      "coreset r=2 -> coreset r=4 m1=2m": {
+        "octets": 31419.375,
+        "rappel": 0.896808517375036
+      },
+      "coreset r=2 -> coreset r=8 m1=2m": {
+        "octets": 39739.375,
+        "rappel": 0.9144996082317762
+      },
+      "coreset r=2 -> coreset r=16 m1=2m": {
+        "octets": 56379.375,
+        "rappel": 0.9283458015079957
+      },
+      "coreset r=2 -> quant 2b m1=2m": {
+        "octets": 43579.375,
+        "rappel": 0.9100444352698923
+      },
+      "coreset r=2 -> quant 4b m1=2m": {
+        "octets": 59963.375,
+        "rappel": 0.945447798278982
+      },
+      "coreset r=2 -> quant 6b m1=2m": {
+        "octets": 76347.375,
+        "rappel": 0.9471642541959108
+      },
+      "coreset r=2 -> exact m1=2m": {
+        "octets": 154171.375,
+        "rappel": 0.9472648969984817
+      },
+      "coreset r=2 -> coreset r=4 m1=4m": {
+        "octets": 39739.375,
+        "rappel": 0.9022295612719697
+      },
+      "coreset r=2 -> coreset r=8 m1=4m": {
+        "octets": 56379.375,
+        "rappel": 0.9231683755195208
+      },
+      "coreset r=2 -> coreset r=16 m1=4m": {
+        "octets": 89659.375,
+        "rappel": 0.9435314581455121
+      },
+      "coreset r=2 -> quant 2b m1=4m": {
+        "octets": 64059.375,
+        "rappel": 0.9099187983173038
+      },
+      "coreset r=2 -> quant 4b m1=4m": {
+        "octets": 96827.375,
+        "rappel": 0.9750201449659255
+      },
+      "coreset r=2 -> quant 6b m1=4m": {
+        "octets": 129595.375,
+        "rappel": 0.9781086214999578
+      },
+      "coreset r=2 -> exact m1=4m": {
+        "octets": 285243.375,
+        "rappel": 0.9783022749297863
+      },
+      "coreset r=2 -> coreset r=4 m1=8m": {
+        "octets": 56379.375,
+        "rappel": 0.9021203570124331
+      },
+      "coreset r=2 -> coreset r=8 m1=8m": {
+        "octets": 89659.375,
+        "rappel": 0.9255067021957111
+      },
+      "coreset r=2 -> coreset r=16 m1=8m": {
+        "octets": 156219.375,
+        "rappel": 0.9492495496516226
+      },
+      "coreset r=2 -> quant 2b m1=8m": {
+        "octets": 105019.375,
+        "rappel": 0.9028528400115414
+      },
+      "coreset r=2 -> quant 4b m1=8m": {
+        "octets": 170555.375,
+        "rappel": 0.9918535003671848
+      },
+      "coreset r=2 -> quant 6b m1=8m": {
+        "octets": 236091.375,
+        "rappel": 0.9959134969128127
+      },
+      "coreset r=2 -> exact m1=8m": {
+        "octets": 547387.375,
+        "rappel": 0.9961585123661492
+      },
+      "quantG 2b -> coreset r=4 m1=2m": {
+        "octets": 99552.0,
+        "rappel": 0.8913848540953327
+      },
+      "quantG 2b -> coreset r=8 m1=2m": {
+        "octets": 107872.0,
+        "rappel": 0.9032840378487049
+      },
+      "quantG 2b -> coreset r=16 m1=2m": {
+        "octets": 124512.0,
+        "rappel": 0.9146208361225661
+      },
+      "quantG 2b -> quant 2b m1=2m": {
+        "octets": 111712.0,
+        "rappel": 0.8969256319958149
+      },
+      "quantG 2b -> quant 4b m1=2m": {
+        "octets": 128096.0,
+        "rappel": 0.932750811989127
+      },
+      "quantG 2b -> quant 6b m1=2m": {
+        "octets": 144480.0,
+        "rappel": 0.9342377730966043
+      },
+      "quantG 2b -> exact m1=2m": {
+        "octets": 222304.0,
+        "rappel": 0.9343306328274145
+      },
+      "quantG 2b -> coreset r=4 m1=4m": {
+        "octets": 107872.0,
+        "rappel": 0.9050900978626663
+      },
+      "quantG 2b -> coreset r=8 m1=4m": {
+        "octets": 124512.0,
+        "rappel": 0.9259186584923838
+      },
+      "quantG 2b -> coreset r=16 m1=4m": {
+        "octets": 157792.0,
+        "rappel": 0.9460392193303356
+      },
+      "quantG 2b -> quant 2b m1=4m": {
+        "octets": 132192.0,
+        "rappel": 0.9110531514352793
+      },
+      "quantG 2b -> quant 4b m1=4m": {
+        "octets": 164960.0,
+        "rappel": 0.9801369066656189
+      },
+      "quantG 2b -> quant 6b m1=4m": {
+        "octets": 197728.0,
+        "rappel": 0.9830972018214409
+      },
+      "quantG 2b -> exact m1=4m": {
+        "octets": 353376.0,
+        "rappel": 0.9832852841375063
+      },
+      "quantG 2b -> coreset r=4 m1=8m": {
+        "octets": 124512.0,
+        "rappel": 0.902880923065546
+      },
+      "quantG 2b -> coreset r=8 m1=8m": {
+        "octets": 157792.0,
+        "rappel": 0.9262958078371964
+      },
+      "quantG 2b -> coreset r=16 m1=8m": {
+        "octets": 224352.0,
+        "rappel": 0.9501565785311179
+      },
+      "quantG 2b -> quant 2b m1=8m": {
+        "octets": 173152.0,
+        "rappel": 0.9042838275822058
+      },
+      "quantG 2b -> quant 4b m1=8m": {
+        "octets": 238688.0,
+        "rappel": 0.994509139139776
+      },
+      "quantG 2b -> quant 6b m1=8m": {
+        "octets": 304224.0,
+        "rappel": 0.9985303097336569
+      },
+      "quantG 2b -> exact m1=8m": {
+        "octets": 615520.0,
+        "rappel": 0.9987682039143695
+      }
+    },
+    "flat": {
+      "coreset r=1": {
+        "octets": 11549.6875,
+        "rappel": 0.8686656421054549
+      },
+      "coreset r=2": {
+        "octets": 23099.375,
+        "rappel": 0.8830511701587727
+      },
+      "coreset r=4": {
+        "octets": 46198.75,
+        "rappel": 0.9023969891136118
+      },
+      "coreset r=8": {
+        "octets": 92397.5,
+        "rappel": 0.925717632719176
+      },
+      "coreset r=16": {
+        "octets": 184795.0,
+        "rappel": 0.9499186274405549
+      },
+      "coreset r=32": {
+        "octets": 369590.0,
+        "rappel": 0.9783296908608994
+      },
+      "quant 1b": {
+        "octets": 68232.0,
+        "rappel": 0.6520305022074513
+      },
+      "quant 2b": {
+        "octets": 113720.0,
+        "rappel": 0.9010324557991596
+      },
+      "quant 3b": {
+        "octets": 159208.0,
+        "rappel": 0.9787913765641272
+      },
+      "quant 4b": {
+        "octets": 204696.0,
+        "rappel": 0.9954204082851661
+      },
+      "quant 6b": {
+        "octets": 295672.0,
+        "rappel": 0.9997212642141018
+      }
+    },
+    "n_blocs_moyen": 88.84375
+  },
+  "smol8k|RoPE": {
+    "asp": {
+      "coreset r=1 -> coreset r=4 m1=2m": {
+        "octets": 19817.777777777777,
+        "rappel": 0.7734175145491954
+      },
+      "coreset r=1 -> coreset r=8 m1=2m": {
+        "octets": 28137.777777777777,
+        "rappel": 0.7915375521510379
+      },
+      "coreset r=1 -> coreset r=16 m1=2m": {
+        "octets": 44777.77777777778,
+        "rappel": 0.8138005794625432
+      },
+      "coreset r=1 -> quant 2b m1=2m": {
+        "octets": 31977.777777777777,
+        "rappel": 0.8177796042717341
+      },
+      "coreset r=1 -> quant 4b m1=2m": {
+        "octets": 48361.77777777778,
+        "rappel": 0.8351661964475857
+      },
+      "coreset r=1 -> quant 6b m1=2m": {
+        "octets": 64745.77777777778,
+        "rappel": 0.8355922996254096
+      },
+      "coreset r=1 -> exact m1=2m": {
+        "octets": 142569.77777777778,
+        "rappel": 0.8356424959958468
+      },
+      "coreset r=1 -> coreset r=4 m1=4m": {
+        "octets": 28137.777777777777,
+        "rappel": 0.8264767435323931
+      },
+      "coreset r=1 -> coreset r=8 m1=4m": {
+        "octets": 44777.77777777778,
+        "rappel": 0.8702781438251359
+      },
+      "coreset r=1 -> coreset r=16 m1=4m": {
+        "octets": 78057.77777777778,
+        "rappel": 0.9024893859301165
+      },
+      "coreset r=1 -> quant 2b m1=4m": {
+        "octets": 52457.77777777778,
+        "rappel": 0.9078064836531508
+      },
+      "coreset r=1 -> quant 4b m1=4m": {
+        "octets": 85225.77777777778,
+        "rappel": 0.951111607600157
+      },
+      "coreset r=1 -> quant 6b m1=4m": {
+        "octets": 117993.77777777778,
+        "rappel": 0.9532422790574478
+      },
+      "coreset r=1 -> exact m1=4m": {
+        "octets": 273641.77777777775,
+        "rappel": 0.9533812533555999
+      },
+      "coreset r=1 -> coreset r=4 m1=8m": {
+        "octets": 44777.77777777778,
+        "rappel": 0.8323564613522078
+      },
+      "coreset r=1 -> coreset r=8 m1=8m": {
+        "octets": 78057.77777777778,
+        "rappel": 0.8826570811264906
+      },
+      "coreset r=1 -> coreset r=16 m1=8m": {
+        "octets": 144617.77777777778,
+        "rappel": 0.9113504181871175
+      },
+      "coreset r=1 -> quant 2b m1=8m": {
+        "octets": 93417.77777777778,
+        "rappel": 0.9299814862504048
+      },
+      "coreset r=1 -> quant 4b m1=8m": {
+        "octets": 158953.77777777778,
+        "rappel": 0.9914644372661486
+      },
+      "coreset r=1 -> quant 6b m1=8m": {
+        "octets": 224489.77777777778,
+        "rappel": 0.9962872272650125
+      },
+      "coreset r=1 -> exact m1=8m": {
+        "octets": 535785.7777777778,
+        "rappel": 0.9966458042827058
+      },
+      "coreset r=2 -> coreset r=4 m1=2m": {
+        "octets": 31315.555555555555,
+        "rappel": 0.8001364911644798
+      },
+      "coreset r=2 -> coreset r=8 m1=2m": {
+        "octets": 39635.555555555555,
+        "rappel": 0.8258264685831693
+      },
+      "coreset r=2 -> coreset r=16 m1=2m": {
+        "octets": 56275.555555555555,
+        "rappel": 0.8520414610716772
+      },
+      "coreset r=2 -> quant 2b m1=2m": {
+        "octets": 43475.555555555555,
+        "rappel": 0.8543356340235456
+      },
+      "coreset r=2 -> quant 4b m1=2m": {
+        "octets": 59859.555555555555,
+        "rappel": 0.8751567368080523
+      },
+      "coreset r=2 -> quant 6b m1=2m": {
+        "octets": 76243.55555555556,
+        "rappel": 0.875864945639941
+      },
+      "coreset r=2 -> exact m1=2m": {
+        "octets": 154067.55555555556,
+        "rappel": 0.8759025088704506
+      },
+      "coreset r=2 -> coreset r=4 m1=4m": {
+        "octets": 39635.555555555555,
+        "rappel": 0.8312138785656193
+      },
+      "coreset r=2 -> coreset r=8 m1=4m": {
+        "octets": 56275.555555555555,
+        "rappel": 0.8812556689574815
+      },
+      "coreset r=2 -> coreset r=16 m1=4m": {
+        "octets": 89555.55555555556,
+        "rappel": 0.9082330065982289
+      },
+      "coreset r=2 -> quant 2b m1=4m": {
+        "octets": 63955.555555555555,
+        "rappel": 0.9180824052437154
+      },
+      "coreset r=2 -> quant 4b m1=4m": {
+        "octets": 96723.55555555556,
+        "rappel": 0.9649912255583397
+      },
+      "coreset r=2 -> quant 6b m1=4m": {
+        "octets": 129491.55555555556,
+        "rappel": 0.9673078936971691
+      },
+      "coreset r=2 -> exact m1=4m": {
+        "octets": 285139.55555555556,
+        "rappel": 0.9674921776843252
+      },
+      "coreset r=2 -> coreset r=4 m1=8m": {
+        "octets": 56275.555555555555,
+        "rappel": 0.832492113530377
+      },
+      "coreset r=2 -> coreset r=8 m1=8m": {
+        "octets": 89555.55555555556,
+        "rappel": 0.8834223470519421
+      },
+      "coreset r=2 -> coreset r=16 m1=8m": {
+        "octets": 156115.55555555556,
+        "rappel": 0.9112512497544107
+      },
+      "coreset r=2 -> quant 2b m1=8m": {
+        "octets": 104915.55555555556,
+        "rappel": 0.9294328839354259
+      },
+      "coreset r=2 -> quant 4b m1=8m": {
+        "octets": 170451.55555555556,
+        "rappel": 0.9925076285198937
+      },
+      "coreset r=2 -> quant 6b m1=8m": {
+        "octets": 235987.55555555556,
+        "rappel": 0.9970722997027833
+      },
+      "coreset r=2 -> exact m1=8m": {
+        "octets": 547283.5555555555,
+        "rappel": 0.9974578927464103
+      },
+      "quantG 2b -> coreset r=4 m1=2m": {
+        "octets": 99143.11111111111,
+        "rappel": 0.8565297054285935
+      },
+      "quantG 2b -> coreset r=8 m1=2m": {
+        "octets": 107463.11111111111,
+        "rappel": 0.8850354192764412
+      },
+      "quantG 2b -> coreset r=16 m1=2m": {
+        "octets": 124103.11111111111,
+        "rappel": 0.8957752387861248
+      },
+      "quantG 2b -> quant 2b m1=2m": {
+        "octets": 111303.11111111111,
+        "rappel": 0.9060359256669065
+      },
+      "quantG 2b -> quant 4b m1=2m": {
+        "octets": 127687.11111111111,
+        "rappel": 0.9390425760318917
+      },
+      "quantG 2b -> quant 6b m1=2m": {
+        "octets": 144071.11111111112,
+        "rappel": 0.9405672319387404
+      },
+      "quantG 2b -> exact m1=2m": {
+        "octets": 221895.11111111112,
+        "rappel": 0.9406391585385203
+      },
+      "quantG 2b -> coreset r=4 m1=4m": {
+        "octets": 107463.11111111111,
+        "rappel": 0.8381972427993309
+      },
+      "quantG 2b -> coreset r=8 m1=4m": {
+        "octets": 124103.11111111111,
+        "rappel": 0.8822671731690487
+      },
+      "quantG 2b -> coreset r=16 m1=4m": {
+        "octets": 157383.11111111112,
+        "rappel": 0.9088827832446115
+      },
+      "quantG 2b -> quant 2b m1=4m": {
+        "octets": 131783.11111111112,
+        "rappel": 0.9317684057958484
+      },
+      "quantG 2b -> quant 4b m1=4m": {
+        "octets": 164551.11111111112,
+        "rappel": 0.9850943093265185
+      },
+      "quantG 2b -> quant 6b m1=4m": {
+        "octets": 197319.11111111112,
+        "rappel": 0.9883797169297844
+      },
+      "quantG 2b -> exact m1=4m": {
+        "octets": 352967.1111111111,
+        "rappel": 0.9885430074630146
+      },
+      "quantG 2b -> coreset r=4 m1=8m": {
+        "octets": 124103.11111111111,
+        "rappel": 0.8328093185213087
+      },
+      "quantG 2b -> coreset r=8 m1=8m": {
+        "octets": 157383.11111111112,
+        "rappel": 0.8804337779901551
+      },
+      "quantG 2b -> coreset r=16 m1=8m": {
+        "octets": 223943.11111111112,
+        "rappel": 0.9090270852398401
+      },
+      "quantG 2b -> quant 2b m1=8m": {
+        "octets": 172743.11111111112,
+        "rappel": 0.9291146671314164
+      },
+      "quantG 2b -> quant 4b m1=8m": {
+        "octets": 238279.11111111112,
+        "rappel": 0.9946497918454009
+      },
+      "quantG 2b -> quant 6b m1=8m": {
+        "octets": 303815.1111111111,
+        "rappel": 0.9995560494921586
+      },
+      "quantG 2b -> exact m1=8m": {
+        "octets": 615111.1111111111,
+        "rappel": 0.9999347646269565
+      }
+    },
+    "flat": {
+      "coreset r=1": {
+        "octets": 11497.777777777777,
+        "rappel": 0.7106940368578959
+      },
+      "coreset r=2": {
+        "octets": 22995.555555555555,
+        "rappel": 0.7626336403386024
+      },
+      "coreset r=4": {
+        "octets": 45991.11111111111,
+        "rappel": 0.8328093048316079
+      },
+      "coreset r=8": {
+        "octets": 91982.22222222222,
+        "rappel": 0.8800606834249513
+      },
+      "coreset r=16": {
+        "octets": 183964.44444444444,
+        "rappel": 0.9088611635925748
+      },
+      "coreset r=32": {
+        "octets": 367928.8888888889,
+        "rappel": 0.9538198641114898
+      },
+      "quant 1b": {
+        "octets": 67925.33333333333,
+        "rappel": 0.6512268825166683
+      },
+      "quant 2b": {
+        "octets": 113208.88888888889,
+        "rappel": 0.9277115243190482
+      },
+      "quant 3b": {
+        "octets": 158492.44444444444,
+        "rappel": 0.9848617218289467
+      },
+      "quant 4b": {
+        "octets": 203776.0,
+        "rappel": 0.9946378951523397
+      },
+      "quant 6b": {
+        "octets": 294343.1111111111,
+        "rappel": 0.9995973791773104
+      }
+    },
+    "n_blocs_moyen": 88.44444444444444
+  }
+}

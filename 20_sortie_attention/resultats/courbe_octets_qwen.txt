@@ -1,0 +1,31 @@
+Qwen/Qwen2.5-0.5B | T=512 W=128 Lb=32 m=2 | tranches offsets [0, 200000, 400000]
+
+offset 0 (auto-test causal 1.2e-04)
+  dense      2.6767
+  pca_d16    2.7092
+  maxip      2.7100
+  pca_d8     2.7488
+  aleatoire  2.8925
+
+offset 200000 (auto-test causal 1.2e-04)
+  pca_d16    3.6187
+  pca_d8     3.6216
+  maxip      3.6276
+  dense      3.6287
+  aleatoire  3.7782
+
+offset 400000 (auto-test causal 9.5e-05)
+  dense      3.3511
+  maxip      3.3760
+  pca_d16    3.3956
+  pca_d8     3.4134
+  aleatoire  3.6776
+
+=== moyennes sur 3 tranches (min-max) ===
+dense      moy=3.2188 min=2.6767 max=3.6287 etendue=0.9520
+maxip      moy=3.2379 min=2.7100 max=3.6276 etendue=0.9176
+aleatoire  moy=3.4494 min=2.8925 max=3.7782 etendue=0.8857
+pca_d8     moy=3.2612 min=2.7488 max=3.6216 etendue=0.8728
+pca_d16    moy=3.2411 min=2.7092 max=3.6187 etendue=0.9095
+
+ecart a maxip (moyennes) : d'=8 +0.0234 | d'=16 +0.0033 | 

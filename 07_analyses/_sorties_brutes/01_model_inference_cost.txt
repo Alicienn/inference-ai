@@ -1,0 +1,39 @@
+==============================================================================
+1. VALIDATION : reconstruction des comptes de parametres
+==============================================================================
+DeepSeek-V3.2        total   675.3B (publie    671B, ecart   +0.6%)   actives  40.9B (publie   37B, ecart  +10.5%)
+DeepSeek-V4-Flash    total   284.2B (publie    284B, ecart   +0.1%)   actives  13.2B (publie   13B, ecart   +1.4%)
+DeepSeek-V4-Pro      total  1572.7B (publie   1600B, ecart   -1.7%)   actives  48.6B (publie   49B, ecart   -0.9%)
+
+==============================================================================
+2. KV CACHE  (octets par token de contexte, et total a 1M)
+==============================================================================
+repartition couches  Flash: 20 CSA / 21 HCA / 2 SWA   Pro: 29 CSA / 32 HCA
+  V3.2          45.75 KiB/token   ->    43.63 GB @1M
+  V4-Flash       3.22 KiB/token   ->     3.07 GB @1M
+  V4-Pro         4.67 KiB/token   ->     4.46 GB @1M
+
+  ratio KV  V3.2/V4-Flash = 14.22x  ( 7.0%)   [publie 13.7x / 7%]
+  ratio KV  V3.2/V4-Pro   =  9.79x  (10.2%)   [publie  9.5x / 10%]
+
+  baseline BF16 GQA8 (43 couches) : 172.0 KiB/token -> V4-Flash = 1.87% [publie ~2%]
+
+==============================================================================
+3. FLOPs DE DECODAGE PAR TOKEN vs CONTEXTE
+==============================================================================
+  contexte |   V3.2 (G)  Flash (G)    Pro (G) |  x Flash    x Pro
+------------------------------------------------------------------------------
+     4,000 |      112.8       28.5      108.4 |     3.96     1.04
+    32,000 |      140.8       31.4      113.7 |     4.49     1.24
+   128,000 |      236.7       41.3      131.4 |     5.73     1.80
+   256,000 |      364.6       54.5      155.0 |     6.69     2.35
+   512,000 |      620.5       81.0      202.2 |     7.66     3.07
+ 1,000,000 |     1108.2      131.5      292.2 |     8.43     3.79
+
+  Decomposition @1M (GFLOPs) :
+   V3.2       total   1108.2 = GEMM    74.0 + attn    34.8 + indexeur    999.4   (indexeur = 90.2%)
+   V4-Flash   total    131.5 = GEMM    26.0 + attn    23.6 + indexeur     81.9   (indexeur = 62.3%)
+   V4-Pro     total    292.2 = GEMM    98.0 + attn    75.4 + indexeur    118.8   (indexeur = 40.7%)
+
+  ratio FLOPs V3.2/V4-Flash =  8.43x (11.9%)  [publie 9.8x / 10%]
+  ratio FLOPs V3.2/V4-Pro   =  3.79x (26.4%)  [publie 3.7x / 27%]

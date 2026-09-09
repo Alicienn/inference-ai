@@ -1,0 +1,19 @@
+Stabilite maxip | T=512 W=128 Lb=32 | harnais causal corrige
+
+== Qwen2.5-0.5B == AUTO-TEST CAUSAL 1.154e-04 ECHEC
+dense        perte=2.6767 (p=  14.537)
+m0           perte=4.6347 (p= 102.995)
+maxip        perte=2.7100 (p=  15.029)
+oracle       perte=2.7072 (p=  14.987)
+meankey      perte=3.3207 (p=  27.679)
+rand1000     perte=2.8925 (p=  18.039)
+rand2000     perte=2.8607 (p=  17.474)
+
+== SmolLM2-135M == AUTO-TEST CAUSAL 2.861e-05 OK
+m1_maxip     perte=2.9949 (p=  19.983)
+m1_oracle    perte=2.9968 (p=  20.021)
+m4_maxip     perte=2.9655 (p=  19.404)
+m4_oracle    perte=2.9658 (p=  19.411)
+m8_maxip     perte=2.9660 (p=  19.414)
+m8_oracle    perte=2.9661 (p=  19.416)
+m4_rand      perte=3.0349 (p=  20.800)

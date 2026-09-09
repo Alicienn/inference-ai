@@ -1,0 +1,7 @@
+SmolLM2-135M | T=1024 | W=256 | Lb=64 | tokens evalues=1024
+native         perte=2.7564 (p=15.74) | hors fenetre=2.6260 (p=13.82)
+dense_m8       perte=2.7564 (p=15.74) | hors fenetre=2.6260 (p=13.82)
+mean_m8        perte=4.0116 (p=55.24) | hors fenetre=3.2032 (p=24.61)
+mean_sink_m8   perte=3.9601 (p=52.46) | hors fenetre=3.1360 (p=23.01)
+mean_m4        perte=3.9240 (p=50.60) | hors fenetre=3.0760 (p=21.67)
+mean_sink_m4   perte=3.8989 (p=49.35) | hors fenetre=3.0446 (p=21.00)

@@ -1,0 +1,77 @@
+================================================================================================
+EXPERIENCE D : cout du transfert KV en desagregation prefill/decode (contexte 1,000,000)
+================================================================================================
+
+modele                KV a transferer |       NVLink 4 InfiniBand NDR  Ethernet 200G  Ethernet 100G
+------------------------------------------------------------------------------------------------
+DeepSeek-V3.2                43.63 GB |           52ms          937ms         1874ms         3748ms
+DeepSeek-V4-Flash             3.07 GB |            4ms           66ms          132ms          264ms
+DeepSeek-V4-Pro               4.46 GB |            5ms           96ms          191ms          383ms
+
+modele                prefill (s)   transfert IB   part du transfert
+------------------------------------------------------------------------------------------------
+DeepSeek-V3.2              48.83s          937ms               1.9%
+DeepSeek-V4-Flash          25.52s           66ms               0.3%
+DeepSeek-V4-Pro            15.94s           96ms               0.6%
+
+================================================================================================
+LECTURE
+================================================================================================
+  A 1M de contexte, V3.2 doit deplacer 44 GB entre le noeud de prefill et
+  le noeud de decode, soit 0.9 s sur InfiniBand 400G. V4-Flash n'en
+  transfere que 3.1 GB (14x moins), soit 66 ms.
+
+  ATTENTION -- l'hypothese intuitive selon laquelle ce transfert interdirait la
+  desagregation est FAUSSE a prefill froid : le prefill de 1M coute ici ~49 s,
+  et 0.9 s de transfert n'en representent que 1.9%. Le calcul domine largement.
+  Le transfert ne devient decisif que sous REUTILISATION DE PREFIXE (section suivante),
+  ou il n'y a plus de prefill a amortir.
+
+================================================================================================
+LE REGIME OU LE TRANSFERT DEVIENT DECISIF : REUTILISATION DE PREFIXE
+================================================================================================
+  Le calcul ci-dessus suppose un prefill A FROID. Or Mooncake (2407.00079) est
+  explicitement 'KVCache-centric' : son gain vient de la REUTILISATION de prefixes
+  deja calcules (conversations multi-tours, agents, RAG). En cas de hit, il n'y a
+  PLUS de prefill du tout -- il ne reste que le transfert. Le transfert n'est alors
+  pas 2% du cout : il est 100% du cout, et devient le facteur limitant.
+
+  Temps pour servir un prefixe de 1M deja en cache, puis 1er token :
+
+modele                 via NVLink   via IB 400G   via Eth 100G    TTFT acceptable ?
+------------------------------------------------------------------------------------------------
+DeepSeek-V3.2                52ms         937ms         3748ms     non (IB > 500ms)
+DeepSeek-V4-Flash             4ms          66ms          264ms                  oui
+DeepSeek-V4-Pro               5ms          96ms          383ms                  oui
+
+  => C'est ici que la compression du KV change la nature du systeme : avec V3.2,
+     un hit de cache sur 1M coute ~0.9 s de transfert inter-noeud, ce qui annule
+     presque l'interet du cache. Avec V4-Flash (66 ms), la reutilisation de
+     prefixe redevient franchement rentable.
+
+================================================================================================
+PART DU TRANSFERT DANS LE PREFILL A FROID, SELON LE CONTEXTE (IB 400G)
+================================================================================================
+  contexte |       V3.2   V4-Flash
+------------------------------------------------------------------------------------------------
+     8,000 |       9.9%       0.7%
+    32,000 |       8.7%       0.7%
+   128,000 |       6.4%       0.6%
+   512,000 |       3.1%       0.4%
+ 1,000,000 |       1.9%       0.3%
+
+  => A froid, le transfert reste minoritaire a toutes les longueurs : le prefill
+     domine. L'hypothese initiale ('le transfert KV interdit la desagregation')
+     est donc FAUSSE dans ce regime, et n'est vraie que sous reutilisation de cache.
+
+================================================================================================
+SEUIL : taille de KV cache max pour que le transfert reste < 10% du prefill
+================================================================================================
+lien                         contexte    KV max admissible
+------------------------------------------------------------------------------------------------
+NVLink 4 (intra-noeud)      1,000,000            2376.8 GB
+InfiniBand NDR 400G         1,000,000             132.0 GB
+Ethernet 200G               1,000,000              66.0 GB
+Ethernet 100G               1,000,000              33.0 GB
+
+  (calcule sur le prefill de V4-Flash sur 4 GPU H800 a 40% de MFU)

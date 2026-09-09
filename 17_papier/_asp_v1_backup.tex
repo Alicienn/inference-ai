@@ -1,0 +1,568 @@
+\documentclass[sigconf,nonacm,11pt]{acmart}
+
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% colonnes etroites + identifiants longs non coupables
+\setlength{\emergencystretch}{3em}
+
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+\begin{document}
+
+\title{Bytes Are Not Milliseconds}
+\subtitle{A Measurement Study of Two-Pass Block Selection for Long-Context LLM Inference}
+
+\author{Anonymous}
+\affiliation{\institution{}\country{}}
+
+\begin{abstract}
+Block-sparse attention makes long-context decoding tractable by reading only a
+fraction of the KV cache, but the \emph{selector}---the mechanism that decides
+which blocks to read---has itself become the dominant cost. We study
+\emph{Adaptive Sequential Precision} (ASP), a two-pass selector that scores all
+blocks with a coarse per-block summary, then rescores only the survivors with a
+finer one, and we formalise it as a \emph{precision-allocation bandit}: a
+best-arm-identification problem in which the measurement budget is spent in
+\emph{bits per arm} along a rate--distortion curve rather than in repeated
+stochastic pulls.
+
+Our headline result is negative and, we argue, instructive. On Qwen3-8B, ASP
+reduces selector KV traffic by $13\text{--}25\times$ yet is $1.2\text{--}1.7\times$
+\emph{slower} end-to-end. We explain the gap in three measured steps. First, the
+irregular gather that ASP requires is essentially free on datacenter hardware:
+across three memory architectures (LPDDR5, GDDR6, HBM2e) scattered reads reach
+$98\text{--}104\%$ of contiguous bandwidth once each gathered chunk exceeds
+$\approx$1\,KiB, and on A100 the granularity threshold disappears entirely.
+Second, fusing the two passes into a single kernel with interleaved stratified
+selection yields $1.57\times$ over the two-kernel form on an H200 (15/15
+configurations), but only when the per-stratum quota is small ($q\!\approx\!8$);
+at $q=64$ fusion loses by $3\times$. Third, the residual end-to-end gap is
+per-layer kernel-launch overhead: an unfused PyTorch selector costs a flat
+$\approx$20\,ms per decode step, which alone exceeds the entire dense attention
+time ($2\text{--}11$\,ms at $16$k--$262$k tokens, itself running at $84\%$ of
+peak bandwidth).
+
+We additionally report two \emph{refuted} predictive models of the gather
+granularity threshold---one based on Little's law, one on DRAM page
+invariance---and a measurement-driven law relating selection recall to
+estimator noise, whose residuals are explained by Jensen's inequality over
+per-query noise dispersion ($r=0.96$). We argue that convergent empirical
+behaviour across three memory architectures without a reliable predictive model is itself a
+result worth documenting.
+\end{abstract}
+
+\keywords{LLM inference, sparse attention, KV cache, GPU kernels, memory bandwidth}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}
+
+Decoding a token from a long-context language model is bound by memory
+bandwidth, not by arithmetic. Every generated token requires reading the entire
+key--value (KV) cache, whose size grows linearly with context. At one million
+tokens a mid-sized model must stream tens of gigabytes \emph{per token per
+sequence}, and no amount of additional compute helps.
+
+Block-sparse attention answers this by reading only the $k$ most relevant blocks
+of the cache~\cite{yuan2025nsa,tang2024quest}. This shifts the problem rather
+than removing it: to know which $k$ blocks matter, something must look at all
+$n$ of them. That \emph{selector} is dense by construction, and it has quietly
+become the dominant term. Reconstructing the cost of DeepSeek-V3.2 from its
+published hyperparameters, we find that at 1M context its lightning indexer
+accounts for $\approx$90\% of decode FLOPs and must stream $7.9$\,GB per decoded
+token---while the sparse attention it enables costs $3\%$.\footnote{Derived
+independently from the architecture description
+in~\cite{deepseek2025v32,deepseek2024v3}, whose MLA latent cache originates
+in~\cite{deepseek2024v2}; our reconstruction reproduces the
+published parameter counts of DeepSeek-V4 to within $1.7\%$, which we take as
+evidence the cost model is faithful.}
+
+\paragraph{Why the existing approach is suboptimal.} Every selector we are aware
+of---NSA~\cite{yuan2025nsa}, Quest~\cite{tang2024quest},
+COBS~\cite{tian2026cobs}, DeepSeek's CSA~\cite{deepseek2026v4},
+AsyncTLS~\cite{hu2026asynctls}---allocates the \emph{same} number of summary
+bytes to every block and reads each summary exactly once. This is a uniform,
+single-pass design. It is an assumption, not a necessity: most blocks are far
+from the decision boundary and could be discarded from a much coarser summary.
+
+\paragraph{Contribution.} We formalise non-uniform, sequential summary reading
+as a \emph{precision-allocation bandit}, implement it as a single fused GPU
+kernel with stratified selection, and measure it end-to-end on a real model---%
+finding that the byte savings are real, large, and \emph{do not become
+speedups} unless the selector is fused, and unless the surrounding engine is
+itself memory-bound.
+
+%======================================================================
+\section{Background and Related Work}
+
+\paragraph{Sparse attention and block selection.} Fixed-pattern methods attend
+to predetermined windows and global tokens~\cite{beltagy2020longformer,%
+zaheer2020bigbird}. Eviction methods discard low-importance
+entries~\cite{xiao2024streamingllm,zhang2023h2o,li2024snapkv}. Query-aware block
+selectors summarise contiguous blocks offline and, per query, run fine-grained
+attention over the highest-scoring ones; this family includes
+Quest~\cite{tang2024quest} and NSA~\cite{yuan2025nsa}. COBS~\cite{tian2026cobs}
+formalises selection as ranking blocks by \emph{attention mass} and shows that
+first-order (mean-pool) summaries are the limiting factor, proposing a
+second-order cumulant correction. Our work is complementary and, on one point,
+in tension: we find that at matched byte budget a \emph{support}-based summary
+(a coreset of $r$ centroids scored by log-sum-exp) dominates a \emph{moment}-based
+one (mean plus rank-$r$ covariance) at equal or lower cost: a coreset of $r=2$
+centroids ($2.03$ vectors per block) reaches $86.4\%$ mass recall at $k=8$, where
+COBS at $r=8$ ($9.12$ vectors) reaches $81.5\%$. The reason is that the
+within-block key covariance is not low-rank---its effective rank is $17.8$ out of $64$ in our measurements, so
+a rank-$r$ summary captures only a varying fraction of the quadratic term. The
+same measurement bounds what methods built on low-rank key structure, such as
+Loki~\cite{singhania2024loki}, can recover \emph{within} a block---though Loki
+estimates its rotated basis globally, where the spectrum is more favourable.
+
+\paragraph{Hierarchical selection.} AsyncTLS~\cite{hu2026asynctls} performs
+coarse block filtering followed by fine token selection;
+HiSparse~\cite{hisparse2026} hierarchises \emph{storage} between host and device,
+and lookahead sparse attention~\cite{lsa2026} amortises the index across steps.
+Both refine \emph{what} is examined. ASP is orthogonal: it refines \emph{how
+precisely} the same objects are examined, and allocates that precision according
+to distance from the decision threshold.
+
+\paragraph{Serving systems.} PagedAttention~\cite{kwon2023vllm} and
+RadixAttention~\cite{zheng2024sglang} govern KV memory;
+FlashAttention-3~\cite{shah2024flashattention3} and
+FlashInfer~\cite{ye2025flashinfer} provide the kernels; prefill/decode
+disaggregation~\cite{zhong2024distserve,qin2024mooncake,agrawal2024sarathi}
+governs placement. ASP sits below all of these, inside the attention kernel.
+
+\paragraph{Speculative decoding.} EAGLE-3~\cite{li2025eagle3} and its
+predecessors~\cite{leviathan2023speculative} amortise the KV read across
+$\gamma+1$ candidate tokens. We note in passing---and quantify in
+Section~\ref{sec:disc}---that sparse attention and speculation interact
+negatively, because candidate positions select different blocks and the
+verification pass must read their union.
+
+\paragraph{Bandits.} Selecting the top-$k$ of $n$ noisy quantities under a
+measurement budget is best-arm identification~\cite{bubeck2009pure,%
+carpentier2016tight,karnin2013almost}. We import that framework, with one
+structural difference developed in Section~\ref{sec:method}.
+
+%======================================================================
+\section{Method}\label{sec:method}
+
+\subsection{Block summarisation as measure quantisation}
+
+A block $b$ is an empirical measure on key space, $\mu_b=\sum_{j\in b}\delta_{k_j}$,
+and its attention mass is the Laplace transform of that measure,
+$m_b(q)=\int e^{s\,q^\top k}\,d\mu_b(k)$ with $s=1/\sqrt{D}$. Summarising a block
+means replacing $\mu_b$ by a few-atom measure whose transform agrees on the query
+distribution. Writing $\ell_b=\log m_b$, the Gibbs variational identity gives
+\begin{equation}
+\ell_b(q)=\max_{p\in\Delta_L}\Big[\textstyle\sum_r p_r\,(s\,q^\top k_r)+H(p)\Big],
+\end{equation}
+so $\ell_b$ interpolates between $\log L+\text{mean}$ as $q\to 0$ and
+$\max_r s\,q^\top k_r$ as $\|q\|\to\infty$. Two approximation families follow:
+\emph{moment} approximations expand the cumulant generating function about $q=0$
+(mean-pool at order one, COBS at order two), while \emph{support} approximations
+approximate the geometry of the key cloud.
+
+\begin{proposition}[Uniform two-sided coreset bound]\label{prop:bound}
+Partition a block into clusters $C_1,\dots,C_r$ with centroids $\mu_c$, counts
+$n_c$ and radii $\rho_c=\max_{k\in C_c}\|k-\mu_c\|$. Then for \emph{every} query $q$,
+\begin{equation}
+\Big|\,\ell_b(q)-\log\textstyle\sum_c n_c e^{s\,q^\top\mu_c}\Big|\;\le\;s\,\|q\|\max_c \rho_c .
+\end{equation}
+\end{proposition}
+\begin{proof}
+For $k\in C_c$, Cauchy--Schwarz gives $|q^\top(k-\mu_c)|\le\|q\|\rho_c$, hence
+$n_c e^{s q^\top\mu_c-s\|q\|\rho_c}\le\sum_{k\in C_c}e^{s q^\top k}\le
+ n_c e^{s q^\top\mu_c+s\|q\|\rho_c}$. Summing over $c$ and taking logarithms, the
+common factors $e^{\pm s\|q\|\rho}$ factor out.
+\end{proof}
+
+Unlike a truncated cumulant expansion, this bound is uniform in the direction of
+$q$, is sign-aware (the term $e^{q^\top\mu_c}$ distinguishes $+\mu$ from $-\mu$,
+whereas $q^\top\Sigma q$ does not), and is exact on an isolated outlier, which
+forms a singleton of zero radius. By Jensen's inequality the coreset estimate is
+moreover always a \emph{lower} bound on $\ell_b$, so the interval is one-sided
+and half as wide as the proposition suggests. The bound also identifies the right
+clustering objective: minimising the \emph{maximum} radius, i.e.\
+$k$-center~\cite{gonzalez1985clustering}, rather than $k$-means.
+
+\subsection{The precision-allocation bandit}
+
+Let $n$ blocks be candidates and $k$ be selected. A summary of $b$ bytes yields an
+estimator with noise $\sigma(b)$, a measurable rate--distortion curve---the same
+curve that governs KV-cache quantization~\cite{turboquant2025,blockgtq2026}, applied
+there uniformly to every block. A two-pass
+scheme reads $b_1$ bytes for all $n$ blocks and $b_2$ bytes for $m$ survivors:
+\begin{equation}
+B(b_1,b_2,m)=n\,b_1+m\,b_2 .
+\end{equation}
+This is best-arm identification with a crucial difference: in a classical bandit,
+pulling an arm $t$ times reduces noise as $1/\sqrt t$ by stochastic averaging;
+here, reading $b$ bytes reduces it along a \emph{deterministic} rate--distortion
+curve. We call this a \emph{precision-allocation bandit}. To our knowledge this
+variant is treated neither in the bandit literature nor in the attention literature.
+
+Recall loss decomposes into two first-order-independent sources. A block of true
+rank $j\le k$ is wrongly eliminated in pass~1 if its noisy score falls below that
+of the rank-$m$ block; both scores being independently perturbed, their difference
+has standard deviation $\sigma_1\sqrt2$, giving
+\begin{equation}
+L_1(b_1,m)=\sum_{j\le k} w_j\,\Phi\!\Big(\!-\Delta_{j,m}\big/(\sigma(b_1)\sqrt2)\Big),
+\label{eq:l1}
+\end{equation}
+with $\Delta_{j,m}=\ell_{(j)}-\ell_{(m)}$ and $w_j$ the mass share of rank $j$.
+Pass-2 ranking error is $L_2(b_2)=1-R(\sigma(b_2))$, where $R$ is the empirical
+recall-versus-noise curve of Section~\ref{sec:law}. The design problem is
+\begin{equation}
+\min_{b_1,b_2,m} \; n\,b_1+m\,b_2
+\quad\text{s.t.}\quad R(\sigma(b_2))-L_1(b_1,m)\ \ge\ \tau .
+\end{equation}
+All quantities---$\sigma(b)$, $\Delta_{j,m}$, $w_j$, $R$---are measurable offline
+on a calibration sample, so the configuration is computed, not swept.
+
+\subsection{Fusion by interleaved stratification}\label{sec:fusion}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/strat.pdf}
+\caption{Cost of stratified selection relative to the global top-$m$, versus the
+number of strata $G$. Interleaved stratification (solid) is nearly free;
+contiguous stratification (dashed) is not, because relevance is correlated
+between adjacent blocks.}
+\label{fig:strat}
+\end{figure}
+
+
+A naive fused kernel must satisfy a global dependency: pass~2 needs the top-$m$
+of pass~1 across all blocks of a query. Three designs are possible. One work-group
+per query needs no synchronisation but collapses parallelism to the number of
+queries (batch $\times$ KV heads), typically two orders of magnitude below GPU
+residency. A grid-wide barrier preserves parallelism but costs $5$--$10\,\mu$s on
+A100---the same order as the launch it was meant to save.
+
+We take a third route. ASP is a heuristic filter, not an exact ranking, so the
+\emph{global} top-$m$ is not required. We partition the $n$ blocks into $G$
+interleaved strata; work-group $g$ of a query handles blocks
+$\{g,\,g\!+\!G,\,g\!+\!2G,\dots\}$, keeps the top-$q$ of its own stratum with
+$q=m/G$, and immediately gathers its own survivors. There is \emph{no
+synchronisation at all}, parallelism is complete, and there is a single launch.
+
+Interleaving is not a detail. Measured on real attention maps (Figure~\ref{fig:strat}),
+interleaved stratification costs at most $2.9$--$3.2$ relative recall points across
+all $(m,G)$, whereas \emph{contiguous} stratification costs up to $22.3$ points:
+adjacent blocks are correlated in relevance, so a contiguous stratum can hold a
+disproportionate share of the mass and be truncated by its quota. Interleaving
+breaks that correlation, and it is also the natural grid-stride access pattern.
+
+%======================================================================
+\section{Experimental Setup}
+
+\paragraph{Hardware.} Four GPUs spanning three memory technologies: an AMD
+Radeon 860M integrated GPU (\texttt{gfx1152}, RDNA 3.5, shared LPDDR5,
+80\,GB/s measured), an NVIDIA Tesla T4 (GDDR6, 274\,GB/s measured), an NVIDIA
+A100 PCIe 40\,GB (HBM2e, 1372\,GB/s measured) and an NVIDIA H200 NVL
+(143\,GB, 132 SMs). Kernels are OpenCL on the AMD part and CUDA
+(\texttt{nvcc -O3}) elsewhere; a single source compiles under both \texttt{nvcc}
+and \texttt{hipcc}, using no warp-width-dependent primitive.
+
+\paragraph{Selection-quality measurements.} Real $Q$/$K$ activations captured from
+Qwen2.5-0.5B and SmolLM2-135M on WikiText at 8192 tokens. Following the
+convention of block-sparse systems, the local window and attention sink are
+served by separate branches and are therefore \emph{excluded} from the candidate
+set; without this exclusion the metric is dominated by trivially-retrieved blocks.
+The metric is \emph{mass recall}: the true attention mass captured by the $k$
+selected blocks, divided by that of the oracle top-$k$.
+
+\paragraph{End-to-end.} Qwen3-8B~\cite{qwen3} (36 layers, 32 query heads, 8 grouped-query
+KV heads~\cite{ainslie2023gqa}, head dim 128, 144\,KiB/token in bf16) on the H200, with ASP registered
+through the \texttt{ALL\_ATTENTION\_\allowbreak FUNCTIONS} extension point of
+\texttt{transformers}~5.16---the supported hook, not a monkey-patch. The rest of
+the model runs unmodified, so the measurement is a \emph{complete decode step}.
+
+%======================================================================
+\section{Results}
+
+\subsection{A law relating recall to estimator noise}\label{sec:law}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/law.pdf}
+\caption{Reference curve $R(\sigma)$, obtained by injecting controlled Gaussian
+noise into the \emph{exact} block log-masses and re-ranking. Three real summaries
+are placed at their measured $\sigma$: coreset and mean-pool land on the curve,
+COBS beats it by 5--8 points.}
+\label{fig:law}
+\end{figure}
+
+
+We first establish what any selector can achieve. Injecting controlled Gaussian
+noise of standard deviation $\sigma$ into the \emph{exact} block log-masses and
+ranking gives a reference curve $R(\sigma)$ (Figure~\ref{fig:law}) that is
+independent of any method: $95\%$ mass recall at $k=8$ requires
+$\sigma\le0.39$~nats, and $99\%$ requires $\sigma\le0.16$.
+
+Real methods do not all fall on this curve. Coresets and mean-pool fall within $0.9$
+points of the prediction; COBS and Gaussian-mixture summaries beat it by $4.8$ to
+$8.1$ points. We tested and rejected two explanations---a rank-dependent bias
+(injecting the measured bias makes predictions \emph{worse}, because the
+rank-conditional mean of the error is a regression-to-the-mean artefact) and
+over-counting of between-stratum variance (the effect is negligible). The
+explanation that survives is Jensen's inequality over \emph{per-query} noise
+dispersion: $R$ is convex, so $\mathbb{E}_i R(\sigma_i)>R(\mathbb{E}_i\sigma_i)$,
+and the gap correlates with the coefficient of variation of $\sigma$ across
+queries at $r=+0.956$. The law is therefore correct but must be applied per query
+and then averaged.
+
+\paragraph{Blocks are nearly tied.} The median log-mass gap between the 8th and
+9th best block is $0.070$~nats, against a residual estimator uncertainty of
+$1.08$~nats without RoPE and $2.36$ with---a ratio of $15$ to $34$. No compact summary can resolve the ordering at
+the cut. This single fact explains four independent negative results we obtained
+(quadrature-optimised weights, correctness certificates, learned calibration and
+adaptive $k$ all reduce estimation error without improving ranking), and it
+explains why mass recall ($85$--$90\%$) so far exceeds set recall ($60$--$75\%$):
+mis-selecting a near-tied block is nearly free.
+
+\subsection{The irregular gather is free}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/gather.pdf}
+\caption{Scattered versus contiguous reads at equal volume, on three memory
+architectures. \textbf{Left:} bandwidth ratio. \textbf{Right:} fraction of peak
+bandwidth reached by the contiguous path; below $\approx$30\% neither path
+saturates and the ratio is uninformative. The gather penalty vanishes above
+$\approx$1\,KiB and decreases monotonically with GPU parallelism; on A100 the
+threshold has disappeared.}
+\label{fig:gather}
+\end{figure*}
+
+ASP's second pass reads a query-dependent subset of summaries, an irregular
+gather. The concern is misposed: each gathered element is a whole block summary
+of $r\!\cdot\! D\!\cdot\!2$ bytes---1\,KiB for $r=8$, $D=64$, i.e.\ sixteen
+64-byte cache lines---so coalescing is perfect \emph{within} a chunk and only
+inter-chunk locality is lost.
+
+Figure~\ref{fig:gather} confirms this and locates the threshold. In the saturated
+regime (contiguous path above $80\%$ of peak) the gather averages $104.0\%$ of
+contiguous bandwidth on the integrated GPU, $98.4\%$ on T4 and $97.7\%$ on A100,
+and never falls below $94.9\%$ on any of the three; values above unity are
+measurement noise on a path that is already bandwidth-saturated. Below saturation
+the three separate: the integrated GPU falls to $67.0\%$ at 64-byte chunks and T4
+to $88.0\%$ at 512 bytes, whereas A100 never drops below $95.5\%$ at \emph{any}
+granularity---the threshold has disappeared. The design rule is
+$r_2\!\cdot\! D\!\cdot\!2\ge2048$ bytes. The coarse pass violates it by
+construction ($r_1=2$, $D=64$: 256 bytes), which is harmless precisely because
+that pass reads every block and is therefore a contiguous scan, not a gather.
+
+\paragraph{Two refuted models.} We pre-registered a predictive model of the
+threshold based on Little's law~\cite{little2008queueing}: a gather kernel
+saturates when $N_{\text{res}}\cdot\min(C,U)\ge B\lambda$, giving
+$C^\star=\min(U,\alpha B\lambda/N_{\text{res}})$ with $\alpha$ calibrated on the
+integrated GPU. It predicted $328$~bytes for T4---\emph{lower} than the 1024
+observed there---and $1009$ for A100. Measurement refuted the calibration twice:
+T4's threshold is $1024$, and A100 has none. We then adopted a DRAM-page
+invariance hypothesis (the threshold is $\approx$1\,KiB on any memory system);
+A100 refutes that too. What survives is only the \emph{direction} of the first
+model: the penalty decreases monotonically with parallelism ($0.67$ at 64\,B on
+8 CUs, $0.88$ at 512\,B on 40 SMs, $1.00$ at 512\,B on 108 SMs). We report this
+as a result: the empirical behaviour converges across three memory architectures without
+a predictive model that survives contact with the data, and we prefer to say so
+rather than fit a third model post hoc.
+
+\subsection{Fusion works, at small quota}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fusion.pdf}
+\caption{H200, $Q=64$ queries, real grids. Fusion beats the two-kernel scheme
+only when the per-stratum quota is small; labels give winning configurations.}
+\label{fig:fusion}
+\end{figure}
+
+\begin{table}[t]
+\caption{Fused versus two-kernel ASP on H200 (59 configurations, $Q=64$,
+$G\in\{32,128,512\}$).}
+\label{tab:fusion}
+\begin{tabular}{rrrr}
+\toprule
+$q$ & fused / two-kernel & fused / dense & winning \\
+\midrule
+\textbf{8}  & \textbf{1.57$\times$} & \textbf{1.71$\times$} (max 4.58) & \textbf{15/15} \\
+16 & 0.78$\times$ & 1.27$\times$ & 3/15 \\
+32 & 0.68$\times$ & 0.71$\times$ & 0/15 \\
+64 & 0.32$\times$ & 0.38$\times$ & 0/14 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:fusion} and Figure~\ref{fig:fusion} give the result. Since
+$G\cdot q=m$ is fixed, $G$ governs parallelism and $q$ the serial work per team;
+the optimum is reached when the per-team quota $q/N_T$ falls to one, i.e.\
+$q\approx N_T=8$, giving the design rule $G\approx m/8$. At that point fusion
+beats the two-kernel form in 15 of 15 configurations, by $1.57\times$ median.
+
+Reaching this required two diagnoses. The first fused kernel failed with an
+illegal memory access, isolated by bisection to partial initialisation of a
+shared array whose full extent was later scanned. The second ran but was
+$3\times$ slower, with a runtime \emph{exactly linear in $q$} and independent of
+summary size---the signature of serialisation, traced to a final merge of
+per-team candidate lists executed by a single thread. Removing that merge by
+stratifying one level further (each team gathers its own top-$q/N_T$) moved the
+result from $0.31\times$ to $0.96\times$, and tuning $G$ to $1.57\times$.
+
+\subsection{End to end: byte savings do not become speedups}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/e2e.pdf}
+\caption{Qwen3-8B on H200. \textbf{Left:} full decode-step latency and the
+corresponding byte-traffic ratio. \textbf{Right:} ventilation---dense attention
+runs at $84\%$ of peak bandwidth and costs $2\text{--}11$\,ms, while the unfused
+ASP selector costs a flat $20\text{--}23$\,ms.}
+\label{fig:e2e}
+\end{figure*}
+
+\begin{table}[t]
+\caption{Qwen3-8B, H200, complete decode step.}
+\label{tab:e2e}
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{rrrrrr}
+\toprule
+context & KV (GB) & dense & ASP & speedup & bytes \\
+        &         & (ms)  & (ms) &         & saved \\
+\midrule
+16\,k  &  2.2 & 29.9 & 49.6 & 0.60$\times$ & 13.5$\times$ \\
+65\,k  &  9.0 & 29.8 & 49.5 & 0.60$\times$ & 20.9$\times$ \\
+131\,k & 18.0 & 30.0 & 49.4 & 0.61$\times$ & 23.0$\times$ \\
+262\,k & 36.0 & 42.1 & 54.0 & 0.78$\times$ & 24.2$\times$ \\
+524\,k & 72.0 & 72.6 & 89.8 & 0.81$\times$ & 24.9$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:e2e} is the paper's central measurement. ASP reads $13$--$25\times$
+fewer bytes and is $1.2$--$1.7\times$ slower. We had predicted a $10$--$40\%$ gain;
+we measure a $19$--$40\%$ loss.
+
+The ventilation (Figure~\ref{fig:e2e}, right) identifies the cause completely.
+Dense attention costs $2.06$, $4.06$, $6.62$ and $11.34$\,ms at $16$k, $65$k,
+$131$k and $262$k---about $84\%$ of the peak-bandwidth floor, i.e.\ already
+near-optimal. The unfused ASP selector costs a flat $20$--$23$\,ms: eight
+non-fused PyTorch operations per layer, some 290 kernel launches per decode step.
+Crossover requires dense attention to exceed the selector overhead, which happens
+at $N\approx470$k; at $524$k we still measure $0.81\times$.
+
+The prediction failed because it assumed a memory-bound decode. This integration
+is not: the measured step is $3.2\times$ above its memory floor ($30$\,ms against
+$9.4$\,ms at $131$k), the non-attention portion being dominated by framework
+overhead. In an engine with CUDA graphs and fused kernels that portion would fall
+towards $\approx$5\,ms, attention would dominate, and the byte savings would
+matter---provided the selector is fused. That projection is an inference, not a
+measurement, and we mark it as such.
+
+\paragraph{An artefact that would have inverted the conclusion.} Our first
+ventilation reported a $10.3\times$ ASP speedup on attention. It was wrong: both
+paths materialised the expanded KV via \texttt{repeat\_interleave} to emulate
+grouped-query attention~\cite{ainslie2023gqa}, inflating the dense baseline by the group factor $g=4$
+while barely touching ASP, which gathers a tiny KV. The impossibility was visible
+---attention alone ($121$\,ms) exceeded the full step ($30$\,ms). Enabling
+GQA-aware SDPA on both paths removed it. We report this because the artefact
+favoured our own method, and because the check that caught it (a component
+exceeding its container) is cheap and general.
+
+%======================================================================
+\section{Discussion}\label{sec:disc}
+
+\paragraph{Where the effort should go.} Two measurements reorder priorities.
+First, at $k=8$, moving from a coreset selector to a perfect
+oracle recovers $5.4$ points of output error, whereas doubling $k$ recovers
+$8.5$. Second, the near-tie structure caps what any selector can do. Both suggest
+that making $k$ larger but cheaper is worth more than making the selector smarter.
+
+\paragraph{Sparse attention and speculation conflict.} Under sparse attention the
+$\gamma+1$ speculative candidates select different blocks, so verification must
+read their union. Measured on real attention, amortisation efficiency falls to
+$41.8\%$ at $\gamma=8$ with token-granular selection, and speculative speedup can
+vanish entirely ($1.00\times$ at $\alpha=0.7$). Block granularity partially
+rescues it ($65.2\%$), which is an argument for block selection that its
+proponents do not make.
+
+\paragraph{Should content-defined blocking be in this paper?} We also find that
+partitioning the cache by key \emph{geometry} rather than by position doubles the
+attention mass captured by the top-8 blocks ($21.6\%\to43.1\%$ without RoPE).
+We deliberately exclude it here. It shares the theoretical frame---the radius
+$\rho$ of Proposition~\ref{prop:bound} bounds every summary's error---but answers
+a different question (\emph{how to partition}, not \emph{how to allocate
+precision}), and its validation requires work this paper does not contain: the
+gain is measured at a single $k$ and a single block size, and it collapses once
+RoPE is applied---from $\times1.99$ to $\times1.23$ ($44.6\%\to54.8\%$), because
+rotation partly destroys the geometric clustering the partition exploits.
+Clustering pre-RoPE keys while attending post-RoPE recovers only part of it
+($\times1.10$), a tension we have characterised but not resolved. Merging the two would dilute both.
+
+%======================================================================
+\section{Limitations}
+
+\textbf{Scope of the hardware claims.} Four GPUs, one of them integrated. No
+MI300 or Blackwell part was tested; the granularity threshold has no surviving
+predictive model, so extrapolation is unwarranted.
+
+\textbf{The end-to-end integration is not a serving engine.} We patch
+\texttt{transformers}, not vLLM or SGLang: no continuous batching, no paged KV,
+no CUDA graphs. Our central negative result is therefore conditional on an
+integration that is itself $3.2\times$ from its memory floor. The fused kernel of
+Section~\ref{sec:fusion} was measured \emph{outside} the model; joining the two is
+the obvious next step and we have not done it.
+
+\textbf{Context beyond the trained range.} Qwen3-8B has
+$\texttt{max\_position\_embeddings}=40960$. Beyond $40$k we measure performance,
+not quality; the memory pattern and latency are unchanged but outputs are not
+meaningful. Selection quality was measured separately, on real attention, at
+in-distribution lengths.
+
+\textbf{Synthetic KV values and simplified summaries.} Decode latency depends on
+cache \emph{shape}, not content, so we synthesise KV beyond $131$k; summaries in
+the end-to-end path are segment means rather than $k$-center coresets, a weaker
+but cheaper construction whose \emph{size}---all that latency depends on---is
+identical.
+
+\textbf{Quality of the fused selector.} Fusion's optimum sits at per-stratum
+quota one, which costs $2.5$--$3.2$ relative recall points. We measured that cost
+but did not measure its effect on any downstream benchmark such as
+RULER~\cite{hsieh2024ruler}.
+
+\textbf{Bandit assumptions.} Equation~\eqref{eq:l1} assumes independence between
+the two loss sources and Gaussian score noise. The first is a first-order
+approximation; the second is contradicted by our own finding that per-query noise
+dispersion matters (Section~\ref{sec:law}).
+
+%======================================================================
+\section{Conclusion and Future Work}
+
+Two-pass precision allocation reduces selector traffic by $13$--$25\times$ on a
+real model, and that reduction does not become a speedup unless two conditions
+hold: the selector must be a single fused kernel, and the surrounding engine must
+be memory-bound. We measured the first condition being met ($1.57\times$ over the
+two-kernel form on H200) and the second being violated ($3.2\times$ from the
+memory floor). The irregular gather, which motivated this study, turns out to
+cost nothing on datacenter hardware.
+
+Four threads remain open. \emph{Fusing the validated kernel into a serving
+engine} is the direct continuation and would test the projection of
+Section~5.4. \emph{Content-defined blocking} needs its own study, with the
+layer-dependence of its gain as the first question. \emph{The second error
+mechanism}---the rank structure of estimator error, which a permutation test
+shows is actively harmful by $1.2$--$5.2$ points---is characterised but
+unexplained. And the \emph{precision-allocation bandit} deserves a proper
+optimality theorem: we have a first-order design rule and a measured
+rate--distortion curve, not a lower bound.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

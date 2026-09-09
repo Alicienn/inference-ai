@@ -1,0 +1,6 @@
+SmolLM2-135M | wikitext (EN DOMAINE) | T=1024 | W=256 | Lb=64 | m=4
+dense            perte=2.3690 (p= 10.69)
+m0_fenetre       perte=3.7847 (p= 44.02)
+mean_cle_moyenne perte=3.8000 (p= 44.70)
+oracle_LSE       perte=3.8145 (p= 45.35)
+rand_seed1234    perte=3.7628 (p= 43.07)

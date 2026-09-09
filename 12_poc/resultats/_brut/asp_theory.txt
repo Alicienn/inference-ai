@@ -1,0 +1,47 @@
+====================================================================================================
+ASP — validation de la règle de conception   (qwen8k / avec RoPE)
+====================================================================================================
+  bruit de la passe grossière (coreset r=1) : sigma_1 = 0.865 nat
+  seuil visé : ecart l_(8) - l_(m) > 2*sigma_1 = 1.729 nat
+
+    m  ecart l_(8)-l_(m)  >2sigma1 ?  top-8 survivant
+----------------------------------------------------------------------------------------------------
+   10              0.208         non           72.83%
+   12              0.389         non           77.39%
+   16              0.704         non           83.67%
+   20              0.975         non           87.68%
+   24              1.221         non           90.49%
+   32              1.671         non           93.97%
+   40              2.083         oui           96.10%
+   48              2.496         oui           97.58%
+
+  -> m prédit par la règle : 40
+  -> m optimal observé (meilleur rappel/octet) : m=10 (r=4, rappel 85.45%)
+
+  Gain ASP vs plat, à rappel comparable :
+    plat r= 4 : 88.08% pour   354.1 vec   |  ASP m=40,r=4 : 88.11% pour   251.0 vec   -> **1.41x**
+
+====================================================================================================
+ASP — validation de la règle de conception   (smol8k / avec RoPE)
+====================================================================================================
+  bruit de la passe grossière (coreset r=1) : sigma_1 = 1.094 nat
+  seuil visé : ecart l_(8) - l_(m) > 2*sigma_1 = 2.187 nat
+
+    m  ecart l_(8)-l_(m)  >2sigma1 ?  top-8 survivant
+----------------------------------------------------------------------------------------------------
+   10              0.270         non           70.71%
+   12              0.512         non           75.18%
+   16              0.982         non           80.84%
+   20              1.482         non           84.83%
+   24              1.896         non           87.70%
+   32              2.619         oui           91.73%
+   40              3.261         oui           94.45%
+   48              3.840         oui           96.41%
+
+  -> m prédit par la règle : 32
+  -> m optimal observé (meilleur rappel/octet) : m=10 (r=4, rappel 80.77%)
+
+  Gain ASP vs plat, à rappel comparable :
+    plat r= 4 : 87.71% pour   354.2 vec   |  ASP m=20,r=16 : 89.01% pour   413.5 vec   -> **0.86x**
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\asp_theory.json

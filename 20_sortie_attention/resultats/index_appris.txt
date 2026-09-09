@@ -1,0 +1,21 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | distillation de maxip, 64 requetes/tete
+entrainement d'=4 : perte CE 4.3912 -> 0.4930 (warm start PCA) sur 4 points
+entrainement d'=8 : perte CE 6.5730 -> 0.4836 (warm start PCA) sur 4 points
+
+=== evaluation sur le texte A (512 tokens) ===
+dense          perte=2.9144 (p=  18.437)  ecart_maxip=-0.0470
+maxip          perte=2.9613 (p=  19.323)  ecart_maxip=+0.0000
+pcaB_d8        perte=3.0217 (p=  20.526)  ecart_maxip=+0.0604
+pcaB_d4        perte=3.0395 (p=  20.895)  ecart_maxip=+0.0782
+learned_d4     perte=3.0676 (p=  21.490)  ecart_maxip=+0.1063
+learned_d8     perte=3.0861 (p=  21.891)  ecart_maxip=+0.1248
+aleatoire      perte=3.1309 (p=  22.894)  ecart_maxip=+0.1696
+
+appris d'=4 vs PCA d'=4 : +0.0281
+appris d'=4 vs PCA d'=8 : +0.0459
+
+=== sur-apprentissage : texte B (entrainement) vs texte A (tenu a l'ecart) ===
+[B] pcaB_d4 perte=2.0200  |  [A] 3.0395  ecart B-A=-1.0196
+[B] learned_d4 perte=1.9903  |  [A] 3.0676  ecart B-A=-1.0773
+[B] pcaB_d8 perte=1.9779  |  [A] 3.0217  ecart B-A=-1.0438
+[B] learned_d8 perte=1.9911  |  [A] 3.0861  ecart B-A=-1.0949

@@ -1,0 +1,26 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | HARNAIS CORRIGE (sentinelle -1)
+CONTROLE STRUCTUREL : p=100 -> 101 (attendu 101, fenetre seule) ; p=300 -> 192 (attendu 192)
+
+offset 0 (auto-test causal 1.6e-05)
+  dense      2.9144
+  maxip      3.1855
+  pca_d8     3.2407
+  aleatoire  5.0570
+
+offset 200000 (auto-test causal 1.3e+01)
+  dense      1.9244
+  maxip      2.1394
+  pca_d8     2.1707
+  aleatoire  3.5405
+
+offset 400000 (auto-test causal 1.2e+01)
+  dense      2.9936
+  maxip      3.1509
+  pca_d8     3.1611
+  aleatoire  4.9491
+
+=== moyennes sur 3 tranches (harnais corrige) ===
+dense      moy=2.6108  ecart_maxip=-0.2145
+maxip      moy=2.8253  ecart_maxip=+0.0000
+pca_d8     moy=2.8575  ecart_maxip=+0.0323
+aleatoire  moy=4.5155  ecart_maxip=+1.6903

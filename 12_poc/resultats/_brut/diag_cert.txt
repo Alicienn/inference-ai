@@ -1,0 +1,49 @@
+================================================================================================
+UN CERTIFICAT EST-IL POSSIBLE ?  --  avec RoPE  (coreset r=4, L=64)
+================================================================================================
+(a) amplitude des ecarts  M = s||q||rho :
+      median    23.87 nats   p90    57.77
+      facteur de Bennett g(M) median : 4.088e+07
+      -> une borne de concentration n'est informative que si M ~ 1.
+
+(b) ecart reel Delta = l_b - lhat_b :
+      moyenne (biais)   2.395   ecart-type ENTRE BLOCS   2.589 nats
+      max  23.869   min   0.027
+
+(c) ecart de score entre le 8e et le 9e bloc :
+      median   0.070   p25   0.028   p75   0.139 nats
+
+  RAPPORT sigma(Delta) / ecart median = 36.75
+  -> l'incertitude residuelle depasse l'ecart a discriminer :
+     aucun certificat, meme calibre, ne peut trancher de facon fiable.
+
+(d) Delta est-il PREVISIBLE a partir de (rho, lambda) stockes ?
+      R^2 de la regression = 0.724   residu sigma = 1.361 nats (contre 2.589 brut)
+      -> oui : on peut corriger le biais PAR BLOC et esperer
+         ameliorer le classement, pas seulement l'estimation.
+
+================================================================================================
+UN CERTIFICAT EST-IL POSSIBLE ?  --  sans RoPE  (coreset r=4, L=64)
+================================================================================================
+(a) amplitude des ecarts  M = s||q||rho :
+      median    20.77 nats   p90    36.96
+      facteur de Bennett g(M) median : 2.423e+06
+      -> une borne de concentration n'est informative que si M ~ 1.
+
+(b) ecart reel Delta = l_b - lhat_b :
+      moyenne (biais)   1.182   ecart-type ENTRE BLOCS   1.934 nats
+      max  23.853   min   0.026
+
+(c) ecart de score entre le 8e et le 9e bloc :
+      median   0.023   p25   0.009   p75   0.054 nats
+
+  RAPPORT sigma(Delta) / ecart median = 85.29
+  -> l'incertitude residuelle depasse l'ecart a discriminer :
+     aucun certificat, meme calibre, ne peut trancher de facon fiable.
+
+(d) Delta est-il PREVISIBLE a partir de (rho, lambda) stockes ?
+      R^2 de la regression = 0.812   residu sigma = 0.838 nats (contre 1.934 brut)
+      -> oui : on peut corriger le biais PAR BLOC et esperer
+         ameliorer le classement, pas seulement l'estimation.
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\diag_cert.json

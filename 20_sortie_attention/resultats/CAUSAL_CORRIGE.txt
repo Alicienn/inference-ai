@@ -1,0 +1,19 @@
+CORRECTION BUG CAUSAL (j <= p impose) | T=512 W=128 Lb=64 m=2 | corpus local
+SmolLM2-135M     dense              perte=2.9144 (p= 18.437)
+SmolLM2-135M     m0_fenetre         perte=4.7402 (p=114.461)
+SmolLM2-135M     mean_cle_moyenne   perte=3.2191 (p= 25.005)
+SmolLM2-135M     oracle_LSE         perte=3.0017 (p= 20.120)
+SmolLM2-135M     rand_seed1000      perte=3.0883 (p= 21.940)
+SmolLM2-135M     rand_seed2000      perte=3.0899 (p= 21.975)
+SmolLM2-135M     rand_seed3000      perte=3.0863 (p= 21.895)
+SmolLM2-135M     ALEATOIRE moy=3.0882 min=3.0863 max=3.0899 | mean bat hasard ? False | oracle bat hasard ? True
+
+Qwen2.5-0.5B     dense              perte=2.6767 (p= 14.537)
+Qwen2.5-0.5B     m0_fenetre         perte=4.6347 (p=102.995)
+Qwen2.5-0.5B     mean_cle_moyenne   perte=3.0936 (p= 22.056)
+Qwen2.5-0.5B     oracle_LSE         perte=2.7694 (p= 15.949)
+Qwen2.5-0.5B     rand_seed1000      perte=2.8549 (p= 17.373)
+Qwen2.5-0.5B     rand_seed2000      perte=2.8229 (p= 16.825)
+Qwen2.5-0.5B     rand_seed3000      perte=2.8447 (p= 17.197)
+Qwen2.5-0.5B     ALEATOIRE moy=2.8408 min=2.8229 max=2.8549 | mean bat hasard ? False | oracle bat hasard ? True
+

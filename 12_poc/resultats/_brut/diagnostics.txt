@@ -1,0 +1,25 @@
+================================================================================================
+REGIME DE DEVELOPPEMENT  --  avec RoPE  (bloc L=64, Qwen2.5-0.5B)
+================================================================================================
+  |terme d'ordre 1|  moyen :   20.357 nats
+   terme d'ordre 2   moyen :    5.386 nats   (median 2.703, p90 6.174)
+  |reste apres ordre 2|    :    2.358 nats   (median 0.581, p90 2.292)
+
+  ratio |reste| / |ordre 2| : moyen   0.24   median   0.21
+  -> l'ordre 2 capture l'essentiel : regime de petites deviations.
+
+  borne coreset (*) : respectee dans 100.00% des cas, serrement moyen 0.072
+
+================================================================================================
+REGIME DE DEVELOPPEMENT  --  sans RoPE  (bloc L=64, Qwen2.5-0.5B)
+================================================================================================
+  |terme d'ordre 1|  moyen :   17.353 nats
+   terme d'ordre 2   moyen :    2.816 nats   (median 1.438, p90 3.943)
+  |reste apres ordre 2|    :    1.081 nats   (median 0.258, p90 1.329)
+
+  ratio |reste| / |ordre 2| : moyen   0.20   median   0.17
+  -> l'ordre 2 capture l'essentiel : regime de petites deviations.
+
+  borne coreset (*) : respectee dans 100.00% des cas, serrement moyen 0.042
+
+-> C:\Users\alici\Downloads\inference_opti\12_poc\resultats\diagnostics_regime.json

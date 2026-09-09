@@ -1,0 +1,18 @@
+{
+  "avec RoPE": {
+    "ordre1": 20.357169304096114,
+    "ordre2": 5.385561672883649,
+    "reste": 2.3584648829535593,
+    "ratio_median": 0.20743887418837917,
+    "borne_respectee": 1.0,
+    "borne_serrement": 0.07245589984743908
+  },
+  "sans RoPE": {
+    "ordre1": 17.352533212078647,
+    "ordre2": 2.816353351986374,
+    "reste": 1.0812429753070212,
+    "ratio_median": 0.1680462332708239,
+    "borne_respectee": 1.0,
+    "borne_serrement": 0.041657092906234754
+  }
+}

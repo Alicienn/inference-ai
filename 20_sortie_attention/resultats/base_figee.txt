@@ -1,0 +1,25 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | index d'=8 (12 % des octets)
+AUTO-TEST CAUSAL 2.861e-05 -> OK
+dense                perte=2.9144
+m0_fenetre           perte=4.7402
+maxip_D64            perte=3.1855
+oracle_LSE           perte=3.1892
+pca_full_d8          perte=3.2407
+pca_frozen128_d8     perte=3.2332
+pca_frozen256_d8     perte=3.1888
+pca_offline_d8       perte=3.2577
+randproj_d8          perte=3.7344
+rand_moy             perte=4.9231
+dense                perte=2.9144 (p=  18.437)
+maxip_D64            perte=3.1855 (p=  24.180)
+pca_frozen256_d8     perte=3.1888 (p=  24.259)
+oracle_LSE           perte=3.1892 (p=  24.269)
+pca_frozen128_d8     perte=3.2332 (p=  25.360)
+pca_full_d8          perte=3.2407 (p=  25.551)
+pca_offline_d8       perte=3.2577 (p=  25.990)
+randproj_d8          perte=3.7344 (p=  41.865)
+m0_fenetre           perte=4.7402 (p= 114.461)
+rand_moy             perte=4.9231 (p= 137.432)
+
+ecart a maxip : full +0.0551 ; frozen128 +0.0476 ; frozen256 +0.0032 ; offline +0.0722
+bat le hasard ? full=True frozen128=True frozen256=True offline=True rproj=True

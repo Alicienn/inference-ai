@@ -1,0 +1,13 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 Lb=32 m=2 | chemin independant (boucles explicites) vs patche (SDPA)
+
+couche 0 :
+  selection identique (toutes tetes, p=300) : True
+  ensemble autorise identique (p=300) : False (192 positions patchees, 192 reference)
+  sortie d'attention brute : abs=1.569e-02  rel=2.962e-02
+  sortie apres o_proj     : abs=2.317e-02  rel=8.773e-03
+
+couche 29 :
+  selection identique (toutes tetes, p=300) : True
+  ensemble autorise identique (p=300) : False (192 positions patchees, 192 reference)
+  sortie d'attention brute : abs=6.577e+00  rel=5.417e-01
+  sortie apres o_proj     : abs=2.903e+01  rel=4.287e-01

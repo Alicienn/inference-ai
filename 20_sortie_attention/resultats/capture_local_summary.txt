@@ -1,0 +1,31 @@
+wikitext doc0 : 49236 caracteres
+corpus local : 31 fichiers, 283015 caracteres
+capture orig_wt : ids (1, 2048) | token[0]=446 | tokens uniques aux frontieres=[446, 533, 32, 28671]
+capture wt_nobos : ids (1, 2048) | token[0]=446 | tokens uniques aux frontieres=[446, 533, 32, 28671]
+capture wt_multidoc : ids (1, 2048) | token[0]=446 | tokens uniques aux frontieres=[446, 81, 2444, 35345]
+capture corpus_nobos : ids (1, 2048) | token[0]=40686 | tokens uniques aux frontieres=[40686, 34, 28, 288]
+VALIDATION couche 5 : max|delta K|=3.906e-03  cosinus=1.000000
+
+=== orig_wt ===
+  mean       err med=0.0721 p90=0.3205 max=3.6476 | masse med=0.915 | catastrophes=  7.1 %
+  mean_sink  err med=0.0483 p90=0.1371 max=0.2826 | masse med=0.956 | catastrophes=  0.0 %
+  oracle     err med=0.0331 p90=0.1116 max=0.2787 | masse med=0.977 | catastrophes=  0.0 %
+  masse position 0 = 0.2345 (med 0.0551) | bloc 0 = 0.2842 | fenetre 512 = 0.5644
+
+=== wt_nobos ===
+  mean       err med=0.0721 p90=0.3205 max=3.6476 | masse med=0.915 | catastrophes=  7.1 %
+  mean_sink  err med=0.0483 p90=0.1371 max=0.2826 | masse med=0.956 | catastrophes=  0.0 %
+  oracle     err med=0.0331 p90=0.1116 max=0.2787 | masse med=0.977 | catastrophes=  0.0 %
+  masse position 0 = 0.2345 (med 0.0551) | bloc 0 = 0.2842 | fenetre 512 = 0.5644
+
+=== wt_multidoc ===
+  mean       err med=0.1056 p90=1.2375 max=4.1245 | masse med=0.865 | catastrophes= 13.1 %
+  mean_sink  err med=0.0706 p90=0.1872 max=0.3912 | masse med=0.949 | catastrophes=  0.0 %
+  oracle     err med=0.0493 p90=0.1749 max=0.3680 | masse med=0.978 | catastrophes=  0.0 %
+  masse position 0 = 0.3560 (med 0.1655) | bloc 0 = 0.4028 | fenetre 512 = 0.4153
+
+=== corpus_nobos ===
+  mean       err med=0.1210 p90=2.2812 max=4.5468 | masse med=0.802 | catastrophes= 26.2 %
+  mean_sink  err med=0.0378 p90=0.1662 max=0.4476 | masse med=0.977 | catastrophes=  0.0 %
+  oracle     err med=0.0217 p90=0.1240 max=0.4633 | masse med=0.993 | catastrophes=  0.0 %
+  masse position 0 = 0.3009 (med 0.0938) | bloc 0 = 0.3329 | fenetre 512 = 0.5057
