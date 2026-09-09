@@ -11,9 +11,11 @@ OUT.mkdir(exist_ok=True)
 
 
 def main(mid, seq, ndoc, tag):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    dtype = torch.bfloat16 if device == "cuda" else torch.float32
     tok = AutoTokenizer.from_pretrained(mid)
     model = AutoModelForCausalLM.from_pretrained(
-        mid, dtype=torch.float32, attn_implementation="sdpa").eval()
+        mid, dtype=dtype, device_map=device, attn_implementation="sdpa").eval()
     cfg = model.config
     H, KVH = cfg.num_attention_heads, getattr(cfg, "num_key_value_heads", H := cfg.num_attention_heads)
     D = getattr(cfg, "head_dim", None) or cfg.hidden_size // H
@@ -26,7 +28,7 @@ def main(mid, seq, ndoc, tag):
 
     def mk(name):
         def fn(mod, inp, out):
-            store[name] = out.detach()[0].float()      # (T, ...)
+            store[name] = out.detach()[0].float().cpu()      # (T, ...)
         return fn
 
     for li, layer in enumerate(model.model.layers):
@@ -43,17 +45,24 @@ def main(mid, seq, ndoc, tag):
             allt.append(buf); buf = ""
             if len(allt) >= ndoc: break
 
-    # module rotatif du modele -> cos/sin exacts
-    from transformers.models.qwen2.modeling_qwen2 import apply_rotary_pos_emb
+    # module rotatif du modele -> cos/sin exacts (meme forme sur toute la famille Qwen)
+    model_type = getattr(cfg, "model_type", "qwen2")
+    try:
+        mod = __import__(f"transformers.models.{model_type}.modeling_{model_type}",
+                          fromlist=["apply_rotary_pos_emb"])
+        apply_rotary_pos_emb = mod.apply_rotary_pos_emb
+    except (ImportError, AttributeError):
+        from transformers.models.qwen2.modeling_qwen2 import apply_rotary_pos_emb
 
     packs = []
     for di, t in enumerate(allt):
-        ids = tok(t, return_tensors="pt", truncation=True, max_length=seq).input_ids
+        ids = tok(t, return_tensors="pt", truncation=True, max_length=seq).input_ids.to(device)
         if ids.shape[1] < seq:
             continue
         emb = model.model.embed_tokens(ids)
-        pos = torch.arange(seq)[None, :]
+        pos = torch.arange(seq, device=device)[None, :]
         cos, sin = model.model.rotary_emb(emb, pos)
+        cos, sin = cos.cpu(), sin.cpu()
         model(ids)
         T = seq
         for li in range(L):
