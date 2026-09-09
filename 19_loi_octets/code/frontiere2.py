@@ -9,11 +9,12 @@ Sortie : sigma_disc(b), sigma_perp(b), rappel de masse @4/@8/@16, ajustement de
 sigma ~ b^-alpha par famille, et rayons gloutons d_r (dimension de recouvrement).
 """
 import numpy as np, json, pathlib, argparse, collections, sys, time
-sys.path.insert(0, r"C:\Users\alici\Downloads\inference_opti\12_poc\code")
+_ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(_ROOT / "12_poc" / "code"))
 import summaries as S
 from eval_selection import load
 
-OUT = pathlib.Path(r"C:\Users\alici\Downloads\inference_opti\19_loi_octets\resultats")
+OUT = pathlib.Path(__file__).resolve().parents[1] / "resultats"
 KS = (4, 8, 16)
 
 
