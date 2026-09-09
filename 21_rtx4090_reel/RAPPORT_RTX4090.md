@@ -171,6 +171,30 @@ premier). Code : `16_gpu/probe_b_decomposition.py`.
 presque autant au dense qu'à ASP — pas l'effet "quasi gratuit" espéré, mais l'échantillon
 est trop petit pour trancher. Code : `16_gpu/probe_c_batch.py`.
 
+### Test D (idée propre) — corriger le bug sur une vraie boucle de décodage : non concluant
+
+**[FAIT]** Implémentation d'une mise à jour incrémentale des résumés (seul le dernier bloc,
+partiel, est recalculé à chaque pas — O(Lb) au lieu de O(N)), testée sur une vraie boucle de
+64 pas consécutifs où le cache grandit token par token (aucun test précédent, y compris
+`e2e_qwen.py` et `vent.py`, ne mesurait plus d'un seul pas à N fixe) :
+
+| N0 | ASP actuel / dense | ASP "corrigé" / dense |
+|---:|---:|---:|
+| 16 384 | 0,945× | 0,941× |
+| 65 536 | 1,008× | 0,752× |
+| 131 072 | 1,674× | **2,183×** (pire) |
+| 262 144 | 1,022× | 0,751× |
+
+**[LIMITE]** Pas de tendance cohérente — la version "corrigée" gagne parfois, perd parfois.
+**[INFÉRENCE]** L'implémentation de test elle-même est probablement en cause, pas
+l'hypothèse : la mise à jour incrémentale utilise `torch.cat` pour faire grandir les
+tenseurs de résumés à chaque pas, ce qui réalloue et recopie de la mémoire à chaque appel
+— un coût qui peut dominer le gain recherché à cette échelle. Démontrer proprement le
+bénéfice demanderait des tampons pré-alloués (pas de `cat` en boucle), hors du périmètre
+d'un script de test rapide. **Le diagnostic du Test B reste valide** (le recalcul complet
+est le vrai coût qui grossit) ; ce Test D ne l'infirme pas, il échoue seulement à
+démontrer proprement le correctif. Code : `16_gpu/probe_d_incremental.py`.
+
 ---
 
 ## 7. Ce que ça change / ne change pas
