@@ -13,7 +13,8 @@ import torch, time, math, json, pathlib
 import e2e_qwen as E
 
 L, KVH, D, H = 36, 8, 128, 32
-BW = 3.8e12   # H200 NVL, bande passante crete annoncee
+import os
+BW = float(os.environ.get("ASP_BW", 3.8e12))   # defaut H200 NVL ; RTX4090 mesure = 936.5e9
 
 
 def timeit(fn, reps=9):
@@ -29,7 +30,7 @@ print("=" * 100)
 print("VENTILATION — H200, Qwen3-8B, un pas de decodage")
 print("=" * 100)
 W = 15.3 * 2**30
-print(f"  poids 15,3 Go ; bande passante crete {BW/1e12:.1f} To/s")
+print(f"  poids 15,3 Go ; bande passante crete {BW/1e9:.1f} Go/s")
 print(f"\n{'N':>9s} {'KV Go':>7s} | {'plancher':>9s} {'attn dense':>11s} {'attn ASP':>9s} "
       f"| {'pas dense':>10s} {'pas ASP':>8s} | {'attn / pas':>11s} {'MFU mem':>8s}")
 print("-" * 100)

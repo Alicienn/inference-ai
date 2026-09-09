@@ -164,6 +164,14 @@ Les expériences empiriques utilisent GPT-2 et SmolLM2-135M sur wikitext.
 - Texte extrait : `_txt/` et `_extracted/` ; scripts : `_tools/`.
 
 
+## Axe 21 — Mesures réelles GPU loué (RTX 4090, Qwen3-8B) — session 13
+
+`21_rtx4090_reel/RAPPORT_RTX4090.md` : premier test sur GPU loué avec un vrai modèle 8B
+(jusque-là CPU seul / petits modèles). Confirme sur 2e GPU independant (apres H200) que
+ASP economise 13-23x d'octets mais reste 10-145% plus lent en bout en bout (Qwen3-8B
+reel) ; confirme coreset > COBS sur le vrai 8B ; releve un artefact de cache L2 dans le
+micro-benchmark gather isole de `16_gpu/RAPPORT_GATHER.md`.
+
 ## Axe 20 — Erreur de sortie d'attention (session 12)
 
 `20_sortie_attention/RAPPORT_SORTIE.md` : decomposition de l'erreur de sortie d'attention
@@ -173,3 +181,35 @@ locale exacte). Resultat : la quantification 4 bits coute 2,6-6,8x moins que la 
 recuperation (Jensen gap). Code : `20_sortie_attention/code/err_attention2.py`,
 `qwen_run.py`. Donnees : `20_sortie_attention/resultats/err_attention_{smol,qwen}_v2.json`.
 Verification : cellule 9 du runbook 9944d27c (runbook_run_8ea7e88b).
+
+## RTX 4090 (2026-09-09) — 4e architecture
+
+- [`16_gpu/resultats/rtx4090_raw.txt`](16_gpu/resultats/rtx4090_raw.txt) — sortie brute du banc de gather CUDA (RTX 4090, GDDR6X, pic 933,2 GB/s).
+- [`16_gpu/resultats/e2e_qwen_rtx4090.json`](16_gpu/resultats/e2e_qwen_rtx4090.json) — latence de decodage Qwen3-8B, dense contre ASP (16k a 131k).
+- [`16_gpu/RAPPORT_GATHER.md`](16_gpu/RAPPORT_GATHER.md) — section 6quater : pas de seuil de gather ; le chiffre d'efficacite mesurait la L2 ; bilan sur quatre GPU.
+- [`17_papier/asp.tex`](17_papier/asp.tex) — papier mis a jour (4 architectures, 2 backends, paragraphe sur le confondant L2, croisement 146k).
+- Rapport : « La RTX 4090 : le banc mesurait le cache, et un GPU plus lent atteint la parite plus tot » (report_f3aaca65-4d17-498e-a130-49aacf558f34).
+- Runbook de reanalyse : `runbook_3bdcabe2-dbc9-47b7-8df3-0f78934846f8`.
+
+## Balayage d'agregations (2026-09-09) — correction de la metrique
+
+- [`20_sortie_attention/code/gpt2_lse.py`](20_sortie_attention/code/gpt2_lse.py) — banc d'induction GPT-2 avec une troisieme agregation (log-sum-exp sur les cles, temperature reglee).
+- [`20_sortie_attention/resultats/gpt2_lse.txt`](20_sortie_attention/resultats/gpt2_lse.txt) — 18 configurations (3 budgets x 6 agregations) : le max gagne aux trois budgets ; la LSE est refutee ; la masse retenue S n'est qu'un proxy (lse lambda=2 retient plus de masse et perd plus a 25 %).
+- Rapport de correction : « Correction : le maximum reste la meilleure agregation, et la masse retenue n'est qu'un proxy » (report_57712c53-1ec8-43ef-977b-9afb2cf3a627). Corrige la section correspondante du rapport v28.
+- [`17_papier/asp.tex`](17_papier/asp.tex) — paragraphe du banc de recuperation corrige (15 pages, 742 910 octets).
+
+## Score sensible a la valeur (2026-09-09) — refutation
+
+- [`20_sortie_attention/code/gpt2_vsel.py`](20_sortie_attention/code/gpt2_vsel.py) et [`gpt2_vsel3.py`](20_sortie_attention/code/gpt2_vsel3.py) — reclassement des blocs par alignement de valeur, plus controles (direction aleatoire, direction opposee) et protection de l'argmax.
+- [`20_sortie_attention/resultats/gpt2_vsel.txt`](20_sortie_attention/resultats/gpt2_vsel.txt) — 15 configurations : aucune variante sensible a la valeur ne bat le max cle seule ; l'ordre correct < aleatoire < anti montre que le signal existe.
+- [`20_sortie_attention/resultats/gpt2_vsel3.txt`](20_sortie_attention/resultats/gpt2_vsel3.txt) — 9 configurations : proteger l'argmax du selecteur redonne les chiffres au chiffre pres, donc le pic deloge n'est pas l'argmax et le degat est dans le remplissage du budget.
+- [`17_papier/asp.tex`](17_papier/asp.tex) — papier a jour (16 pages, 744 218 octets) : paragraphe du banc de recuperation etendu au test de valeur.\n
+## Budget adaptatif (2026-09-09) — refutation
+
+- [`20_sortie_attention/code/gpt2_tau.py`](20_sortie_attention/code/gpt2_tau.py) — selection par seuil tau * meilleur score, plafonnee a m, avec compteur de blocs lus (corrige du facteur nb).
+- [`20_sortie_attention/resultats/gpt2_tau.txt`](20_sortie_attention/resultats/gpt2_tau.txt) — 18 configurations : a octets egaux le rang bat le seuil (a m=24, tau=0,5 economise 51 % des blocs et coute +0,72 nat, alors que tronquer le rang de 24 a 8 blocs coute +0,66 nat).\n
+## Index a deux etages (2026-09-09) — resultat positif
+
+- [`20_sortie_attention/code/gpt2_two.py`](20_sortie_attention/code/gpt2_two.py) et variantes `gpt2_fine.py`, `gpt2_finesum.py`, `gpt2_finenorm.py` — etage 1 = top-2m candidats par l'index grossier d'=8, etage 2 = re-classement des candidats.
+- [`20_sortie_attention/resultats/gpt2_two.txt`](20_sortie_attention/resultats/gpt2_two.txt) — le re-classement EXACT atteint l'oracle : +0,01128 nat a m=16 (contre +0,22553), +0,24636 a m=8 (contre +0,69516) ; controle aleatoire catastrophique (+1,15 a +1,82).
+- [`20_sortie_attention/resultats/gpt2_fine.txt`](20_sortie_attention/resultats/gpt2_fine.txt), [`gpt2_finesum.txt`](20_sortie_attention/resultats/gpt2_finesum.txt), [`gpt2_finenorm.txt`](20_sortie_attention/resultats/gpt2_finenorm.txt) — aucun score compact teste ne reproduit le gain ; a m=24 le cosinus 32d a S=0,949 et 99,9 % de pic pour +0,358 nat, contre +0,038 nat pour la reference (S=0,913, 97,1 %).
