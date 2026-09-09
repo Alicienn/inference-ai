@@ -1,0 +1,15 @@
+====================================================================================================
+TEST G -- decomposition ASP2 par etape (comparaison directe avec ASP1, Test B)
+====================================================================================================
+        N   update   stage1  gatherS2   stage2  gatherKV     attn |  somme ASP2  somme ASP1(*)
+----------------------------------------------------------------------------------------------
+    16384   0.009m   0.189m    0.063m   0.143m    0.162m   0.045m |      0.613m
+    65536   0.007m   0.211m    0.071m   0.137m    0.159m   0.045m |      0.629m
+   131072   0.007m   0.307m    0.092m   0.136m    0.159m   0.046m |      0.747m
+   262144   0.007m   0.489m    0.207m   0.139m    0.159m   0.053m |      1.054m
+
+(*) voir 16_gpu/resultats/probe_b_decomposition.json pour la somme ASP1 equivalente.
+LECTURE. Si 'stage1' domine largement (contrairement a ASP1 ou c'etait 'update'/build),
+le cout s'est deplace : le score max necessite un tenseur 5D (n blocs x Lb cles x d'
+dims) touche a CHAQUE pas, meme quand les resumes sont deja construits -- plus cher
+par element que la reduction logsumexp compacte d'ASP1, malgre moins de donnees brutes.

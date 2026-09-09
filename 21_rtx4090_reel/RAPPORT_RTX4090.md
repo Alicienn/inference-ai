@@ -245,9 +245,58 @@ pipeline complet (tri + gather + attention finale) ni un vrai passage de modèle
 bout sur une séquence multi-pas — ce dernier reste à faire pour confirmer que le gain
 survit une fois intégré dans un vrai passage `forward()` répété.
 
+## 8. Le test décisif : intégré dans un vrai décodage complet, le correctif régresse
+
+Dernière session GPU. Intégration du pipeline ASP2 complet (déjà fonctionnel : tampons
+incrémentaux + score max aux deux étages) dans une **vraie boucle `model()` avec
+`use_cache=True`**, le cache grandissant naturellement token par token — le test qui
+manquait, ni un instantané figé ni une brique isolée.
+
+**[FAIT]** 32 pas de décodage réels, Qwen3-8B complet (`16_gpu/e2e_multistep_final.py`) :
+
+| N0 | dense | asp1 (bug d'origine) | asp2 (corrigé) | gain asp1 | gain asp2 |
+|---:|---:|---:|---:|---:|---:|
+| 16 384 | 1,68 s | 2,25 s | 2,86 s | 0,75× | **0,59×** |
+| 65 536 | 1,74 s | 2,06 s | 2,77 s | 0,85× | **0,63×** |
+
+**Le pipeline complet corrigé est plus lent que le bug d'origine, pas plus rapide** —
+l'inverse de ce que le Test F isolé laissait espérer. VRAM insuffisante pour tester
+131k/262k dans ce protocole (cache grandissant + poids + tampons simultanés).
+
+**[FAIT] Diagnostic (Test G, `16_gpu/probe_g_decompose_asp2.py`)** — décomposition du coût
+d'ASP2 par étape, à comparer à celle d'ASP1 (§6, Test B) :
+
+| N | update (résumés) | tri grossier (stage1) | gather | tri fin (stage2) | gather final | attention |
+|---:|---:|---:|---:|---:|---:|---:|
+| 16 384 | 0,009 ms | 0,189 ms | 0,063 ms | 0,143 ms | 0,162 ms | 0,045 ms |
+| 262 144 | 0,007 ms | **0,489 ms** | 0,207 ms | 0,139 ms | 0,159 ms | 0,053 ms |
+
+**[FAIT]** `update` (la brique corrigée) est bien redevenu quasi gratuit (0,007-0,009 ms,
+conforme au Test F) — **mais le coût s'est simplement déplacé** vers le tri grossier
+(stage1), qui grossit maintenant lui-même avec le contexte (×2,6 entre 16k et 262k) :
+scorer chaque bloc par un max sur ses clés projetées touche un tenseur à 5 dimensions
+(blocs × clés du bloc × dimensions projetées) à chaque pas, même une fois les résumés
+construits — alors qu'ASP1 réduisait ce même travail en une seule passe `logsumexp`
+compacte. **[INFÉRENCE]** La somme des étapes d'ASP2 (0,613-1,054 ms/couche) reste
+pourtant *inférieure* à celle d'ASP1 à grand contexte (1,792 ms/couche à 262k, Test B) —
+l'écart mesuré dans le vrai modèle (§8) est donc probablement dominé par un surcoût
+d'intégration non capturé par la mesure isolée (plus d'opérations GPU distinctes par
+couche pour le score max — 8 environ contre 6 pour ASP1 — donc plus de lancements de
+calcul séparés, dont le coût s'additionne différemment une fois entrelacés avec les 36
+couches du vrai modèle). Non vérifié plus avant, faute de budget GPU restant.
+
+**Conclusion honnête de cette piste de correctif** : le bug de vitesse diagnostiqué (Test
+B) était réel et sa brique isolée se corrige bien (Test F, jusqu'à 1,68×) — mais
+l'implémentation du correctif introduit un second défaut (le score max coûte plus cher
+par appel que la moyenne qu'il remplace), et le bilan net, mesuré sur un vrai décodage
+complet, est une **régression**, pas une amélioration. Le chantier n'est pas résolu ; il
+est mieux caractérisé, avec un nouveau défaut précis à corriger (rendre le score max
+aussi compact que la réduction logsumexp qu'il remplace) plutôt qu'une intuition vague de
+"il faut fusionner le noyau".
+
 ---
 
-## 8. Ce que ça change / ne change pas
+## 9. Ce que ça change / ne change pas
 
 - **Ne change pas** : la conclusion centrale du papier (ASP économise des octets mais ne
   devient pas plus rapide sans fusion de noyau) — **renforcée**, reproduite sur un 2ᵉ GPU.
@@ -267,18 +316,27 @@ survit une fois intégré dans un vrai passage `forward()` répété.
   mesurer l'effet bout en bout sur un vrai passage de modèle multi-pas — pas encore fait,
   mais la brique qui manquait est maintenant validée isolément.
 
-## État final — où en est ASP après cette session
+## État final — où en est ASP après cette session (3 sessions GPU, terminées)
 
-1. **Le résultat négatif du papier tient** : ASP tel que publié/implémenté est plus lent
-   que dense, confirmé sur 2 GPU indépendants (H200, RTX 4090).
-2. **Deux causes identifiées et corrigées isolément** : reconstruction complète des
-   résumés à chaque pas (corrigé, §7, jusqu'à 1,68× de gain sur cette brique) et score par
-   moyenne au lieu de max (corrigé, qualité déjà validée, effet vitesse mesuré §7 en bonus
-   ~5-12 %).
-3. **Ce qui manque encore pour conclure** : intégrer les deux correctifs dans le pipeline
-   complet (tri + gather + attention finale, pas juste la construction des résumés) et
-   mesurer un vrai décodage multi-pas de bout en bout, pas seulement une brique isolée.
-   C'est l'étape suivante si ce travail continue.
+1. **Le résultat négatif du papier tient et se confirme encore** : ASP, dans toutes les
+   variantes testées (original et corrigée), est plus lent que dense en décodage complet.
+   Confirmé sur 2 GPU indépendants (H200, RTX 4090), et maintenant sur un vrai décodage
+   multi-pas, pas seulement des instantanés figés.
+2. **Deux causes réelles ont été isolées et comprises** : reconstruction complète des
+   résumés à chaque pas (§6, Test B) et score par moyenne au lieu de max (validé
+   indépendamment en qualité). Chacune se corrige **isolément** avec un gain net
+   (§7 : jusqu'à 1,68× sur la seule construction des résumés).
+3. **Mais l'intégration complète des deux correctifs régresse** (§8) : le score max, une
+   fois utilisé pour trier *tous* les blocs à chaque pas (pas seulement pour construire
+   les résumés), coûte lui-même plus cher par appel que la réduction compacte qu'il
+   remplace — un **troisième défaut**, de nature différente des deux premiers, découvert
+   en testant le correctif plutôt qu'en l'implémentant à l'aveugle.
+4. **Bilan honnête** : trois sessions GPU (< 10 $ au total) ont transformé un résultat
+   négatif brut ("c'est plus lent, point") en un résultat négatif *caractérisé* — chaque
+   défaut trouvé a un nom, une cause et une piste de correction précise, mais aucune
+   combinaison testée à ce jour ne rend ASP plus rapide que dense sur un vrai modèle.
+   Ce n'est pas un échec de la démarche : c'est le type de résultat qu'une vraie
+   investigation produit quand la réponse honnête est "non, pas encore".
 
 ## Reproductibilité
 
