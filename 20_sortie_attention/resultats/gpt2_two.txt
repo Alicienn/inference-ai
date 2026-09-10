@@ -1,0 +1,20 @@
+gpt2 | banc induction | index a deux etages | S = masse retenue, L1 = |sparse-dense|
+m     two       perte      Delta     pic%   S       L1
+---  dense  ---    0.06211  ---       ---     ---     ---
+   8  none        0.75727  +0.69516   87.4  0.7670  0.4661
+   8  exactmax    0.30847  +0.24636   94.7  0.8279  0.3443
+   8  exactmass    0.33457  +0.27246   94.5  0.8285  0.3431
+   8  rand        1.88089  +1.81878   64.5  0.6294  0.7412
+  16  none        0.28764  +0.22553   94.4  0.8564  0.2873
+  16  exactmax    0.07338  +0.01128   98.6  0.9148  0.1703
+  16  exactmass    0.06532  +0.00322   98.6  0.9165  0.1670
+  16  rand        1.26173  +1.19962   66.6  0.6694  0.6613
+  24  none        0.10020  +0.03809   97.1  0.9134  0.1732
+  24  exactmax    0.07032  +0.00822   99.8  0.9571  0.0857
+  24  exactmass    0.06656  +0.00446   99.8  0.9584  0.0831
+  24  rand        1.21049  +1.14838   67.9  0.6943  0.6114
+
+correlations avec Delta_loss :
+1-pic%   Pearson=+0.971 Spearman=+0.930
+S        Pearson=-0.962 Spearman=-0.972
+L1       Pearson=+0.962 Spearman=+0.972

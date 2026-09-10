@@ -1,0 +1,31 @@
+Qwen/Qwen2.5-0.5B | T=512 W=128 | requetes=15360
+masse hors fenetre        = 0.4599
+support effectif          = 20.56
+masse top-1 (moyenne)     = 0.6666
+position normalisee argmax= 0.0864 (0 = debut de sequence)
+argmax dans les 10 1res   = 0.8055
+argmax dans les 32 1res   = 0.8844
+
+decile de POSITION de l'argmax :
+    1       0.8401
+    2       0.0370
+    3       0.0173
+    4       0.0128
+    5       0.0099
+    6       0.0104
+    7       0.0100
+    8       0.0189
+    9       0.0279
+   10       0.0158
+
+profil conditionnel par decile de distance :
+    1       0.6877
+    2       0.0422
+    3       0.0326
+    4       0.0293
+    5       0.0295
+    6       0.0288
+    7       0.0287
+    8       0.0338
+    9       0.0425
+   10       0.0449

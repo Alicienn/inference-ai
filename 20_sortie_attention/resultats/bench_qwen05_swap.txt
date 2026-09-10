@@ -1,0 +1,9 @@
+Qwen/Qwen2.5-0.5B | banc induction | index a deux etages | S = masse retenue, L1 = |sparse-dense|
+cfg        perte      Delta     pic%   S       L1
+---  dense  ---    0.00521  ---       ---     ---     ---
+q8h          0.05081  +0.04560   62.3  0.6895  0.6210
+norm         1.81641  +1.81119   30.7  0.4057  1.1862
+exactmax     0.05357  +0.04835   62.3  0.6901  0.6198
+exactmax-k1    0.05212  +0.04691   60.2  0.6702  0.6593
+exactmax-k2    0.10040  +0.09519   57.7  0.6463  0.7073
+exactmax-k4    0.11212  +0.10691   53.5  0.6056  0.7888

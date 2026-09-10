@@ -31,20 +31,24 @@ best-arm-identification problem in which the measurement budget is spent in
 stochastic pulls.
 
 Our first headline result is negative and, we argue, instructive. On Qwen3-8B, ASP
-reduces selector KV traffic by $13\text{--}25\times$ yet is $1.2\text{--}1.7\times$
-\emph{slower} end-to-end. We explain the gap in three measured steps. First, the
+reduces selector KV traffic by $13\text{--}25\times$ yet is $1.1\text{--}2.5\times$
+\emph{slower} end-to-end on two independent backends. We explain the gap in three measured steps. First, the
 irregular gather that ASP requires is essentially free on datacenter hardware:
-across three memory architectures (LPDDR5, GDDR6, HBM2e) scattered reads reach
-$98\text{--}104\%$ of contiguous bandwidth once each gathered chunk exceeds
-$\approx$1\,KiB, and on A100 the granularity threshold disappears entirely.
+across four memory architectures (LPDDR5, GDDR6, HBM2e, GDDR6X) scattered reads
+reach $97\text{--}104\%$ of contiguous bandwidth once each gathered chunk exceeds
+$\approx$1\,KiB, and on A100 and RTX 4090 the granularity threshold disappears
+entirely.
 Second, fusing the two passes into a single kernel with interleaved stratified
 selection yields $1.57\times$ over the two-kernel form on an H200 (15/15
 configurations), but only when the per-stratum quota is small ($q\!\approx\!8$);
 at $q=64$ fusion loses by $3\times$. Third, the residual end-to-end gap is
 per-layer kernel-launch overhead: an unfused PyTorch selector costs a flat
-$\approx$20\,ms per decode step, which alone exceeds the entire dense attention
-time ($2\text{--}11$\,ms at $16$k--$262$k tokens, itself running at $84\%$ of
-peak bandwidth).
+$\approx$20--25\,ms per decode step, which alone exceeds the entire dense attention
+time ($2\text{--}11$\,ms at $16$k--$262$k tokens on the H200, itself running at
+$84\%$ of peak bandwidth; $2.6\text{--}42.7$\,ms at the same lengths on an
+RTX 4090, running at $80\text{--}100\%$ of peak). Because the selector's cost is
+flat, the crossover moves with the hardware: we bracket it at $N\approx146$k
+tokens on the RTX 4090 and extrapolate $N\approx700$k on the H200.
 
 A second, later result revises what we believe about selector \emph{quality}, and
 we report it with the same prominence because it changes how the first result
@@ -66,7 +70,7 @@ granularity threshold---one based on Little's law, one on DRAM page
 invariance---and a measurement-driven law relating selection recall to
 estimator noise, whose residuals are explained by Jensen's inequality over
 per-query noise dispersion ($r=0.96$). We argue that convergent empirical
-behaviour across three memory architectures without a reliable predictive model is itself a
+behaviour across four memory architectures without a reliable predictive model is itself a
 result worth documenting.
 \end{abstract}
 
@@ -276,11 +280,12 @@ breaks that correlation, and it is also the natural grid-stride access pattern.
 %======================================================================
 \section{Experimental Setup}
 
-\paragraph{Hardware.} Four GPUs spanning three memory technologies: an AMD
-Radeon 860M integrated GPU (\texttt{gfx1152}, RDNA 3.5, shared LPDDR5,
-80\,GB/s measured), an NVIDIA Tesla T4 (GDDR6, 274\,GB/s measured), an NVIDIA
-A100 PCIe 40\,GB (HBM2e, 1372\,GB/s measured) and an NVIDIA H200 NVL
-(143\,GB, 132 SMs). Kernels are OpenCL on the AMD part and CUDA
+\paragraph{Hardware.} Five GPUs. The gather sweep spans four memory
+technologies: an AMD Radeon 860M integrated GPU (\texttt{gfx1152}, RDNA 3.5,
+shared LPDDR5, 80\,GB/s measured), an NVIDIA Tesla T4 (GDDR6, 274\,GB/s
+measured), an NVIDIA A100 PCIe 40\,GB (HBM2e, 1372\,GB/s measured) and an NVIDIA
+RTX 4090 (GDDR6X, 933\,GB/s measured, 72\,MB of L2). An NVIDIA H200 NVL
+(143\,GB, 132 SMs, HBM3e) is used for kernel fusion and end-to-end measurement. Kernels are OpenCL on the AMD part and CUDA
 (\texttt{nvcc -O3}) elsewhere; a single source compiles under both \texttt{nvcc}
 and \texttt{hipcc}, using no warp-width-dependent primitive.
 
@@ -293,10 +298,14 @@ The metric is \emph{mass recall}: the true attention mass captured by the $k$
 selected blocks, divided by that of the oracle top-$k$.
 
 \paragraph{End-to-end.} Qwen3-8B~\cite{qwen3} (36 layers, 32 query heads, 8 grouped-query
-KV heads~\cite{ainslie2023gqa}, head dim 128, 144\,KiB/token in bf16) on the H200, with ASP registered
+KV heads~\cite{ainslie2023gqa}, head dim 128, 144\,KiB/token in bf16) on the H200 and, independently, on an
+RTX 4090 (GDDR6X, 933\,GB/s measured), with ASP registered
 through the \texttt{ALL\_ATTENTION\_\allowbreak FUNCTIONS} extension point of
 \texttt{transformers}~5.16---the supported hook, not a monkey-patch. The rest of
 the model runs unmodified, so the measurement is a \emph{complete decode step}.
+On the 4090 the harness uses the same configuration ($L_b=64$, $r_1=2$, $r_2=8$,
+$m_{\text{frac}}=8$, $k_{\text{frac}}=64$, $512$ local keys, $64$ sink keys) and a
+synthetic KV tensor: the 4090 run measures latency, not quality.
 
 %======================================================================
 \section{Results}
@@ -346,12 +355,12 @@ mis-selecting a near-tied block is nearly free.
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/gather.pdf}
-\caption{Scattered versus contiguous reads at equal volume, on three memory
+\caption{Scattered versus contiguous reads at equal volume, on four memory
 architectures. \textbf{Left:} bandwidth ratio. \textbf{Right:} fraction of peak
 bandwidth reached by the contiguous path; below $\approx$30\% neither path
 saturates and the ratio is uninformative. The gather penalty vanishes above
-$\approx$1\,KiB and decreases monotonically with GPU parallelism; on A100 the
-threshold has disappeared.}
+$\approx$1\,KiB and decreases monotonically with GPU parallelism; on A100 and
+RTX 4090 the threshold has disappeared.}
 \label{fig:gather}
 \end{figure*}
 
@@ -363,12 +372,37 @@ inter-chunk locality is lost.
 
 Figure~\ref{fig:gather} confirms this and locates the threshold. In the saturated
 regime (contiguous path above $80\%$ of peak) the gather averages $104.0\%$ of
-contiguous bandwidth on the integrated GPU, $98.4\%$ on T4 and $97.7\%$ on A100,
-and never falls below $94.9\%$ on any of the three; values above unity are
-measurement noise on a path that is already bandwidth-saturated. Below saturation
-the three separate: the integrated GPU falls to $67.0\%$ at 64-byte chunks and T4
-to $88.0\%$ at 512 bytes, whereas A100 never drops below $95.5\%$ at \emph{any}
-granularity---the threshold has disappeared. The design rule is
+contiguous bandwidth on the integrated GPU, $98.4\%$ on T4, $97.7\%$ on A100 and
+$98.8\%$ on the RTX 4090, and never falls below $94.9\%$ on any of the four;
+values above unity are measurement noise on a path that is already
+bandwidth-saturated. Below saturation the four separate: the integrated GPU falls
+to $67.0\%$ at 64-byte chunks and T4 to $88.0\%$ at 512 bytes, whereas A100 never
+drops below $95.5\%$ at \emph{any} granularity and the RTX 4090 never drops below
+$96.9\%$ above 512 bytes---the threshold has disappeared on both. On the 4090 the
+smallest saturated chunk is 512 bytes, so the design rule
+$r_2\!\cdot\!D\!\cdot\!2\ge2048$ bytes is conservative rather than tight.
+
+\paragraph{An efficiency number that measures cache residency.} One statistic
+from the gather bench does \emph{not} survive scrutiny, and we report the failure
+because it changed how we read our own tables. The bench also reports an
+\emph{efficiency}: the measured speedup of the two-pass path over a contiguous
+read of the same volume, divided by the byte ratio. On the 4090 it averages
+$47.0\%$, and $20$ of $32$ configurations are slower than the flat path. The two
+configurations above $200\%$ ($278.4\%$ and $222.3\%$) look like outliers and are
+in fact the only honest ones. The flat baseline reads $n\,r_2D\,2$ bytes; on a
+4090 that volume exceeds the $72$\,MB L2 only for those two rows. Everywhere else
+the flat path is served from L2---its implied bandwidth is $822$--$3647$\,GB/s,
+above the $933$\,GB/s DRAM peak measured on the same card---so the ratio measures
+cache residency, not DRAM behaviour. The same regime split appears on
+every card: efficiency is $28.3\%$ (T4, $4$\,MB L2), $30.2\%$ (A100, $40$\,MB)
+and $33.5\%$ (4090, $72$\,MB) whenever the flat volume fits in L2---three GPUs
+whose launch costs and bandwidths differ by an order of magnitude and which agree
+to five points---and $81.0\%$ (T4) and $75.9\%$ (A100) when it does not. On T4 and
+A100 volume and cache regime vary together, so the split cannot be attributed to
+the cache alone; on the 4090 it can, because the implied flat bandwidth reaches
+$2097$\,GB/s against a measured DRAM peak of $933$\,GB/s. Not one of the $32$ configurations compares two DRAM-bound paths, because
+the ASP path never exceeds $50$\,MB. The granularity sweep above is unaffected: it
+reads $96$\,MiB per launch, above every L2 in the study. The design rule is
 $r_2\!\cdot\! D\!\cdot\!2\ge2048$ bytes. The coarse pass violates it by
 construction ($r_1=2$, $D=64$: 256 bytes), which is harmless precisely because
 that pass reads every block and is therefore a contiguous scan, not a gather.
@@ -384,7 +418,7 @@ invariance hypothesis (the threshold is $\approx$1\,KiB on any memory system);
 A100 refutes that too. What survives is only the \emph{direction} of the first
 model: the penalty decreases monotonically with parallelism ($0.67$ at 64\,B on
 8 CUs, $0.88$ at 512\,B on 40 SMs, $1.00$ at 512\,B on 108 SMs). We report this
-as a result: the empirical behaviour converges across three memory architectures without
+as a result: the empirical behaviour converges across four memory architectures without
 a predictive model that survives contact with the data, and we prefer to say so
 rather than fit a third model post hoc.
 
@@ -442,7 +476,7 @@ ASP selector costs a flat $20\text{--}23$\,ms.}
 \end{figure*}
 
 \begin{table}[t]
-\caption{Qwen3-8B, H200, complete decode step.}
+\caption{Qwen3-8B, complete decode step, on two backends.}
 \label{tab:e2e}
 \small
 \setlength{\tabcolsep}{4.5pt}
@@ -451,31 +485,158 @@ ASP selector costs a flat $20\text{--}23$\,ms.}
 context & KV (GB) & dense & ASP & speedup & bytes \\
         &         & (ms)  & (ms) &         & saved \\
 \midrule
+\multicolumn{6}{l}{\emph{H200, 3.8\,TB/s}}\\
 16\,k  &  2.2 & 29.9 & 49.6 & 0.60$\times$ & 13.5$\times$ \\
 65\,k  &  9.0 & 29.8 & 49.5 & 0.60$\times$ & 20.9$\times$ \\
 131\,k & 18.0 & 30.0 & 49.4 & 0.61$\times$ & 23.0$\times$ \\
 262\,k & 36.0 & 42.1 & 54.0 & 0.78$\times$ & 24.2$\times$ \\
 524\,k & 72.0 & 72.6 & 89.8 & 0.81$\times$ & 24.9$\times$ \\
+\midrule
+\multicolumn{6}{l}{\emph{RTX 4090, 0.93\,TB/s}}\\
+16\,k  &  2.2 & 113.9 & 212.9 & 0.54$\times$ & 13.5$\times$ \\
+33\,k  &  4.5 & 113.6 & 280.3 & 0.41$\times$ & 17.7$\times$ \\
+65\,k  &  9.0 & 188.4 & 212.1 & 0.89$\times$ & 20.9$\times$ \\
+131\,k & 18.0 & 199.0 & 219.2 & 0.91$\times$ & 23.0$\times$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Table~\ref{tab:e2e} is the paper's central measurement. ASP reads $13$--$25\times$
-fewer bytes and is $1.2$--$1.7\times$ slower. We had predicted a $10$--$40\%$ gain;
-we measure a $19$--$40\%$ loss.
+fewer bytes and is $1.2$--$1.7\times$ slower on the H200 and $1.1$--$2.5\times$
+slower on the RTX 4090. That byte count belongs to the harness's selector, whose fine pass re-ranks on the
+$r_2=8$ segment summaries of each surviving block and never reads a raw candidate
+key, at a block budget of $1.6\%$ of the keys. The two-stage index whose quality is
+validated in the long-context validation above instead reads the raw keys of the $2m$
+candidates at a $25\%$ budget, and therefore reads $3.9\times$ fewer bytes than
+dense ($1.000\times$ the one-stage index at eight bits, $0.877\times$ at four). The
+two are different selectors; their byte ratios must not be conflated. At equal bytes the two mechanisms are not equivalent. On SmolLM2-135M at
+$T=1024$ and a $25\%$ budget, re-ranking on two segment summaries per block ($520$
+units, byte-neutral) costs $+0.0109$\,nat against $+0.0113$ for eight-bit raw keys
+at the same $520$ units, but a single block-mean summary ($456$ units, $0.877\times$)
+costs $+0.0304$ against $+0.0117$ for four-bit raw keys---$2.6\times$ worse.
+Averaging destroys the within-block peak, the same failure mode as the mean-pooled
+block key, whereas quantisation preserves the rank. The harness's $r_2=8$ summaries
+average eight keys each, i.e.\ the heavy-dilution end of this ladder, so its byte
+advantage is not free on a model whose landscape has curvature; on Qwen2.5-0.5B,
+where it is flat at this operating point, every variant stays within $0.002$\,nat of
+dense. The penalty is regime-dependent rather than intrinsic: it appears only where the
+coarse index leaves work to do. At $T=1024$ with the offset at $200{,}000$ keys the
+coarse index already costs $+0.013$\,nat and a single block-mean summary is as good
+as any other variant ($-0.0051$ against $-0.0050$ for exact raw keys); at a $50\%$
+budget it is $-0.0006$ against $+0.0001$. The block-mean summary, the cheapest
+mechanism on this ladder, therefore suffices whenever the coarse index is within
+about $0.02$\,nat of dense, and loses only when the coarse gap is large ($+0.059$\,nat
+at a $25\%$ budget on the same model). The stage-two mechanism should be chosen from
+the coarse gap, not from an architectural preference. The budget ladder confirms the prediction. The same comparison at $12.5\%$ and
+$6.25\%$ of keys gives dilution penalties of $+0.044$ and $+0.112$\,nat, and at
+$6.25\%$ a single block-mean re-rank ($+0.256$) is worse than not re-ranking at all
+($+0.244$), while four-bit raw keys ($+0.143$) are the best variant measured. The
+harness operates at $1.6\%$ of keys, below this range, so its summary re-rank is
+predicted to be penalised at its own operating point; raw-key quantisation is the
+mechanism to prefer once the coarse gap exceeds $0.05$\,nat. Tested at the harness's own dilution this is decisive. With $L_b=64$ and $r_2=8$
+segments of eight keys---exactly the harness's summaries---the summary re-rank
+recovers $10.9\%$ of the stage-two gain, while two-bit raw keys at the same $16$
+units recover $76.4\%$ ($+1.280$ against $+0.830$); doubling the number of summaries
+to sixteen, four keys each, still recovers only $55.5\%$. More summaries do not
+restore the rank that averaging destroys, and quantisation wins at every rung of the
+equal-byte ladder ($16$, $8$, $4$ and $2$ units: gaps of $0.09$, $0.33$, $0.36$ and
+$0.36$\,nat). The pattern is not specific to this architecture. On Qwen2.5-0.5B at a $1.6\%$
+budget the coarse gap is $+0.680$\,nat; two- and four-bit raw keys recover $90\%$ and
+$78\%$ of it, two summaries per block recover $40\%$, and a single block-mean summary
+is $0.27$\,nat \emph{worse} than not re-ranking at all. At a $6.25\%$ budget on the
+same model two summaries per block are the best variant measured ($117\%$) while one
+summary is again worse than the coarse index. The governing parameter is the number of
+keys averaged per summary: four collapse at sparse budgets on both models, and eight
+---the harness's choice---lie beyond that. Precision has a floor on the raw-key route: at the same $1.6\%$ budget, four- and
+two-bit keys recover $90.5\%$ and $82.4\%$ of the stage-two gain while a single bit
+recovers $-53\%$, i.e. it is worse than not re-ranking at all. Two bits---a $16\times$
+compression---are therefore both cheaper and far better than eight-key summaries. The floor does not move with the budget: a single bit is worse than not re-ranking at
+$1.6\%$, $6.25\%$ and $25\%$ of keys ($-53\%$, $-52\%$, $-14\%$), while two bits
+recover $65$--$82\%$ and four bits $90$--$101\%$ at all three. The same floor appears on the second architecture: on Qwen2.5-0.5B at the same $1.6\%$
+budget a single bit costs $+1.71$\,nat against the coarse index's $+0.68$, while two,
+four and eight bits recover $53\%$, $78\%$ and $90\%$ of the stage-two gain. Substituting those raw keys for the summaries is therefore strictly dominant: on the
+harness's own accounting the byte ratio rises from $13.5$--$23.0\times$ to
+$14.8$--$27.3\times$ at two bits---the $m r_2$ term is replaced by $k L_b p$, eight
+times smaller---while the recovered stage-two gain rises from $11\%$ to $76\%$. The
+summary mechanism is dominated on both axes at once. That dominance is specific to fine re-ranking, and the boundary is the number of keys
+per summary. At the harness's block size ($L_b=64$) the mean-summary re-rank is
+monotone in dilution and never beats the exact re-rank: $16$, $32$ and $64$ keys per
+summary give $+1.333$, $+1.476$ and $+1.829$\,nat against the coarse index's
+$+1.355$---the first is neutral, the other two are worse than not re-ranking at
+all---while the exact re-rank gives $+0.668$. Shrinking the coarse index's projection
+rank also degrades it ($d'=8$, $4$ and $2$ give $+1.355$, $+1.615$ and $+1.603$\,nat),
+so the first pass does need its four elements per block. The harness's first pass is a
+mean-summary score too, and there it is not merely neutral but catastrophic: at four
+elements per block a maximum over four mean summaries of sixteen keys costs
+$+3.732$\,nat against the PCA index's $+1.355$, and the gap is unchanged at two and one
+element per block ($+3.837$ against $+1.615$; $+3.875$ against $+1.603$). Mean-pooling
+attenuates the peak key by the size of the segment, which is fatal when the score must
+rank all blocks and only mildly damaging when it must re-order two candidates already
+known to contain the peak. The harness uses summaries at both stages, and they buy
+nothing at either. Normalising the summaries before scoring does not rescue them: the same
+configuration costs $+3.003$\,nat with unit-normalised segment means, still $1.65$\,nat
+worse than the index at identical bytes. The gap travels: on Qwen2.5-0.5B the same four-element comparison gives
+$+4.187$ against $+1.057$, and unit-normalised summaries still cost $+2.286$ against
+$+1.057$. At that block size the fine stage's summaries recover nothing either: with the
+candidates chosen by the index, exact re-ranking recovers the whole available gain on
+both models ($+0.562$ against $+1.057$ on Qwen2.5-0.5B), while re-ranking by two, four
+or one mean summaries of 32, 16 or 64 keys recovers $-16\%$, $-43\%$ and $-75\%$ of it
+there --- every granularity worse than not re-ranking at all. Normalising the fine stage's summaries makes it worse rather than better:
+the same configurations recover $-66\%$, $-61\%$ and $-50\%$ of the gain on
+SmolLM2-135M and $-197\%$, $-135\%$ and $-156\%$ on Qwen2.5-0.5B. The asymmetry with
+the coarse stage has a mechanism: there the decision is which block contains the peak,
+so the direction suffices and the norm is noise; here every candidate already contains
+the peak, so the decision is how much mass it carries, and the norm of a segment mean
+is exactly that signal. Normalisation helps a stage that must identify and destroys one
+that must weigh. The rule does not depend on the dilution regime: at $L_b=4$, where the summaries
+are nearly neutral, normalisation is \emph{more} damaging than at $L_b=64$ --- $-0.91$ and
+$-0.94$\,nat on SmolLM2-135M, $-1.38$ and $-1.75$\,nat on Qwen2.5-0.5B. At that block
+size the fine stage has almost no headroom anyway (the gain exact re-ranking can recover
+falls to $0.007$\,nat on SmolLM2-135M and $0.070$\,nat on Qwen2.5-0.5B), because two
+candidates drawn from 254 blocks leave the coarse stage's error in charge. Summaries are not a marginal cost either: they are $32\%$, $41\%$, $49\%$ and $54\%$ of
+the harness's selector bytes at $16$k, $32$k, $64$k and $131$k tokens. Replacing both
+passes by the architecture validated here---an eight-projection eight-bit index for
+ranking and two-bit raw keys of the candidate blocks for re-ranking---cuts the selector
+by $30$--$51\%$ and raises the byte ratio from $13.5$--$23.0\times$ to
+$19.2$--$47.1\times$, while recovering $76\%$ rather than $11\%$ of the stage-two gain. At the harness's own budget fraction, $1.6\%$ of keys, the contrast is stark. On
+SmolLM2-135M at $T=1024$ the coarse index costs $+1.275$\,nat; a four-bit raw-key
+re-rank recovers $90.5\%$ of the gap it leaves, and a block-mean re-rank recovers
+$15.8\%$ ($+1.241$ against $+1.079$). Across the whole ladder quantisation recovers
+$78$--$104\%$ of the stage-two gain at every budget, while the summary mechanisms
+collapse from $96\%$ to $35\%$ (two summaries per block) and from $104\%$ to $16\%$
+(one summary per block) as the budget falls from $50\%$ to $1.6\%$. We had predicted a $10$--$40\%$ gain; we measure a
+$19$--$46\%$ loss. The 4090 reproduces the mechanism but not the shape: its gain
+is \emph{not} monotone in context ($0.54$, $0.41$, $0.89$, $0.91$), because the
+ASP step is dominated by a flat selector cost while the dense step is not.
 
 The ventilation (Figure~\ref{fig:e2e}, right) identifies the cause completely.
 Dense attention costs $2.06$, $4.06$, $6.62$ and $11.34$\,ms at $16$k, $65$k,
 $131$k and $262$k---about $84\%$ of the peak-bandwidth floor, i.e.\ already
 near-optimal. The unfused ASP selector costs a flat $20$--$23$\,ms: eight
 non-fused PyTorch operations per layer, some 290 kernel launches per decode step.
-Crossover requires dense attention to exceed the selector overhead, which happens
-at $N\approx470$k; at $524$k we still measure $0.81\times$.
+Crossover requires dense attention to exceed the selector overhead. Fitting the
+four ventilation points gives $N\approx700$k on the H200---beyond the largest
+length we measured, where the speedup is still $0.81\times$.
+
+The same ventilation on the RTX 4090 locates the crossover inside the measured
+range. Dense attention there costs $0.161$\,ms per $1{,}000$ tokens of context
+(residual $0.8$\,ms) and runs at $80$--$100\%$ of the card's measured peak
+bandwidth, while ASP's attention is flat at $24.4$\,ms (residual $1.9$\,ms). The
+lines cross at $N\approx146$k tokens, bracketed by measurement: at $131$k ASP is
+still slower ($25.3$ against $22.3$\,ms), and at $262$k it is $1.8\times$ faster
+($24.2$ against $42.7$\,ms). Because the selector cost is flat, the crossover
+scales inversely with dense-attention throughput: the dense slope is $4.3\times$
+steeper on the 4090 than on the H200, against a bandwidth ratio of $4.1\times$. A
+slower GPU therefore reaches parity \emph{sooner}---the opposite of the intuition
+that sparse attention needs fast hardware.
 
 The prediction failed because it assumed a memory-bound decode. This integration
 is not: the measured step is $3.2\times$ above its memory floor ($30$\,ms against
 $9.4$\,ms at $131$k), the non-attention portion being dominated by framework
-overhead. In an engine with CUDA graphs and fused kernels that portion would fall
+overhead. The 4090 makes the point more sharply: its step is $5.6$--$7.3\times$
+above the memory floor at $16$k--$131$k, and dense attention is only $2.3\%$,
+$6.4\%$ and $11.2\%$ of the step at those lengths---so even a perfect sparse
+attention can buy at most a few per cent end-to-end at $16$k. In an engine with CUDA graphs and fused kernels that portion would fall
 towards $\approx$5\,ms, attention would dominate, and the byte savings would
 matter---provided the selector is fused. That projection is an inference, not a
 measurement, and we mark it as such.
@@ -604,6 +765,270 @@ $8$-dimensional projections is not merely a cheaper stand-in for \emph{maxip}, i
 is a better scorer. Averaged over chunks the index cost is $\pm0.02$\,nat either
 way, so it is best read as free rather than as a fixed penalty.
 
+Pushing the grid further shows where the effect saturates. On Qwen, $L_b=2$ and
+$L_b=1$ give $-0.003$ and $-0.004$\,nat, no better than $L_b=4$ ($-0.003$). At
+$L_b=1$ the blocks degenerate to single keys, so the selector becomes exact
+top-$m$ selection and the measurement is the true per-key oracle at that budget:
+the block structure costs nothing once the grid is fine enough. The practical rule
+is $L_b\approx4$--$8$, and below it the quota $m$ grows without buying anything.
+
+\paragraph{The window is a red herring; the selection is the mechanism.} Fixing
+$L_b=4$ and the total budget, we swept the window against the quota
+(Table~\ref{tab:window}). At $192$ keys read, $W=32$ with $m=40$, $W=64$ with
+$m=32$ and $W=128$ with $m=16$ all land within $0.008$\,nat of one another
+($+0.027$, $+0.029$, $+0.021$): how the budget is split between contiguous and
+selected keys barely matters. What matters is that there \emph{is} a selection. A
+pure sliding window reading the most recent $256$ keys---half the context, more
+keys than any sparse configuration above---loses $1.23$\,nat, two orders of
+magnitude worse than reading $192$ keys of which only $16$ are chosen by the
+index. Locality alone buys almost nothing; the two-pass selection does the work.
+
+Pushing the budget down sharpens the contrast. At $128$ keys---a quarter of the
+context---the two-pass selector costs $0.033$\,nat, while a pure window of exactly
+the same size costs $1.68$\,nat: a factor of $50$ at identical bytes. The index's
+own cost rises from $0.008$ at $192$ keys to $0.022$ at $128$, because with fewer
+blocks admitted each selection error weighs more. The frontier is shallow: going
+from $192$ to $128$ keys costs $0.012$\,nat, so a quarter of the context is enough
+for the selector to stay within a few hundredths of dense attention.
+
+\paragraph{A third architecture, without rotary embeddings.} GPT-2 has no rotary
+embeddings, uses learned absolute positions, and projects queries, keys and values
+with a single matrix, so nothing in the mechanism above is specific to the
+Llama-style stack. The results carry over. At a fixed $192$ keys the cost against
+dense falls from $0.400$\,nat at $L_b=64$ to $0.216$ at $L_b=32$ and $-0.004$ at
+$L_b=4$; at $128$ keys the selector costs $0.020$\,nat while a pure window of the
+same size costs $1.42$\,nat, a factor of $70$. The PCA index again beats
+\emph{maxip} in every configuration ($-0.008$ to $-0.017$\,nat).
+
+\paragraph{Scaling the configuration with the context.} The scale law above held
+the configuration fixed and let the fraction of keys read shrink. Scaling the
+configuration with the context instead---keeping the fraction at a quarter by
+setting $W=T/8$ and $m=T/32$ blocks of $L_b=4$---the cost against dense
+\emph{falls}: $+0.041$\,nat at $T=512$, $+0.012$ at $1024$ and $+0.004$ at
+$2048$. At the same fraction a pure window costs $+1.76$, $+1.24$ and $+1.08$\,nat,
+so the ratio between selection and locality grows from $43\times$ to $299\times$.
+The advantage of selection over locality widens with context length, the opposite
+of what a utility-threshold argument based on fixed overhead would predict.
+
+\paragraph{Why $L_b\approx4$: a quantitative account.} The boundary gap of a grid
+of size $L_b$ holds $(L_b-1)/2$ keys on average, and the attention density just
+behind the window turns out to be flat: measured over all layers and heads, the
+mass on the $d$-th key behind the window is $7.8\times10^{-4}$ for every $d$ from
+$1$ to $60$, with no decay. The trapped mass is therefore $\rho(L_b-1)/2$ with
+$\rho\approx7.8\times10^{-4}$, and it costs $\kappa\approx12$--$25$\,nat per unit of
+mass: regressing the measured penalty on the measured trapped mass gives
+$\kappa=11.7$ with $R^2=0.986$. Repeating the measurement on Qwen2.5-0.5B and
+GPT-2 tests whether the two constants transfer. The \emph{shape} does: the measured
+penalty differences are proportional to the trapped-mass differences with $R^2$ of
+$0.999$ and $0.992$, and the density $\rho$ is nearly invariant across the three
+models ($7.5$, $7.8$ and $8.3\times10^{-4}$ per key, a spread under 10\%)---the flat
+floor behind the window is a structural property of these attention distributions.
+The \emph{scale} does not: $\kappa$ is model-specific, $11.7$ (SmolLM2), $17.9$
+(GPT-2) and $33.4$ (Qwen). The rule $\Delta\approx\kappa\rho(L_b-1)/2$ therefore
+predicts a model-specific optimum $L_b\lesssim1+2\varepsilon/(\kappa\rho)$, which at
+$\varepsilon=0.02$\,nat gives $5.4$, $4.0$ and $2.5$ for the three models---bracketing
+the saturation point of $4$ observed on all three, and ordering them correctly. The
+same formula explains the scaling result: at a fixed fraction $\rho$ falls as the
+context grows, so the optimal $L_b$ stays small and the penalty shrinks.
+
+\paragraph{What sets $\rho$: a sink plus a uniform background.} A natural guess is
+that attention outside the window is spread uniformly, giving
+$\rho=(1-\mu_w)/(T-W)$. The measured density just behind the window is $2$--$5\times$
+below the global average of non-window keys, which first looks like a trough.
+Decomposing the out-of-window distribution resolves it: that distribution has an
+effective support of only $15$ keys, and a single key holds $0.67$ of it---the
+sequence-initial sink, which sits in the first tenth of the positions and carries
+$0.70$ of the out-of-window mass. The remaining $0.30$ is a flat background at
+$8$--$9\times10^{-4}$ per key. So the background \emph{is} uniform and $\rho$ measures
+it; the apparent trough was the background compared against an average inflated by
+the sink. This also explains why the granularity penalty is small and why block
+selection works at all: the sink lives in the oldest block, which is always eligible
+and therefore never trapped in the boundary gap, so the gap only ever takes
+background mass---and the background is flat, which is exactly why ranking it is a
+near-tie problem. At $W=128$ and $T=512$ the out-of-window mass is $0.58$ of the
+total, so this is not a marginal component.
+
+\paragraph{A valid retrieval bench: GPT-2.} The degeneracy is not universal. On GPT-2
+the same repeated-span probe engages a genuine retrieval circuit: the loss on the
+fourth copy is $2.95$\,nat below the first, the attention on the distant source copy
+is $0.437$ against $0.250$ uniform, and a single head at layer 11 puts its entire mass
+on it. At a $37.5\%$ read budget the oracle, which selects blocks by true attention
+mass, costs $0.007$\,nat; the deployable index costs $0.226$. The obvious
+explanation---that the index fails to retain the attention peak---does not survive.
+Across six index variants at the same budget, the peak-retention rate has rank
+correlation $0.14$ with the loss, while the \emph{retained attention mass} $S$ has
+rank correlation $-1.00$: $S=0.857$ costs $0.226$\,nat, $S=0.789$ costs $1.17$,
+$S=0.553$ costs $4.64$. That conclusion, however, does not survive a wider sweep.
+Replacing the maximum over keys by a log-sum-exp with a tuned temperature---which
+interpolates continuously between the maximum and the sum---yields a configuration
+that retains \emph{more} mass than the maximum at $25\%$ ($S=0.770$ against
+$0.767$) and still loses more ($0.782$ against $0.695$\,nat); and across $18$
+configurations spanning three budgets ($25\%$, $37.5\%$, $50\%$) and six
+aggregations, the plain maximum is first at every budget. Mass is therefore a good
+but not sufficient proxy, because the output is $\sum_k A(k)v_k$: a block can carry
+high attention mass and still contribute the wrong value. Both proxies are
+imperfect---across the $18$ configurations $S$ and the peak-retention rate have rank
+correlations $-0.965$ and $-0.977$ with the loss, and at a fixed $25\%$ budget
+$-0.66$ and $-0.83$---so the design rule is not ``maximise a scalar'' but ``prefer
+the aggregation that concentrates on the single most aligned key''. On this bench
+that is the maximum over projections and over keys, which is also what the
+flowing-text regime preferred. Adding value information to the score does not improve on it: reweighting the
+block score by the alignment between a block's mean value and the value at the
+top-scoring key costs $0.264$\,nat at $37.5\%$ against $0.226$, a random
+direction costs $0.433$, and the anti-aligned direction $0.702$---so the value
+direction carries real information that a multiplicative factor cannot exploit.
+Forcing the selector's own top-scoring block to be kept changes the result not at
+all, which locates the damage in the filling of the budget rather than in the
+first choice: the attention peak is not the selector's argmax to begin with. Nor does reading less help: thresholding the block score---keeping a block only
+if it scores within a factor $\tau$ of the best in its cell---saves blocks only by
+removing mass-bearing ones. At $m=24$, raising $\tau$ from $0$ to $0.5$ cuts the
+blocks read from $24.0$ to $11.8$ and costs $+0.72$\,nat, whereas truncating the
+rank from $24$ to $8$ blocks costs $+0.66$\,nat: at equal bytes the rank dominates
+the threshold, because the max-over-keys score is a spike detector and not an
+estimator of block mass. The fix is a second stage: keep the coarse index to form a candidate set of $2m$
+blocks, then re-rank those candidates with an accurate score. At $37.5\%$ this
+brings the penalty from $0.226$ to $0.011$\,nat---the oracle's own $0.007$---and at
+$25\%$ from $0.695$ to $0.246$. The selection rule was never the problem; the score
+estimator was. The gain is not automatic: re-ranking the candidates with $32$ or
+$64$ principal directions helps at the $25\%$ budget ($0.204$ and $0.220$\,nat) but
+is six to sixteen times worse than the exact score at $37.5\%$ ($0.069$ and
+$0.184$) and catastrophic at $50\%$ ($0.358$, worse than not re-ranking at all),
+even though it retains $94.9\%$ of the attention mass and $99.9\%$ of the peak:
+mean retained mass is not a sufficient statistic for the loss. Nor is the compact index's problem the basis: replacing the warm-up basis by
+the oracle basis---the $32$ dominant singular directions of the current
+sequence's own keys---leaves the penalty at $0.166$\,nat at $37.5\%$ and $0.282$
+at $50\%$, against $0.011$ and $0.008$ for the exact score. A rank-$32$ score
+approximates the value of $q\cdot k$ well (it retains $91.3\%$ of the attention
+mass) and still orders the top blocks wrongly: what matters is not how much of
+the score the index captures but whether it preserves the ranking of the best
+blocks. The compact index is not a sufficient statistic for selection, and the
+second stage has to read the keys of its candidates. Whether that second pass can be quantised is model-dependent: on GPT-2, $8$-bit
+keys (per-head scale) cost $0.179$\,nat against $0.011$ for the exact score even
+though every element errs by only $0.8\%$, whereas on SmolLM2-135M the same
+$8$-bit re-ranking is as good as the exact one ($0.042$ against $0.051$\,nat) and on Qwen2.5-0.5B free as well
+($0.046$ against $0.048$\,nat)---so
+the byte saving cannot be assumed and must be measured per model. The mechanism is a property of the loss landscape, not of the selector:
+replacing one of the $16$ selected blocks at random costs $0.167$\,nat on GPT-2
+but only $0.010$\,nat on SmolLM2 and none on Qwen2.5-0.5B, and the gap
+persists at $k=2$ and $k=4$
+($0.286$ against $0.026$, $0.677$ against $0.147$). The GPT-2 bench sits at the
+optimum, so any perturbation shows; the SmolLM2 bench sits on a floor of
+$0.051$\,nat, where the same perturbation is invisible. The design and the rule both survive at long context: on SmolLM2 at
+$T=1024$ with a $25\%$ budget, the coarse index costs $0.059$\,nat, the exact
+re-ranking $0.012$ and the $8$-bit re-ranking $0.011$, while re-ranking random
+candidates costs $0.694$; the measured $\Delta(1)=0.015$\,nat is flat, so the second stage can be quantised. With eight-bit candidate keys it reads
+exactly the same bytes as the one-stage index ($1.000\times$) while being five
+times more accurate, and with four-bit keys it reads $0.877\times$; the exact
+stage costs $1.246$--$1.330\times$. Quantising is only free where $\Delta(1)$ is
+flat: on GPT-2, where it is $0.167$\,nat, eight-bit re-ranking recovers none of
+the gain. The plateau is robust: on a second offset and at $T=2048$, $\Delta(1)$ stays
+between $0.014$ and $0.018$\,nat, and $4$-bit keys at the second stage cost
+within $0.0006$\,nat of the exact re-ranking, so the stage can be built at
+four bits. At $T=1024$ and offset $200{,}000$ the two-stage index even beats
+dense, by $0.005$\,nat. The result survives a change of architecture: on Qwen2.5-0.5B, at the same
+budget, the coarse index costs $0.008$\,nat, the exact re-ranking $0.0007$ (a
+factor of $10.7$), and the eight- and four-bit re-rankings $0.002$ and $0.0002$,
+all within the $0.002$\,nat noise floor, so the byte-neutral configuration is not
+an artefact of one model. A query-free
+score, by contrast, fails on both: ranking blocks by the largest key norm, the
+family that wins the byte-precision frontier on Qwen3-8B, costs $1.04$, $1.62$ and $1.81$\,nat on GPT-2, SmolLM2 and Qwen2.5-0.5B,
+with peak retention falling to $31.6\%$, $23.0\%$ and $30.7\%$. Selection needs a query-dependent score that preserves the order of the
+top keys. Budget buys $S$: the loss on the
+retrieval task falls through $0.643$, $0.288$, $0.132$ and $-0.001$\,nat at $25\%$,
+$37.5\%$, $50\%$ and $75\%$ of keys, and at $75\%$ it matches dense. Projection rank
+buys little: at $37.5\%$, $d'=32$ with max scoring reaches $S=0.867$ against $0.856$
+for $d'=8$. On retrieval tasks ASP therefore saves about $1.3\times$, not the
+$16\times$ it saves on flowing text---the two regimes sit at opposite ends of the
+budget axis, but they share one objective, captured attention mass.
+The decomposition repeats on both other models. The out-of-window argmax falls in
+the first ten positions for $0.97$ (SmolLM2), $0.87$ (GPT-2) and $0.81$ (Qwen) of
+queries; the top key holds $0.63$--$0.67$ of the out-of-window mass; the first decile
+holds $0.66$--$0.71$; and the remaining deciles are flat at $0.03$--$0.05$. Effective
+support varies ($15$, $35$, $21$ keys) and the out-of-window mass itself varies
+($0.58$, $0.49$, $0.46$), but the sink-plus-background shape does not.
+
+At longer context the shape gains a third component. Repeating the decomposition at
+$T=2048$ the first decile still holds $0.63$ of the out-of-window mass and $0.92$ of
+the argmaxes remain in the first ten positions, but the remaining deciles are no
+longer flat: their share rises monotonically from $0.019$ at the third decile to
+$0.082$ at the last one---a recency gradient peaking immediately behind the window.
+The boundary gap therefore sits in the densest part of the background, which is the
+worst place to lose keys, while effective support grows from $15$ keys at $T=512$ to
+$59$ at $T=2048$ and the sink's share falls from $0.71$ to $0.63$. The measured
+penalty nevertheless stays small ($0.004$\,nat at $T=2048$ in the scaled
+configuration), so the gradient shifts the mechanism without overturning it.
+
+\paragraph{The constant is not constant in context length.} Repeating the contrast at
+a fixed read fraction ($37.5\%$), with the trapped mass measured in the same pass
+rather than borrowed from $\rho$, gives at $T=1024$: $\Delta_4=+0.022$,
+$\Delta_{16}=+0.036$, $M_4=2.5\times10^{-3}$, $M_{16}=1.2\times10^{-2}$, hence
+$\kappa=1.4$; and at $T=2048$: $\Delta_4=-0.055$, $\Delta_{16}=-0.018$,
+$M_4=1.6\times10^{-3}$, $M_{16}=8.0\times10^{-3}$, hence $\kappa=5.7$. The estimate
+swings by an order of magnitude across context lengths and, more importantly, the
+sign of $\Delta$ flips: at $T=2048$ the sparse model \emph{beats} dense by
+$0.055$\,nat at the same read fraction. So $\Delta=\kappa M+c$ is a local
+linearisation valid within a fixed configuration, not a law with a universal
+$\kappa$---a context-dependent benefit of dropping the diffuse background competes
+with the trapped-mass cost. The sign flip is itself the useful fact: at long context
+the background is mostly noise and removing it helps. The contrast uses oracle
+top-$m$ selection, not the deployable index, and one model, so it bounds the
+mechanism rather than the system.
+
+\paragraph{The deployable index beats dense at long context.} The contrasts above use
+oracle selection. Replacing it with the deployable causal PCA index---base fitted on
+the first $256$ tokens, block score
+$\max_{k\in B}\max_{i\le 8}\langle q,u_i\rangle\langle k,u_i\rangle$---at the same
+fixed read fraction of $37.5\%$ and $L_b=4$ gives, at $T=1024$: dense $13.5125$,
+oracle $13.4733$ ($-0.039$), index $13.4768$ ($-0.036$); at $T=2048$: dense
+$13.5443$, oracle $13.5179$ ($-0.026$), index $13.4977$ ($-0.047$). Both beat dense,
+and at $T=2048$ the index beats the attention-peak oracle. Two caveats bound this.
+First, the sign is not robust to how blocks are scored: selecting by summed mass
+instead of peak attention gives $+0.022$ at $T=1024$, so aggregation is a first-order
+design choice, not a detail. Second, this is loss at a $2.7\times$ KV reduction, not
+latency; the selector cost that drives the negative headline is untouched by it.
+
+\paragraph{Where the gain comes from, and what this testbed cannot test.} Sweeping the
+read fraction with the deployable index at $T=1024$ (window and quota scaled together,
+$L_b=4$) the loss gain over dense grows monotonically as less is read: $-0.036$ at
+$37.5\%$, $-0.077$ at $24.7\%$, $-0.090$ at $12.3\%$ and $-0.144$ at $6.0\%$. Read
+naively this says sparse is better the sparser it is. Two control probes show why that
+reading is unsafe. A synthetic needle of $16$ tokens placed twice gives a dense
+attention mass of $0.0395$ on the needle keys, against $20/512=0.039$ for a uniform
+distribution; a natural span repeated four times, where induction is demonstrably
+active (the loss on the fourth copy is $0.395$\,nat below the first), gives a dense
+mass of $0.263$ on the source copy against $0.250$ uniform. In both cases distant
+content carries no attention above chance, so there is no concentrated component for a
+selector to lose---consistent with the sink-plus-background structure. The local
+testbed therefore cannot decide whether sparsity preserves retrieval; that needs a
+model or a corpus in which distant attention concentrates.
+The same probe on Qwen2.5-0.5B does not repair this: dense induction is absent
+there (the loss on the fourth copy is $0.001$\,nat \emph{above} the first) and the
+attention on the source copy is $0.204$, \emph{below} the $0.250$ uniform level, while
+the nearest copy receives $0.287$---a mild recency tilt, not retrieval. Scaling the
+probe model from $135$\,M to $0.5$\,B does not produce a concentrated distant
+component.
+
+\begin{table}[t]
+\centering
+\caption{Window against quota at fixed total budget, $L_b=4$, SmolLM2-135M,
+$T=512$, means over three corpus chunks. The last row reads more keys than any
+sparse configuration and still loses two orders of magnitude more.}
+\label{tab:window}
+\begin{tabular}{rrrrr}
+\toprule
+$W$ & $m$ & keys read & vs dense & index cost \\
+\midrule
+32 & 40 & 192 & $+0.027$ & $+0.009$ \\
+64 & 32 & 192 & $+0.029$ & $+0.011$ \\
+128 & 16 & 192 & $+0.021$ & $+0.008$ \\
+64 & 48 & 256 & $+0.026$ & $+0.006$ \\
+128 & 32 & 256 & $+0.018$ & $+0.005$ \\
+256 & 0 & 256 & $+1.234$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 \begin{table}[t]
 \centering
 \caption{Constant byte budget ($mL_b=64$, $W=128$, so $37.5\%$ of key positions
@@ -682,8 +1107,9 @@ overfitting, not capacity.
 
 \paragraph{What survives from the first version.} The latency findings are kernel-
 and memory-level measurements and are unaffected by the harness bug: the
-irregular gather remains free on datacenter hardware, fusion still wins at small
-quota, and an unfused selector still costs about $20$\,ms per decode step. What
+irregular gather remains free on datacenter hardware (now across four
+architectures), fusion still wins at small quota, and an unfused selector still
+costs about $20$--$25$\,ms per decode step on two backends. What
 does \emph{not} survive is the inference that the approach is near its quality
 ceiling. The ceiling was the estimator, and it is fixable for $12.5\%$ of the key
 bytes.

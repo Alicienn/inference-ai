@@ -1,0 +1,46 @@
+BILAN OCTETS-VS-QUALITE DE L'INDEX ASP A DEUX ETAGES
+unite = 1 element pleine precision (D=128, bf16) ; index d'=8 a 8 bits ;
+octets par requete, par tete, par couche (K et V comptes separement)
+
+=== GPT-2 T=256 induction  (T=256, W=32, m=16, Lb=4, 38 % de cles a 1 etage) ===
+config         unites  x dense  x 1 etage     perte     Delta
+dense           512.0    1.000      2.639   0.06211  +0.00000
+un_etage        194.0    0.379      1.000   0.28764  +0.22553
+deux_exact      258.0    0.504      1.330   0.07339  +0.01128
+deux_q8         194.0    0.379      1.000   0.24115  +0.17904
+  fenetre locale : 64 unites ; K des 2m candidats : 128 ; V des m retenus : 64 ; index : 2.0
+
+=== Qwen2.5-0.5B T=1024 off 0 (D=64)  (T=1024, W=128, m=32, Lb=4, 25 % de cles a 1 etage) ===
+config         unites  x dense  x 1 etage     perte     Delta
+dense          2048.0    1.000      3.938   2.59795  +0.00000
+un_etage        520.0    0.254      1.000   2.60562  +0.00767
+deux_exact      648.0    0.316      1.246   2.59867  +0.00072
+deux_q8         520.0    0.254      1.000   2.59999  +0.00204
+deux_q4         456.0    0.223      0.877   2.59811  +0.00016
+  fenetre locale : 256 unites ; K des 2m candidats : 256 ; V des m retenus : 128 ; index : 8.0
+
+=== SmolLM2 T=1024 off 0  (T=1024, W=128, m=32, Lb=4, 25 % de cles a 1 etage) ===
+config         unites  x dense  x 1 etage     perte     Delta
+dense          2048.0    1.000      3.938   2.75635  +0.00000
+un_etage        520.0    0.254      1.000   2.81544  +0.05909
+deux_exact      648.0    0.316      1.246   2.76814  +0.01179
+deux_q8         520.0    0.254      1.000   2.76764  +0.01129
+  fenetre locale : 256 unites ; K des 2m candidats : 256 ; V des m retenus : 128 ; index : 8.0
+
+=== SmolLM2 T=1024 off 200k  (T=1024, W=128, m=32, Lb=4, 25 % de cles a 1 etage) ===
+config         unites  x dense  x 1 etage     perte     Delta
+dense          2048.0    1.000      3.938   1.63241  +0.00000
+un_etage        520.0    0.254      1.000   1.64588  +0.01347
+deux_exact      648.0    0.316      1.246   1.62744  -0.00497
+deux_q8         520.0    0.254      1.000   1.62737  -0.00504
+deux_q4         456.0    0.223      0.877   1.62789  -0.00452
+  fenetre locale : 256 unites ; K des 2m candidats : 256 ; V des m retenus : 128 ; index : 8.0
+
+=== SmolLM2 T=2048 off 0  (T=2048, W=256, m=64, Lb=4, 25 % de cles a 1 etage) ===
+config         unites  x dense  x 1 etage     perte     Delta
+dense          4096.0    1.000      3.938   2.55973  +0.00000
+un_etage       1040.0    0.254      1.000   2.56925  +0.00952
+deux_exact     1296.0    0.316      1.246   2.56543  +0.00570
+deux_q8        1040.0    0.254      1.000   2.56556  +0.00583
+deux_q4         912.0    0.223      0.877   2.56584  +0.00611
+  fenetre locale : 512 unites ; K des 2m candidats : 512 ; V des m retenus : 256 ; index : 16.0

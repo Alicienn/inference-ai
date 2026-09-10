@@ -1,0 +1,5 @@
+gpt2 | span naturel 64 tok repete 4x (T=256) | attention native
+config        perte_copie1  perte_copie4  gain_induction
+dense              3.00978       0.06211  +2.94767
+masse moyenne copie1=0.4367 copie3=0.1292 (uniforme 0.250)
+max couche/tete copie1=1.0000 (couche 11, tete 755)

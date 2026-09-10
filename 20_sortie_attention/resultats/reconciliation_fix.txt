@@ -1,0 +1,5 @@
+Remplacement des resumes C2 (m*r2) par les cles brutes quantifiees des k blocs candidats (k*Lb*p)
+N=16384 : ratio resumes 6.74 -> cles brutes 2 bits 7.42
+N=32768 : ratio resumes 8.83 -> cles brutes 2 bits 10.04
+N=65536 : ratio resumes 10.45 -> cles brutes 2 bits 12.19
+N=131072 : ratio resumes 11.51 -> cles brutes 2 bits 13.65

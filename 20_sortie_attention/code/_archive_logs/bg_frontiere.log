@@ -1,0 +1,19 @@
+off=0 W=64 m=16 cles=128 vs_dense=+0.0462 index=+0.0264
+off=0 W=32 m=24 cles=128 vs_dense=+0.0503 index=+0.0344
+off=0 W=128 m=0 cles=128 vs_dense=+1.8259 index=+0.0000
+off=0 W=64 m=24 cles=160 vs_dense=+0.0411 index=+0.0213
+off=0 W=32 m=32 cles=160 vs_dense=+0.0485 index=+0.0310
+off=0 W=128 m=8 cles=160 vs_dense=+0.0493 index=+0.0202
+off=200000 W=64 m=16 cles=128 vs_dense=+0.0359 index=+0.0202
+off=200000 W=32 m=24 cles=128 vs_dense=+0.0266 index=+0.0177
+off=200000 W=128 m=0 cles=128 vs_dense=+1.6992 index=+0.0000
+off=200000 W=64 m=24 cles=160 vs_dense=+0.0342 index=+0.0078
+off=200000 W=32 m=32 cles=160 vs_dense=+0.0268 index=+0.0040
+off=200000 W=128 m=8 cles=160 vs_dense=+0.0157 index=+0.0124
+off=400000 W=64 m=16 cles=128 vs_dense=+0.0273 index=+0.0195
+off=400000 W=32 m=24 cles=128 vs_dense=+0.0214 index=+0.0147
+off=400000 W=128 m=0 cles=128 vs_dense=+1.5059 index=+0.0000
+off=400000 W=64 m=24 cles=160 vs_dense=+0.0190 index=+0.0119
+off=400000 W=32 m=32 cles=160 vs_dense=+0.0137 index=+0.0032
+off=400000 W=128 m=8 cles=160 vs_dense=+0.0231 index=+0.0078
+FIN

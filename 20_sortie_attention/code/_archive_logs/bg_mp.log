@@ -1,0 +1,9 @@
+base collectee
+dense: 0.06211
+dp=8 max/max: perte=0.28764 Delta=+0.22553 pic=94.4% masse_pic dense=0.4021 creuse=0.4299
+dp=8 sum/max: perte=1.16724 Delta=+1.10514 pic=95.2% masse_pic dense=0.3772 creuse=0.4361
+dp=8 sum/sum: perte=4.64278 Delta=+4.58067 pic=55.1% masse_pic dense=0.5428 creuse=0.2336
+dp=16 sum/max: perte=0.93612 Delta=+0.87401 pic=96.6% masse_pic dense=0.3729 creuse=0.4331
+dp=32 sum/max: perte=0.55653 Delta=+0.49442 pic=98.5% masse_pic dense=0.3779 creuse=0.4348
+dp=32 max/max: perte=0.15562 Delta=+0.09352 pic=95.1% masse_pic dense=0.4103 creuse=0.4372
+FIN

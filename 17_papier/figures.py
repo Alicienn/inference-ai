@@ -17,7 +17,8 @@ plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3,
                      "figure.dpi": 200, "savefig.bbox": "tight",
                      "axes.spines.top": False, "axes.spines.right": False})
 C = {"dense": "#444444", "asp": "#0072B2", "fused": "#D55E00",
-     "igpu": "#009E73", "t4": "#0072B2", "a100": "#D55E00", "h200": "#CC79A7"}
+     "igpu": "#009E73", "t4": "#0072B2", "a100": "#D55E00", "h200": "#CC79A7",
+     "rtx": "#C0392B"}
 
 # ---------------------------------------------------------------- données mesurées
 # Session 4-7 : ratio débit gather / débit contigu, par taille de morceau
@@ -28,12 +29,15 @@ GATHER = {
                                       [1.002, 0.943, 0.908, 0.880, 0.988, 0.949, 0.988, 1.002, 0.994]),
     "A100 PCIe (HBM2e, 1372 GB/s)":  ([64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384],
                                       [1.000, 1.000, 1.000, 1.000, 0.984, 0.972, 0.980, 0.955, 1.000]),
+    "RTX 4090 (GDDR6X, 933 GB/s)":   ([64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768],
+                                      [1.001, 1.000, 1.002, 0.969, 0.972, 0.992, 0.993, 0.996, 1.000, 0.997]),
 }
 # fraction du débit crête atteinte par le chemin contigu (régime de saturation)
 SAT = {
     "AMD gfx1152 (LPDDR5, 80 GB/s)": [0.06, 0.12, 0.23, 0.37, 0.49, 0.75, 0.81, 1.00],
     "Tesla T4 (GDDR6, 274 GB/s)":    [0.05, 0.15, 0.30, 0.61, 0.86, 1.00, 0.99, 0.98, 0.99],
     "A100 PCIe (HBM2e, 1372 GB/s)":  [0.04, 0.08, 0.16, 0.32, 0.63, 0.93, 1.00, 1.00, 0.99],
+    "RTX 4090 (GDDR6X, 933 GB/s)":   [0.13, 0.27, 0.54, 0.95, 0.98, 0.98, 0.99, 0.99, 1.00, 1.00],
 }
 # Session 6-7 : efficacité ASP (gain réel / gain théorique en octets) par volume lu
 EFF_VOL = {"Tesla T4": ([4, 32, 100], [0.283, 0.784, 0.852]),
@@ -78,9 +82,9 @@ def fig_law():
 
 
 def fig_gather():
-    """Fig. 2 — pénalité du gather par granularité, trois architectures mémoire."""
+    """Fig. 2 — pénalité du gather par granularité, quatre architectures mémoire."""
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.0, 2.4))
-    for (nm, (x, y)), col in zip(GATHER.items(), [C["igpu"], C["t4"], C["a100"]]):
+    for (nm, (x, y)), col in zip(GATHER.items(), [C["igpu"], C["t4"], C["a100"], C["rtx"]]):
         a1.plot(x, y, marker="o", ms=3.2, lw=1.3, color=col, label=nm)
         a2.plot(x, [100 * s for s in SAT[nm][:len(x)]], marker="s", ms=3.2, lw=1.3, color=col)
     a1.axhline(1.0, color="k", lw=0.7, ls=":")

@@ -1,0 +1,6 @@
+base collectee sur 12 couches
+dense: perte_copie4=0.06211 (Delta +0.06211) bloc_source_sel=nan%
+oracle 0.375: perte_copie4=0.06917 (Delta +0.00706) bloc_source_sel=98.0%
+pca 0.375: perte_copie4=0.28764 (Delta +0.22553) bloc_source_sel=98.3%
+pca 0.125: perte_copie4=1.46088 (Delta +1.39877) bloc_source_sel=86.8%
+FIN

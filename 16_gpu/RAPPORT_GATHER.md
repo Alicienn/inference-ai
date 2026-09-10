@@ -267,15 +267,72 @@ schemas) : **inutilisable**, car pour les petites configurations le temps total 
 l'overhead — la soustraction produit des efficacites absurdes (9413 %). Chiffres bruts
 conserves, artefact signale.
 
-### Bilan sur trois GPU
+### Bilan sur quatre GPU
 
-| | gfx1152 (LPDDR5) | T4 (GDDR6) | A100 (HBM2e) |
-|---|---:|---:|---:|
-| pic mesure | 80 GB/s | 274 GB/s | 1372 GB/s |
-| penalite de gather | ~5 % | ~1 % | **0 %** |
-| seuil de granularite | ~1-2 Kio | ~1 Kio | **aucun >=512 o** |
-| efficacite ASP mediane | 96,2 % | 79,2 % | 30,6 % (brute) |
-| volume requis par passe | quelques Mo | ~8 Mo | **~64-134 Mo** |
+| | gfx1152 (LPDDR5) | T4 (GDDR6) | A100 (HBM2e) | RTX 4090 (GDDR6X) |
+|---|---:|---:|---:|---:|
+| pic mesure | 80 GB/s | 274 GB/s | 1372 GB/s | 933 GB/s |
+| penalite de gather | ~5 % | ~1 % | **0 %** | **~1 % (min 0,969)** |
+| seuil de granularite | ~1-2 Kio | ~1 Kio | **aucun >=512 o** | **aucun >=512 o** |
+| efficacite ASP mediane (toutes lignes) | 96,2 % | 79,2 % | 30,6 % (brute) | 47,0 % |
+| efficacite ASP, lignes <= L2 | — | 28,3 % | 30,2 % | 33,5 % |
+| efficacite ASP, lignes > L2 | — | 81,0 % | 75,9 % | 250,3 % (2 lignes) |
+| volume requis par passe | quelques Mo | ~8 Mo | **~64-134 Mo** | ~34-50 Mo |
+
+---
+
+## 6quater. RTX 4090 (GDDR6X) — quatrieme architecture, et un artefact de mesure demasque
+
+[`resultats/rtx4090_raw.txt`](resultats/rtx4090_raw.txt) — NVIDIA GeForce RTX 4090,
+49140 Mio, sm_89, 128 CU/SM, bus 384 bits, 2520 MHz.
+
+### Le seuil de granularite ne reapparait pas
+
+Pic contigu mesure **933,2 GB/s**. La saturation (>=80 % du pic) est atteinte des
+**512 o** (95 % du pic), et au-dela de 512 o le ratio gather/contigu vaut
+0,969 / 0,972 / 0,992 / 0,993 / 0,996 / 1,000 / 0,997 pour 512 o a 32 Kio :
+**moyenne 0,9884, minimum 0,969**. Sous 512 o le chemin contigu lui-meme
+n'atteint que 13 % / 27 % / 54 % du pic : on y mesure du cout de lancement, pas de
+la memoire. Quatrieme architecture, quatrieme fois : aucun seuil a ~1 Kio ; sur la
+4090 il est a **512 o au plus**, comme sur l'A100 il avait disparu.
+
+### Le chiffre d'efficacite ne mesure pas la DRAM mais le cache
+
+Le banc publie aussi une « efficacite » : gain reel / gain en octets. Sur la 4090
+elle vaut **47,0 % en moyenne** et **20 des 32 configurations sont plus lentes**
+que le chemin plat. Les deux configurations au-dessus de 200 % (278,4 % et
+222,3 %) sont les **seules honnetes** : le chemin plat lit `n x r2 x D x 2`
+octets, volume qui ne depasse les 72 Mo de L2 de la carte que pour ces deux
+lignes (128 Mo).
+
+Preuve independante du diagnostic : le debit plat **implique** par les 30 autres
+lignes va de **822 a 3647 GB/s** — impossible en DRAM quand le pic mesure sur la
+meme carte est de 933 GB/s. Ces lignes sont servies par la L2 ; le « gain » du
+chemin plat y est un gain de cache, que le chemin ASP (dont le volume ne depasse
+jamais 50 Mo) ne reproduit pas dans les memes proportions.
+
+Le meme partage de regime apparait sur les trois autres GPU :
+
+| GPU | L2 | lignes <= L2 | efficacite <= L2 | lignes > L2 | efficacite > L2 |
+|---|---:|---:|---:|---:|---:|
+| Tesla T4 | 4 Mo | 2 | 28,3 % | 30 | 81,0 % |
+| A100 PCIe | 40 Mo | 24 | 30,2 % | 8 | 75,9 % |
+| RTX 4090 | 72 Mo | 30 | 33,5 % | 2 | 250,3 % |
+
+Sur le T4 et l'A100 le volume et le regime de cache varient ensemble : le partage
+ne peut pas y etre attribue au seul cache. Sur la 4090, si, parce que le debit
+implicite depasse le pic DRAM mesure.
+
+### Ce qui reste valable, et ce qui doit etre retire
+
+Valable : la penalite de gather (le balayage lit 96 Mio par lancement, au-dessus
+de toutes les L2 de l'etude) ; la regle `r2 x D x 2 >= 1024 o` (sur la 4090 elle
+est conservatrice) ; l'absence de seuil a 1 Kio.
+
+A retirer des tableaux de synthese : le classement d'efficacite 96,2 % / 79,2 % /
+30,6 %, qui melange des regimes de cache differents. A remplacer par : efficacite
+~30 % quand le volume plat tient en L2, 76-81 % quand il en sort, et **aucune des
+32 configurations ne compare deux chemins tous deux en DRAM**.
 
 ---
 

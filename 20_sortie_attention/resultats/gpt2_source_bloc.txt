@@ -1,0 +1,6 @@
+gpt2 | span 64 tok x4, T=256 | Lb=4 base PCA d'=8 sur 128 tok
+config        perte_copie4  Delta_vs_dense  bloc_source_sel%
+dense             0.06211  +0.06211         nan
+oracle 0.375      0.06917  +0.00706        98.0
+pca 0.375         0.28764  +0.22553        98.3
+pca 0.125         1.46088  +1.39877        86.8

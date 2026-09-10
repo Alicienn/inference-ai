@@ -1,0 +1,17 @@
+gpt2 | banc induction | score sensible a la valeur | S = masse retenue, L1 = |sparse-dense|
+m     vsel  perte      Delta     pic%   S       L1
+---  dense  ---    0.06211  ---       ---     ---     ---
+   8  none     0.75727  +0.69516   87.4  0.7670  0.4661
+   8  v3       1.12080  +1.05869   77.0  0.7274  0.5452
+   8  rnd3     1.01432  +0.95221   75.5  0.7048  0.5903
+  16  none     0.28764  +0.22553   94.4  0.8564  0.2873
+  16  v3       0.32624  +0.26413   89.5  0.8340  0.3321
+  16  rnd3     0.42891  +0.36680   85.2  0.8014  0.3972
+  24  none     0.10020  +0.03809   97.1  0.9134  0.1732
+  24  v3       0.18664  +0.12453   94.5  0.9007  0.1986
+  24  rnd3     0.26924  +0.20714   91.1  0.8630  0.2740
+
+correlations avec Delta_loss :
+1-pic%   Pearson=+0.936 Spearman=+0.950
+S        Pearson=-0.964 Spearman=-0.983
+L1       Pearson=+0.964 Spearman=+0.983

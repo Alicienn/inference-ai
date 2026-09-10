@@ -1,0 +1,26 @@
+HARNESS Qwen/Qwen3-8B : L=36 KVH=8 D=128 cfg={'Lb': 64, 'r1': 2, 'r2': 8, 'mfrac': 8, 'kfrac': 64, 'nloc': 512, 'nsink': 64}
+unite = 1 cle-equivalent (D elements pleine precision) par requete/tete/couche
+
+       N      n     m    k |     dense       ASP ratio calc ratio enreg. |  % dense
+--------------------------------------------------------------------------------------------
+   16384    256    32    4 |     32768      2432      13.47        13.47 |     7.42
+   32768    512    64    8 |     65536      3712      17.66        17.66 |     5.66
+   65536   1024   128   16 |    131072      6272      20.90        20.90 |     4.79
+  131072   2048   256   32 |    262144     11392      23.01        23.01 |     4.35
+
+DECOMPOSITION DE L'ECART AVEC LE BANC QUALITE (T=1024, W=128, m=32, Lb=4) :
+  banc qualite, un etage          : 2W + 2mLb = 512 unites sur 2T = 2048 -> 25.0 % de dense, soit 4.00x
+  banc qualite, deux etages exact : 2W + 3mLb = 640 unites -> 31.2 % de dense, soit 3.20x
+  banc qualite, deux etages 8 bits: 2W + 2mLb = 512 unites -> 25.0 % de dense, soit 4.00x
+
+  Terme 1 (budget de blocs) : le harness lit k*Lb = n/64 blocs, soit 1.56 % des cles, contre 25 % pour le banc qualite.
+  Terme 2 (mecanisme de l'etage fin) : le harness re-classe sur C2 = m*r2 vecteurs de
+    segment (8 par bloc) et ne lit AUCUNE cle candidate brute ; le banc qualite
+    lit les 2m*Lb cles brutes des candidats. A N=131072 : C2 = 2048 unites contre 2m*Lb = 32768 unites, soit un facteur 16.
+
+CONCLUSION : les deux chiffres ne sont pas contradictoires, ils decrivent deux algorithmes
+differents. Le ratio 13,5-23x du harness vient d'un etage fin a RESUMES (budget 1,6 % des
+cles) ; le ratio 3,9x du banc qualite vient d'un etage fin a CLES BRUTES (budget 25 %).
+Seul le second a ete valide en qualite dans cette session ; les proxys valides du premier
+(resumes fins) sont les configurations cosinus 32d et max 32d, qui coutaient +0,069 a
++0,410 nat contre +0,011 nat pour le reclassement exact.

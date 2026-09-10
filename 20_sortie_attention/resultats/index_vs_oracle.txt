@@ -1,0 +1,8 @@
+HuggingFaceTB/SmolLM2-135M | Lb=4 | fraction 37,5 % (W=T/8, m*Lb=T/4) | base PCA=8 sur 256 tokens | p>=320
+T      config      perte       Delta
+ 1024  dense     13.51250   ---
+ 1024  oracle    13.47332   -0.03917
+ 1024  pca       13.47678   -0.03571
+ 2048  dense     13.54427   ---
+ 2048  oracle    13.51793   -0.02633
+ 2048  pca       13.49771   -0.04656

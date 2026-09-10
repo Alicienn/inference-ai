@@ -1,0 +1,5 @@
+Selecteur complet : harness (r1=2, r2=8) contre recommande (index PCA d'=8 8 bits + cles brutes 2 bits)
+N=16384 : ra 2432 (ratio 13.47) -> ra 1704 (ratio 19.23), 29.9% d'octets en moins
+N=32768 : ra 3712 (ratio 17.66) -> ra 2256 (ratio 29.05), 39.2% d'octets en moins
+N=65536 : ra 6272 (ratio 20.90) -> ra 3360 (ratio 39.01), 46.4% d'octets en moins
+N=131072 : ra 11392 (ratio 23.01) -> ra 5568 (ratio 47.08), 51.1% d'octets en moins

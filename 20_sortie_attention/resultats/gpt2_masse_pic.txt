@@ -1,0 +1,9 @@
+gpt2 | banc induction | frac=0,375 | masse du pic : dense vs creuse
+dp  kagg  bagg  perte      Delta    pic%   masse_pic_dense  masse_pic_creuse
+---  dense  ---    0.06211  ---      ---    ---     ---
+  8  max   max     0.28764  +0.22553   94.4          0.4021           0.4299
+  8  sum   max     1.16724  +1.10514   95.2          0.3772           0.4361
+  8  sum   sum     4.64278  +4.58067   55.1          0.5428           0.2336
+ 16  sum   max     0.93612  +0.87401   96.6          0.3729           0.4331
+ 32  sum   max     0.55653  +0.49442   98.5          0.3779           0.4348
+ 32  max   max     0.15562  +0.09352   95.1          0.4103           0.4372

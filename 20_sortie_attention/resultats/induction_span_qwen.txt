@@ -1,0 +1,5 @@
+Qwen/Qwen2.5-0.5B | span naturel 64 tok repete 4x (T=256) | index PCA d'=8 max
+config       perte_copie1  perte_copie4  gain_induction
+dense            14.89887      14.89999  -0.00112
+pca 0.375        15.13770      14.81884  +0.31887
+pca 0.125        15.25975      15.13363  +0.12612

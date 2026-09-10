@@ -1,0 +1,23 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 | distribution conditionnelle HORS fenetre
+requetes=19200
+
+masse hors fenetre (moyenne)      = 0.5816
+support effectif exp(H)           = 15.26 cles
+masse top-1                       = 0.6679
+masse top-4                       = 0.8215
+masse top-16                      = 0.8830
+masse top-64                      = 0.9513
+masse top-256                     = 0.9974
+
+profil conditionnel par distance (1 = juste derriere la fenetre)
+decile  fraction de la masse hors fenetre
+    1         0.7052
+    2         0.0351
+    3         0.0484
+    4         0.0364
+    5         0.0312
+    6         0.0270
+    7         0.0276
+    8         0.0275
+    9         0.0299
+   10         0.0318

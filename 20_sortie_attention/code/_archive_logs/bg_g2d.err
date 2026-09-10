@@ -1,0 +1,58 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 3714.42it/s]
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (2384295 > 1024). Running this sequence through the model will result in indexing errors
+Traceback (most recent call last):
+  File "C:\Users\alici\Downloads\inference_opti\20_sortie_attention\code\gpt2_source_bloc.py", line 131, in <module>
+    run("oracle", 0.375)
+  File "C:\Users\alici\Downloads\inference_opti\20_sortie_attention\code\gpt2_source_bloc.py", line 117, in run
+    logits = model(seq[None]).logits[0]
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\utils\generic.py", line 903, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\gpt2\modeling_gpt2.py", line 691, in forward
+    transformer_outputs: BaseModelOutputWithPastAndCrossAttentions = self.transformer(
+                                                                     ^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\utils\generic.py", line 1032, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\utils\output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\gpt2\modeling_gpt2.py", line 617, in forward
+    hidden_states = block(
+                    ^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\gpt2\modeling_gpt2.py", line 274, in forward
+    attn_output, _ = self.attn(
+                     ^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alici\Downloads\inference_opti\20_sortie_attention\code\gpt2_source_bloc.py", line 73, in fwd
+    ACC["peak"] += int(keep[:, QPOS].sum())
+                       ~~~~^^^^^^^^^
+IndexError: index 203 is out of bounds for dimension 0 with size 12

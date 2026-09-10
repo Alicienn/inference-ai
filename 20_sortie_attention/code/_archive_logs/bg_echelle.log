@@ -1,0 +1,13 @@
+off=0 T=512 W=64 m=16 vs_dense=+0.0462 index=+0.0264
+off=0 T=512 W=128 m=0 vs_dense=+1.8259 index=+0.0000
+off=0 T=1024 W=128 m=32 vs_dense=+0.0236 index=+0.0354
+off=0 T=1024 W=256 m=0 vs_dense=+1.3999 index=+0.0000
+off=0 T=2048 W=256 m=64 vs_dense=+0.0052 index=+0.0043
+off=0 T=2048 W=512 m=0 vs_dense=+1.3237 index=+0.0000
+off=200000 T=512 W=64 m=16 vs_dense=+0.0359 index=+0.0202
+off=200000 T=512 W=128 m=0 vs_dense=+1.6992 index=+0.0000
+off=200000 T=1024 W=128 m=32 vs_dense=-0.0007 index=+0.0141
+off=200000 T=1024 W=256 m=0 vs_dense=+1.0829 index=+0.0000
+off=200000 T=2048 W=256 m=64 vs_dense=+0.0020 index=+0.0029
+off=200000 T=2048 W=512 m=0 vs_dense=+0.8283 index=+0.0000
+FIN

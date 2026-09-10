@@ -1,0 +1,9 @@
+base SVD complete collectee
+dense: 0.06211
+dp=8 frac=0.250 W=21 m=10 perte=0.64276 Delta=+0.58065 pic=89.6%
+dp=8 frac=0.375 W=32 m=16 perte=0.28764 Delta=+0.22553 pic=94.4%
+dp=8 frac=0.500 W=42 m=21 perte=0.13222 Delta=+0.07011 pic=96.9%
+dp=8 frac=0.750 W=64 m=32 perte=0.06078 Delta=-0.00133 pic=99.5%
+dp=16 frac=0.375 W=32 m=16 perte=0.22409 Delta=+0.16198 pic=94.7%
+dp=32 frac=0.375 W=32 m=16 perte=0.15562 Delta=+0.09352 pic=95.1%
+FIN

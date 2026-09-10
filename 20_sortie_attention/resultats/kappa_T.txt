@@ -1,0 +1,10 @@
+HuggingFaceTB/SmolLM2-135M | W=128 | selection oracle top-m, m=64/Lb | p>=256
+T      Lb    perte_moyenne
+ 1024  dense   13.50323
+ 1024      4   13.44220  (Delta -0.06103)
+ 1024     16   13.41270  (Delta -0.09053)
+ 2048  dense   13.56635
+ 2048      4   13.65677  (Delta +0.09042)
+ 2048     16   13.73691  (Delta +0.17056)
+T=1024 : kappa = ((D16)-(D4))/(M16-M4) = -9.11 nat/masse
+T=2048 : kappa = ((D16)-(D4))/(M16-M4) = 24.74 nat/masse

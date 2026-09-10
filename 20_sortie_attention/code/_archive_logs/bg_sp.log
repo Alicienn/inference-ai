@@ -1,0 +1,5 @@
+base collectee
+dense c1=13.86411 c4=13.46924 gain=+0.39487
+pca 0.375 c1=14.11689 c4=13.40579 gain=+0.71110 | masse_dense=0.2633 (uniforme 0.250) retenue=0.0991 bloc_sel=97.5%
+pca 0.125 c1=13.83302 c4=13.62158 gain=+0.21144 | masse_dense=0.2613 (uniforme 0.250) retenue=0.0214 bloc_sel=61.4%
+FIN

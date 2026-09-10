@@ -1,0 +1,350 @@
+banc long-contexte instrumente | HuggingFaceTB/SmolLM2-135M | Lb=4 d'=8 | T=1024 W=128 m=32 (25 % de cles) | offset=0
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.81544  +0.05909
+exact        2.76814  +0.01178
+q8h          2.76764  +0.01128
+rand         3.45027  +0.69392
+swap1        2.78339  +0.02703
+swap2        2.79360  +0.03724
+swap4        2.84155  +0.08519
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=200000 | cfgs=coarse,exact,q8h,q4h,swap1,swap2 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        1.63241  ---
+coarse       1.64588  +0.01347
+exact        1.62744  -0.00497
+q8h          1.62737  -0.00503
+q4h          1.64588  +0.01347
+swap1        1.64571  +0.01330
+swap2        1.66503  +0.03263
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=200000 | cfgs=q4h,swap4 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        1.63241  ---
+q4h          1.62789  -0.00452
+swap4        1.67977  +0.04736
+
+--- HuggingFaceTB/SmolLM2-135M | T=2048 W=256 m=64 offset=0 | cfgs=coarse,exact | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.55973  ---
+coarse       2.56925  +0.00952
+exact        2.56543  +0.00570
+
+--- HuggingFaceTB/SmolLM2-135M | T=2048 W=256 m=64 offset=0 | cfgs=q8h,q4h,swap1,swap2 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.55973  ---
+q8h          2.56556  +0.00583
+q4h          2.56584  +0.00611
+swap1        2.57901  +0.01928
+swap2        2.58142  +0.02169
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=128 m=32 offset=0 | cfgs=coarse,exact | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       2.60562  +0.00767
+exact        2.59867  +0.00072
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=128 m=32 offset=0 | cfgs=q8h,q4h,swap1,swap2 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+q8h          2.59999  +0.00204
+q4h          2.59811  +0.00016
+swap1        2.59622  -0.00173
+swap2        2.62209  +0.02414
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.81544  +0.05909
+exact        2.76814  +0.01178
+q8h          2.76764  +0.01128
+q4h          2.76804  +0.01168
+r2           2.81544  +0.05909
+r1           2.81544  +0.05909
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.81544  +0.05909
+exact        2.76814  +0.01178
+q8h          2.76764  +0.01128
+q4h          2.76804  +0.01168
+r2           2.76720  +0.01085
+r1           2.78674  +0.03039
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=128 m=32 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       2.60562  +0.00767
+exact        2.59867  +0.00072
+q8h          2.59999  +0.00204
+q4h          2.59811  +0.00016
+r2           2.59976  +0.00181
+r1           2.59726  -0.00069
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=96 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 87.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.77563  +0.01928
+exact        2.75648  +0.00013
+q8h          2.75648  +0.00013
+q4h          2.75652  +0.00016
+r2           2.75717  +0.00082
+r1           2.75573  -0.00063
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=200000 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        1.63241  ---
+coarse       1.64588  +0.01347
+exact        1.62744  -0.00497
+q8h          1.62737  -0.00503
+q4h          1.62789  -0.00452
+r2           1.62620  -0.00621
+r1           1.62729  -0.00511
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=32 m=8 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 9.4 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       3.00077  +0.24441
+exact        2.90044  +0.14408
+q8h          2.90517  +0.14881
+q4h          2.89978  +0.14343
+r2           2.95656  +0.20020
+r1           3.01198  +0.25563
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=64 m=16 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 18.8 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.87191  +0.11556
+exact        2.82926  +0.07290
+q8h          2.82894  +0.07259
+q4h          2.82770  +0.07135
+r2           2.84619  +0.08984
+r1           2.87205  +0.11570
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=2 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 2.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.03088  +1.27453
+exact        3.81518  +1.05882
+q8h          3.86178  +1.10542
+q4h          3.83562  +1.07926
+r2           3.95509  +1.19873
+r1           3.99690  +1.24055
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,exact,q2h,ns2 | 1.6 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.14028  +1.38393
+exact        4.13287  +1.37652
+q2h          4.14028  +1.38393
+ns2          4.14028  +1.38393
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,exact,q8h,q4h,q2h,q1h,ns8,ns4,ns2,ns1 | 3.9 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       3.91411  +1.15775
+exact        3.67789  +0.92154
+q8h          3.75066  +0.99431
+q4h          3.62900  +0.87264
+q2h          3.94579  +1.18944
+q1h          4.09256  +1.33621
+ns8          3.83911  +1.08275
+ns4          3.95921  +1.20285
+ns2          4.30590  +1.54955
+ns1          4.45486  +1.69850
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,exact,q2h,ns8,ns16 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+exact        3.42414  +0.66779
+q2h          3.58629  +0.82993
+ns8          4.03605  +1.27970
+ns16         3.72969  +0.97334
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=2 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 2.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.27780  +0.67985
+exact        3.09228  +0.49433
+q8h          3.11099  +0.51304
+q4h          3.13322  +0.53527
+r2           3.20312  +0.60517
+r1           3.54436  +0.94640
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=32 m=8 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 9.4 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       2.71780  +0.11985
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=32 m=8 offset=0 | cfgs=coarse,exact,q8h,q4h,r2,r1 | 9.4 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       2.71780  +0.11985
+exact        2.68121  +0.08325
+q8h          2.67688  +0.07893
+q4h          2.67923  +0.08128
+r2           2.67486  +0.07690
+r1           2.75463  +0.15668
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=2 offset=0 | cfgs=coarse,exact,q8h,q4h,q2h,q1h | 2.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.03088  +1.27453
+exact        3.81518  +1.05882
+q8h          3.86178  +1.10542
+q4h          3.83562  +1.07926
+q2h          3.85311  +1.09675
+q1h          4.14613  +1.38977
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=32 m=8 offset=0 | cfgs=coarse,exact,q8h,q4h,q2h,q1h | 9.4 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       3.00077  +0.24441
+exact        2.90044  +0.14408
+q8h          2.90517  +0.14881
+q4h          2.89978  +0.14343
+q2h          2.93569  +0.17934
+q1h          3.05240  +0.29604
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=128 m=32 offset=0 | cfgs=coarse,exact,q8h,q4h,q2h,q1h | 37.5 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       2.81544  +0.05909
+exact        2.76814  +0.01178
+q8h          2.76764  +0.01128
+q4h          2.76804  +0.01168
+q2h          2.77905  +0.02270
+q1h          2.82211  +0.06575
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=2 offset=0 | cfgs=coarse,exact,q8h,q4h,q2h,q1h | 2.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.27780  +0.67985
+exact        3.09228  +0.49433
+q8h          3.11099  +0.51304
+q4h          3.13322  +0.53527
+q2h          3.17954  +0.58159
+q1h          4.30688  +1.70893
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,ns1,ns2,ns4,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+ns1          4.58497  +1.82862
+ns2          4.23207  +1.47571
+ns4          4.08975  +1.33340
+exact        3.42414  +0.66779
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,ns1,ns2,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+ns1          4.58497  +1.82862
+ns2          4.23207  +1.47571
+exact        3.42414  +0.66779
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,ns1,ns2,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.37114  +1.61479
+ns1          4.61305  +1.85669
+ns2          4.23949  +1.48314
+exact        3.48119  +0.72483
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,ns1,ns2,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.35917  +1.60282
+ns1          4.72305  +1.96670
+ns2          4.25255  +1.49620
+exact        3.49347  +0.73712
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,sum4 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+sum4         6.48859  +3.73223
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,sum2 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.37114  +1.61479
+sum2         6.59363  +3.83728
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,sum1 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.35917  +1.60282
+sum1         6.63101  +3.87465
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,sum4,csum4 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=sum4,csum4 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=sum4,csum4 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+sum4         6.48859  +3.73223
+csum4        5.75975  +3.00339
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=1 offset=0 | cfgs=coarse,sum4,csum4 | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.65505  +1.05709
+sum4         6.78508  +4.18713
+csum4        4.88405  +2.28610
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=1 offset=0 | cfgs=coarse,ns1,ns2,ns4,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.65505  +1.05709
+ns1          4.02469  +1.42674
+ns2          3.73214  +1.13419
+ns4          3.86746  +1.26951
+exact        3.16037  +0.56242
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,cns1,cns2,cns4,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.11093  +1.35457
+cns1         4.56623  +1.80988
+cns2         4.52727  +1.77091
+cns4         4.45530  +1.69894
+exact        3.42414  +0.66779
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=1 offset=0 | cfgs=coarse,cns1,cns2,cns4,exact | 13.3 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.65505  +1.05709
+cns1         4.63046  +2.03251
+cns2         4.32074  +1.72279
+cns4         4.42690  +1.82895
+exact        3.16037  +0.56242
+
+--- HuggingFaceTB/SmolLM2-135M | T=1024 W=8 m=1 offset=0 | cfgs=coarse,exact,ns2,ns1,cns2,cns1 | 1.6 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.75635  ---
+coarse       4.14028  +1.38393
+exact        4.13287  +1.37652
+ns2          4.19434  +1.43798
+ns1          4.35120  +1.59485
+cns2         5.08108  +2.32473
+cns1         5.04828  +2.29193
+
+--- Qwen/Qwen2.5-0.5B | T=1024 W=8 m=1 offset=0 | cfgs=coarse,exact,ns2,ns1,cns2,cns1 | 1.6 % de cles lues ---
+cfg        perte      vs_dense
+dense        2.59795  ---
+coarse       3.49621  +0.89826
+exact        3.42623  +0.82828
+ns2          3.50275  +0.90479
+ns1          3.96491  +1.36695
+cns2         4.88039  +2.28244
+cns1         5.25064  +2.65269

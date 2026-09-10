@@ -1,0 +1,19 @@
+off=0 W=32 m=40 vs_dense=+0.0455 index=+0.0165
+off=0 W=64 m=32 vs_dense=+0.0375 index=+0.0213
+off=0 W=128 m=16 vs_dense=+0.0435 index=+0.0139
+off=0 W=64 m=48 vs_dense=+0.0347 index=+0.0072
+off=0 W=128 m=32 vs_dense=+0.0426 index=+0.0090
+off=0 W=256 m=0 vs_dense=+1.0711 index=+0.0000
+off=200000 W=32 m=40 vs_dense=+0.0278 index=+0.0094
+off=200000 W=64 m=32 vs_dense=+0.0354 index=+0.0058
+off=200000 W=128 m=16 vs_dense=+0.0092 index=+0.0001
+off=200000 W=64 m=48 vs_dense=+0.0371 index=+0.0063
+off=200000 W=128 m=32 vs_dense=+0.0109 index=+0.0047
+off=200000 W=256 m=0 vs_dense=+0.9687 index=+0.0000
+off=400000 W=32 m=40 vs_dense=+0.0088 index=+0.0023
+off=400000 W=64 m=32 vs_dense=+0.0124 index=+0.0069
+off=400000 W=128 m=16 vs_dense=+0.0098 index=+0.0085
+off=400000 W=64 m=48 vs_dense=+0.0072 index=+0.0044
+off=400000 W=128 m=32 vs_dense=+0.0008 index=+0.0002
+off=400000 W=256 m=0 vs_dense=+1.6634 index=+0.0000
+FIN

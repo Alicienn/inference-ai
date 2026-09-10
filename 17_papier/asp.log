@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.27)  9 SEP 2026 22:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.27)  10 SEP 2026 01:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -967,9 +967,9 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 24.88pt on input line 75.
+(Font)              scaled to size 24.88pt on input line 79.
 LaTeX Font Info:    Trying to load font information for T1+LinuxBiolinumT-TLF o
-n input line 75.
+n input line 79.
 
 (C:\Users\alici\AppData\Local\Programs\MiKTeX\tex/latex/libertine\t1linuxbiolin
 umt-tlf.fd
@@ -977,61 +977,61 @@ File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 24.88pt on input line 75.
+(Font)              scaled to size 24.88pt on input line 79.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 24.88pt on input line 75.
+(Font)              scaled to size 24.88pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 75.
+(Font)              scaled to size 17.28pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 75.
+(Font)              scaled to size 17.28pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 75.
+(Font)              scaled to size 17.28pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 75.
+(Font)              scaled to size 12.0pt on input line 79.
 
 
 Class acmart Warning: No city present for an affiliation.
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 14.4pt on input line 75.
+(Font)              scaled to size 14.4pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 (C:\Users\alici\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
@@ -1039,46 +1039,48 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 10.95pt on input line 75.
+(Font)              scaled to size 10.95pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 75.
+(Font)              scaled to size 8.0pt on input line 79.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.1pt on input line 75.
+(Font)              scaled to size 6.1pt on input line 79.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1308) in paragraph at lines 75--75
+Underfull \hbox (badness 1308) in paragraph at lines 79--79
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) ($\OML/nxlmi/m/it/10.95 r \U/ntxmia/m/i
 t/10.95 = \OT1/LinuxLibertineT-TLF/m/n/10.95 (+20) 0\OML/nxlmi/m/it/10.95 :\OT1
 /LinuxLibertineT-TLF/m/n/10.95 (+20) 96$\T1/LinuxLibertineT-TLF/m/n/10.95 (+20)
  ). We ar-gue that con-ver-gent em-pir-i-cal
  []
 
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.6pt on input line 98.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.0pt, for example:
@@ -1093,45 +1095,52 @@ pa5.enc}
 77jq.enc}{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertin
 e/lbtn_7grukw.enc}{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
 /libertine/lbtn_oexx6f.enc}]
-Underfull \hbox (badness 5077) in paragraph at lines 118--138
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 6.6pt on input line 102.
+
+Underfull \hbox (badness 5077) in paragraph at lines 122--142
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) meth-ods at-tend to pre-de-ter-mined wi
 n-dows and
  []
 
 
-Underfull \hbox (badness 4403) in paragraph at lines 118--138
+Underfull \hbox (badness 4403) in paragraph at lines 122--142
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) global to-kens [[], []]. Evic-tion meth
 -ods dis-card
  []
 
 
-Underfull \hbox (badness 1708) in paragraph at lines 118--138
+Underfull \hbox (badness 1708) in paragraph at lines 122--142
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) low-importance en-tries [[], [], []]. Q
 uery-aware
  []
 
 
-Underfull \hbox (badness 1158) in paragraph at lines 118--138
+Underfull \hbox (badness 1158) in paragraph at lines 122--142
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) and NSA [[]]. COBS [[]] for-malises se-
 lec-tion as
  []
 
 
-Underfull \hbox (badness 2591) in paragraph at lines 118--138
+Underfull \hbox (badness 2591) in paragraph at lines 122--142
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) Our work is com-ple-men-tary and, on on
 e point,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--146
+Underfull \hbox (badness 10000) in paragraph at lines 143--150
  []\T1/LinuxLibertineT-TLF/m/it/10.95 (+20) Hierarchical se-lec-tion.[] \T1/Lin
 uxLibertineT-TLF/m/n/10.95 (+20) AsyncTLS [[]] per-forms
  []
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 184.
+(Font)              scaled to size 10.95pt on input line 180.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 184.
+(Font)              scaled to size 9.0pt on input line 180.
+
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.0pt, for example:
@@ -1139,26 +1148,26 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 
 [2.2]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/sc' will be
-(Font)              scaled to size 10.95pt on input line 185.
+(Font)              scaled to size 10.95pt on input line 189.
 
-Underfull \hbox (badness 1215) in paragraph at lines 186--188
+Underfull \hbox (badness 1215) in paragraph at lines 190--192
 [][][]\T1/LinuxLibertineT-TLF/m/sc/10.95 (+20) Proposition 3.1 (Uni-form two-si
 ded core-set
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--228
+Underfull \hbox (badness 10000) in paragraph at lines 228--232
 []\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) Recall loss de-com-poses into two fir
 st-order-
  []
 
-<figs/strat.pdf, id=180, 242.22809pt x 176.8354pt>
+<figs/strat.pdf, id=175, 242.22809pt x 176.8354pt>
 File: figs/strat.pdf Graphic file (type pdf)
 <use figs/strat.pdf>
-Package pdftex.def Info: figs/strat.pdf  used on input line 246.
+Package pdftex.def Info: figs/strat.pdf  used on input line 250.
 (pdftex.def)             Requested size: 241.14749pt x 176.05244pt.
 
-Class acmart Warning: A possible image without description on input line 252.
+Class acmart Warning: A possible image without description on input line 256.
 
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
@@ -1166,70 +1175,52 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
 [3.3{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbt
-n_ncsllp.enc} <./figs/strat.pdf>]
+n_ncsllp.enc}]
 LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 28
-0.
+4.
 
 (C:\Users\alici\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.95pt on input line 280.
+(Font)              scaled to size 10.95pt on input line 284.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 4660) in paragraph at lines 279--286
+Underfull \hbox (badness 2237) in paragraph at lines 283--291
  []\T1/LinuxLibertineT-TLF/m/it/10.95 (+20) Hardware.[] \T1/LinuxLibertineT-TLF
-/m/n/10.95 (+20) Four GPUs span-ning three mem-ory
+/m/n/10.95 (+20) Five GPUs. The gather sweep spans
  []
 
 
-Underfull \hbox (badness 5091) in paragraph at lines 279--286
-\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) tech-nolo-gies: an AMD Radeon 860M in-t
-e-grated
- []
-
-
-Underfull \hbox (badness 2088) in paragraph at lines 279--286
-\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) 1372GB/s mea-sured) and an NVIDIA H200 
-NVL
- []
-
-
-Underfull \hbox (badness 1789) in paragraph at lines 279--286
-\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) part and CUDA (\T1/zi4/m/n/10.95 nvcc -
-O3\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) ) else-where; a sin-gle
- []
-
-
-Underfull \hbox (badness 1418) in paragraph at lines 295--300
+Underfull \hbox (badness 1418) in paragraph at lines 300--309
  []\T1/LinuxLibertineT-TLF/m/it/10.95 (+20) End-to-end.[] \T1/LinuxLibertineT-T
 LF/m/n/10.95 (+20) Qwen3-8B [[]] (36 lay-ers, 32 query
  []
 
 
-Underfull \hbox (badness 1668) in paragraph at lines 295--300
-\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) heads, 8 grouped-query KV heads [[]], h
-ead dim
+Underfull \hbox (badness 2564) in paragraph at lines 300--309
+\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) on an RTX 4090 (GDDR6X, 933GB/s mea-sur
+ed),
  []
 
 
-Underfull \hbox (badness 1616) in paragraph at lines 295--300
-\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) reg-is-tered through the \T1/zi4/m/n/10
-.95 ALL_ATTENTION_FUNCTIONS
+Underfull \hbox (badness 1052) in paragraph at lines 300--309
+\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) with ASP reg-is-tered through the \T1/z
+i4/m/n/10.95 ALL_ATTENTION_
  []
 
-<figs/law.pdf, id=252, 241.94577pt x 178.12146pt>
+<figs/law.pdf, id=198, 241.94577pt x 178.12146pt>
 File: figs/law.pdf Graphic file (type pdf)
 <use figs/law.pdf>
-Package pdftex.def Info: figs/law.pdf  used on input line 308.
+Package pdftex.def Info: figs/law.pdf  used on input line 317.
 (pdftex.def)             Requested size: 241.14749pt x 177.53938pt.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/it' will be
-(Font)              scaled to size 10.95pt on input line 312.
+(Font)              scaled to size 10.95pt on input line 321.
 
-Class acmart Warning: A possible image without description on input line 314.
+Class acmart Warning: A possible image without description on input line 323.
 
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
@@ -1237,87 +1228,122 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
 [4.4{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i
-4-t1-4.enc}{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libert
-ine/lbtn_ki75ao.enc} <./figs/law.pdf>]
-<figs/gather.pdf, id=304, 440.6933pt x 176.8354pt>
+4-t1-4.enc} <./figs/strat.pdf>]
+<figs/gather.pdf, id=266, 440.6933pt x 176.8354pt>
 File: figs/gather.pdf Graphic file (type pdf)
 <use figs/gather.pdf>
-Package pdftex.def Info: figs/gather.pdf  used on input line 348.
+Package pdftex.def Info: figs/gather.pdf  used on input line 357.
 (pdftex.def)             Requested size: 506.295pt x 203.15944pt.
 
 
-Class acmart Warning: A possible image without description on input line 356.
+Class acmart Warning: A possible image without description on input line 365.
 
 
-Underfull \vbox (badness 4927) has occurred while \output is active []
-
-<figs/fusion.pdf, id=307, 239.3423pt x 176.5531pt>
-File: figs/fusion.pdf Graphic file (type pdf)
-<use figs/fusion.pdf>
-Package pdftex.def Info: figs/fusion.pdf  used on input line 395.
-(pdftex.def)             Requested size: 241.14749pt x 177.89426pt.
+Underfull \vbox (badness 1648) has occurred while \output is active []
 
 
-Class acmart Warning: A possible image without description on input line 399.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (3.72661pt too wide) in paragraph at lines 405--415
- [][] 
- []
-
-<figs/e2e.pdf, id=310, 437.8232pt x 176.8354pt>
-File: figs/e2e.pdf Graphic file (type pdf)
-<use figs/e2e.pdf>
-Package pdftex.def Info: figs/e2e.pdf  used on input line 436.
-(pdftex.def)             Requested size: 506.295pt x 204.4951pt.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 440.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 6.1pt on input line 440.
-
-Class acmart Warning: A possible image without description on input line 442.
-
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 447.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 10.0pt on input line 449.
-LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 7.3pt on input line 449.
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[5.5]
-Underfull \hbox (badness 2547) in paragraph at lines 475--482
+[5.5{C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbt
+n_ki75ao.enc} <./figs/law.pdf>]
+<figs/fusion.pdf, id=314, 239.3423pt x 176.5531pt>
+File: figs/fusion.pdf Graphic file (type pdf)
+<use figs/fusion.pdf>
+Package pdftex.def Info: figs/fusion.pdf  used on input line 429.
+(pdftex.def)             Requested size: 241.14749pt x 177.89426pt.
+
+
+Class acmart Warning: A possible image without description on input line 433.
+
+
+Overfull \hbox (3.72661pt too wide) in paragraph at lines 439--449
+ [][] 
+ []
+
+
+Underfull \vbox (badness 1546) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[6.6 <./figs/gather.pdf> <./figs/fusion.pdf>]
+<figs/e2e.pdf, id=433, 437.8232pt x 176.8354pt>
+File: figs/e2e.pdf Graphic file (type pdf)
+<use figs/e2e.pdf>
+Package pdftex.def Info: figs/e2e.pdf  used on input line 470.
+(pdftex.def)             Requested size: 506.295pt x 204.4951pt.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 8.0pt on input line 474.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 6.1pt on input line 474.
+
+
+Class acmart Warning: A possible image without description on input line 476.
+
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 481.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 10.0pt on input line 483.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 7.3pt on input line 483.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 488.
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[7.7]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[8.8 <./figs/e2e.pdf>]
+Underfull \hbox (badness 2547) in paragraph at lines 633--643
 \OT1/LinuxLibertineT-TLF/m/n/10.95 (+20) 9\OML/nxlmi/m/it/10.95 :\OT1/LinuxLibe
 rtineT-TLF/m/n/10.95 (+20) 4$\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) ms at $\OT
 1/LinuxLibertineT-TLF/m/n/10.95 (+20) 131$\T1/LinuxLibertineT-TLF/m/n/10.95 (+2
@@ -1329,8 +1355,8 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[6.6 <./figs/gather.pdf> <./figs/fusion.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[9.9]
+Underfull \vbox (badness 2865) has occurred while \output is active []
 
 
 
@@ -1338,11 +1364,32 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[7.7 <./figs/e2e.pdf>]
+[10.10]
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[11.11]
 Underfull \vbox (badness 3428) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1874) in paragraph at lines 625--634
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[12.12]
+
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[13.13]
+Underfull \vbox (badness 3428) has occurred while \output is active []
+
+
+Underfull \hbox (badness 1874) in paragraph at lines 1050--1059
  []\T1/LinuxLibertineT-TLF/m/it/10.95 (+20) What the cor-rected mea-sure-ments 
 say.[] \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) With the
  []
@@ -1352,17 +1399,20 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[8.8]
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 645.
+[14.14]
 
-Underfull \hbox (badness 10000) in paragraph at lines 697--707
+Package fancyhdr Warning: \footskip is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.0pt, for example:
+(fancyhdr)                \setlength{\footskip}{13.0pt}.
+
+[15.15]
+Underfull \hbox (badness 10000) in paragraph at lines 1123--1133
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) streaming-compatible choice---and eval-
 u-at-ing on
  []
 
 
-Underfull \hbox (badness 3668) in paragraph at lines 697--707
+Underfull \hbox (badness 3668) in paragraph at lines 1123--1133
 \T1/LinuxLibertineT-TLF/m/n/10.95 (+20) by $\OT1/LinuxLibertineT-TLF/m/n/10.95 
 (+20) 0\OML/nxlmi/m/it/10.95 :\OT1/LinuxLibertineT-TLF/m/n/10.95 (+20) 0216$\T1
 /LinuxLibertineT-TLF/m/n/10.95 (+20) nat on SmolLM2-135M and $\OT1/LinuxLiberti
@@ -1371,26 +1421,14 @@ neT-TLF/m/n/10.95 (+20) 0\OML/nxlmi/m/it/10.95 :\OT1/LinuxLibertineT-TLF/m/n/10
  []
 
 
-Underfull \vbox (badness 3428) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \footskip is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.0pt, for example:
-(fancyhdr)                \setlength{\footskip}{13.0pt}.
-
-[9.9]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (1.06503pt too wide) in paragraph at lines 764--769
+Overfull \hbox (1.06503pt too wide) in paragraph at lines 1190--1195
 \T1/LinuxLibertineT-TLF/m/n/10.95 (-20) coresets, a weaker but cheaper construc
 tion whose \T1/LinuxLibertineT-TLF/m/it/10.95 (-20) size\T1/LinuxLibertineT-TLF
 /m/n/10.95 (-20) ---
  []
 
 
-Underfull \vbox (badness 2368) has occurred while \output is active []
+Underfull \vbox (badness 5802) has occurred while \output is active []
 
 
 
@@ -1398,8 +1436,8 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[10.10]
-Underfull \hbox (badness 1221) in paragraph at lines 795--804
+[16.16]
+Underfull \hbox (badness 1221) in paragraph at lines 1221--1230
 []\T1/LinuxLibertineT-TLF/m/n/10.95 (+20) Four threads re-main open. \T1/LinuxL
 ibertineT-TLF/m/it/10.95 (+20) Fus-ing the val-i-dated
  []
@@ -1408,7 +1446,7 @@ ibertineT-TLF/m/it/10.95 (+20) Fus-ing the val-i-dated
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 52.
 
-Underfull \vbox (badness 6396) has occurred while \output is active []
+Underfull \vbox (badness 2073) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1419,11 +1457,14 @@ Package fancyhdr Warning: \footskip is too small (12.0pt):
 (fancyhdr)                Make it at least 13.0pt, for example:
 (fancyhdr)                \setlength{\footskip}{13.0pt}.
 
-[11.11]
+[17.17]
 Underfull \hbox (badness 2189) in paragraph at lines 426--431
 \T1/LinuxLibertineT-TLF/m/n/9 (+20) Ainslie, Chris Al-berti, San-ti-ago On-tañó
 n, Philip Pham,
  []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \hbox (badness 1320) in paragraph at lines 440--447
@@ -1448,8 +1489,8 @@ rtant steps when creating your papers will ensure that the widest possible audi
 ence can ingest your work..
 
 
-Overfull \vbox (1.715pt too high) has occurred while \output is active []
-
+Package balance Warning: You have called \balance in second column
+(balance)                Columns might not be balanced.
 
 
 Package fancyhdr Warning: \footskip is too small (12.0pt): 
@@ -1463,22 +1504,22 @@ File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
 (C:\Users\alici\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [12.12] (asp.aux)
+) [18.18] (asp.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `asp.out' has not changed.
-(rerunfilecheck)             Checksum: 160B6D5036F65EF06E027335C19CF4DD;3496.
+(rerunfilecheck)             Checksum: 7F6CDEFD7DD3225B27FCDF4B85724FC4;3496.
  ) 
 Here is how much of TeX's memory you used:
- 21797 strings out of 467871
- 359179 string characters out of 5418376
- 830066 words of memory out of 5000000
- 49365 multiletter control sequences out of 15000+600000
- 863922 words of font info for 576 fonts, out of 8000000 for 9000
+ 21871 strings out of 467871
+ 360776 string characters out of 5418376
+ 841564 words of memory out of 5000000
+ 49366 multiletter control sequences out of 15000+600000
+ 869771 words of font info for 613 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,13n,131p,1002b,762s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,13n,131p,1002b,742s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/
 Inconsolata-zi4r.pfb><C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/newtx/LibertineMathMI.pfb><C:/Users/alici/AppData/Local/Programs/MiKTeX/
@@ -1499,9 +1540,9 @@ XMI7.pfb><C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx
 tx/txmiaX.pfb><C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 newtx/txsym.pfb><C:/Users/alici/AppData/Local/Programs/MiKTeX/fonts/type1/publi
 c/newtx/txsys.pfb>
-Output written on asp.pdf (12 pages, 710090 bytes).
+Output written on asp.pdf (18 pages, 763510 bytes).
 PDF statistics:
- 652 PDF objects out of 1000 (max. 8388607)
- 110 named destinations out of 1000 (max. 500000)
+ 695 PDF objects out of 1000 (max. 8388607)
+ 127 named destinations out of 1000 (max. 500000)
  112314 words of extra memory for PDF output out of 128383 (max. 10000000)
 

@@ -1,0 +1,5 @@
+base collectee
+frac=0.375 W=64 m=32 masse_dense=1.184e+00 retenue=4.389e-01 part_OW=0.9238 bloc_sel=75.8%
+frac=0.125 W=21 m=10 masse_dense=1.220e+00 retenue=1.962e-01 part_OW=1.0461 bloc_sel=33.8%
+frac=0.062 W=10 m=5 masse_dense=1.237e+00 retenue=1.744e-01 part_OW=1.5045 bloc_sel=25.1%
+FIN

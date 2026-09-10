@@ -1,0 +1,8 @@
+base collectee
+dense: 0.06211
+dp=8 kagg=max bagg=max: perte=0.28764 Delta=+0.22553 pic=94.4%
+dp=8 kagg=sum bagg=max: perte=1.16724 Delta=+1.10514 pic=95.2%
+dp=8 kagg=sum bagg=sum: perte=4.64278 Delta=+4.58067 pic=55.1%
+dp=16 kagg=sum bagg=max: perte=0.93612 Delta=+0.87401 pic=96.6%
+dp=32 kagg=sum bagg=max: perte=0.55653 Delta=+0.49442 pic=98.5%
+FIN

@@ -1,0 +1,6 @@
+base collectee
+dense perte_aiguille=14.41529
+frac=0.375 W=64 m=32 perte=14.24643 Delta=-0.16886
+frac=0.125 W=21 m=10 perte=14.42166 Delta=+0.00638
+frac=0.062 W=10 m=5 perte=14.08536 Delta=-0.32993
+FIN

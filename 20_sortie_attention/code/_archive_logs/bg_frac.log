@@ -1,0 +1,12 @@
+base collectee
+T=1024 dense=13.51250
+T=1024 frac=0.375 W=128 m=64 cles=384(0.375) perte=13.47678 Delta=-0.03571
+T=1024 frac=0.250 W=85 m=42 cles=253(0.247) perte=13.43592 Delta=-0.07657
+T=1024 frac=0.125 W=42 m=21 cles=126(0.123) perte=13.42204 Delta=-0.09046
+T=1024 frac=0.062 W=21 m=10 cles=61(0.060) perte=13.36835 Delta=-0.14415
+T=2048 dense=13.54427
+T=2048 frac=0.375 W=256 m=128 cles=768(0.375) perte=13.49771 Delta=-0.04656
+T=2048 frac=0.250 W=170 m=85 cles=510(0.249) perte=13.60068 Delta=+0.05641
+T=2048 frac=0.125 W=85 m=42 cles=253(0.124) perte=13.52511 Delta=-0.01915
+T=2048 frac=0.062 W=42 m=21 cles=126(0.062) perte=13.61989 Delta=+0.07562
+FIN

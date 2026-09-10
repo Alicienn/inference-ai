@@ -1,0 +1,8 @@
+gpt2 | banc induction | frac=0,375 (W=32, m=16) | Lb=4
+dp  kagg  bagg  perte_copie4  Delta    pic_retenu%
+---  dense  ---        0.06211   ---      ---
+  8  max   max        0.28764  +0.22553    94.4
+  8  sum   max        1.16724  +1.10514    95.2
+  8  sum   sum        4.64278  +4.58067    55.1
+ 16  sum   max        0.93612  +0.87401    96.6
+ 32  sum   max        0.55653  +0.49442    98.5

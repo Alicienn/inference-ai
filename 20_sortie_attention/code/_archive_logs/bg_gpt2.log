@@ -1,0 +1,11 @@
+off=0 W=128 Lb=64 m=1 vs_dense=+0.0438 index=+0.0017
+off=0 W=128 Lb=32 m=2 vs_dense=+0.0125 index=+0.0097
+off=0 W=128 Lb=4 m=16 vs_dense=+0.0046 index=+0.0010
+off=0 W=64 Lb=4 m=16 vs_dense=+0.0114 index=-0.0002
+off=0 W=128 Lb=4 m=0 vs_dense=+0.1676 index=+0.0000
+off=200000 W=128 Lb=64 m=1 vs_dense=+0.7557 index=-0.0181
+off=200000 W=128 Lb=32 m=2 vs_dense=+0.4191 index=-0.0440
+off=200000 W=128 Lb=4 m=16 vs_dense=-0.0128 index=-0.0163
+off=200000 W=64 Lb=4 m=16 vs_dense=+0.0283 index=-0.0155
+off=200000 W=128 Lb=4 m=0 vs_dense=+2.6781 index=+0.0000
+FIN

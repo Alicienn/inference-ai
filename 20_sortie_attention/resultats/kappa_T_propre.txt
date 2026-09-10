@@ -1,0 +1,10 @@
+HuggingFaceTB/SmolLM2-135M | fraction lue 37,5 % (W=T/8, m*Lb=T/4) | p>=320
+T      Lb   perte      Delta    masse_piegee
+ 1024  dense   13.51250  ---        ---
+ 1024      4   13.53498  +0.02248  2.524e-03
+ 1024     16   13.54898  +0.03648  1.228e-02
+ 2048  dense   13.54427  ---        ---
+ 2048      4   13.48922  -0.05504  1.585e-03
+ 2048     16   13.52629  -0.01798  8.041e-03
+T=1024 : kappa = 1.44 nat/masse
+T=2048 : kappa = 5.74 nat/masse

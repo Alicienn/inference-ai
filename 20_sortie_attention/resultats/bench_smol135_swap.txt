@@ -1,0 +1,7 @@
+HuggingFaceTB/SmolLM2-135M | banc induction | index a deux etages | S = masse retenue, L1 = |sparse-dense|
+cfg        perte      Delta     pic%   S       L1
+---  dense  ---    0.03217  ---       ---     ---     ---
+exactmax     0.08313  +0.05096   72.6  0.7388  0.5222
+exactmax-k1    0.09326  +0.06110   69.3  0.7093  0.5810
+exactmax-k2    0.10980  +0.07764   66.2  0.6796  0.6409
+exactmax-k4    0.17896  +0.14679   59.4  0.6166  0.7668

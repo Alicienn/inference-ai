@@ -1,0 +1,31 @@
+HuggingFaceTB/SmolLM2-135M | T=512 W=128 | requetes=19200
+masse hors fenetre        = 0.5816
+support effectif          = 15.26
+masse top-1 (moyenne)     = 0.6679
+position normalisee argmax= 0.0335 (0 = debut de sequence)
+argmax dans les 10 1res   = 0.9652
+argmax dans les 32 1res   = 0.9677
+
+decile de POSITION de l'argmax :
+    1       0.9629
+    2       0.0047
+    3       0.0005
+    4       0.0012
+    5       0.0022
+    6       0.0021
+    7       0.0032
+    8       0.0044
+    9       0.0112
+   10       0.0076
+
+profil conditionnel par decile de distance :
+    1       0.7052
+    2       0.0351
+    3       0.0484
+    4       0.0364
+    5       0.0312
+    6       0.0270
+    7       0.0276
+    8       0.0275
+    9       0.0299
+   10       0.0318

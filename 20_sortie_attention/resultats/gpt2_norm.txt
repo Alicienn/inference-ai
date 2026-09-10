@@ -1,0 +1,17 @@
+gpt2 | banc induction | index a deux etages | S = masse retenue, L1 = |sparse-dense|
+m     two       perte      Delta     pic%   S       L1
+---  dense  ---    0.06211  ---       ---     ---     ---
+   8  pca         0.75727  +0.69516   87.4  0.7670  0.4661
+   8  norm        1.93421  +1.87210   28.6  0.3241  1.3517
+   8  normsum     3.60115  +3.53904   26.9  0.3138  1.3724
+  16  pca         0.28764  +0.22553   94.4  0.8564  0.2873
+  16  norm        1.09860  +1.03649   31.6  0.3703  1.2594
+  16  normsum     1.69276  +1.63065   30.0  0.3561  1.2878
+  24  pca         0.10020  +0.03809   97.1  0.9134  0.1732
+  24  norm        0.89106  +0.82895   34.2  0.4158  1.1685
+  24  normsum     1.63811  +1.57600   32.1  0.3965  1.2070
+
+correlations avec Delta_loss :
+1-pic%   Pearson=+0.727 Spearman=+0.983
+S        Pearson=-0.759 Spearman=-0.983
+L1       Pearson=+0.759 Spearman=+0.983

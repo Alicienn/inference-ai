@@ -1,0 +1,7 @@
+gpt2 | banc induction | index a deux etages | S = masse retenue, L1 = |sparse-dense|
+m     two       perte      Delta     pic%   S       L1
+---  dense  ---    0.06211  ---       ---     ---     ---
+  16  exactmax    0.07338  +0.01128   98.6  0.9148  0.1703
+  16  exactmax-k1    0.24081  +0.17870   94.4  0.8817  0.2366
+  16  exactmax-k2    0.34835  +0.28625   90.4  0.8504  0.2992
+  16  exactmax-k4    0.73906  +0.67695   82.1  0.7908  0.4184
